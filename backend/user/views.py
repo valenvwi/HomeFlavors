@@ -14,24 +14,33 @@ class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class RegisterView(APIView):
-    def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
-        if serializer.is_valid():
-            username = serializer.validated_data["username"]
+class RegisterView(viewsets.ModelViewSet):
+    # def post(self, request):
+    #     serializer = RegisterSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         username = serializer.validated_data["username"]
 
-            forbidden_usernames = ["admin", "root", "superuser"]
-            if username is forbidden_usernames:
-                return Response({"error": "Username not allowed"}, status=status.HTTP_409_CONFLICT)
+    #         forbidden_usernames = ["admin", "root", "superuser"]
+    #         if username is forbidden_usernames:
+    #             return Response({"error": "Username not allowed"}, status=status.HTTP_409_CONFLICT)
 
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        errors = serializer.errors
-        if "username" in errors and "non_field_errors" not in errors:
-            return Response({"error": "Username already exists"}, status=status.HTTP_409_CONFLICT)
+    #     errors = serializer.errors
+    #     if "username" in errors and "non_field_errors" not in errors:
+    #         return Response({"error": "Username already exists"}, status=status.HTTP_409_CONFLICT)
 
-        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+    #     return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer_class = RegisterSerializer
+        queryset = User.objects.all()
+
+        def create(self, request, *args, **kwargs):
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            headers = self.get_success_headers(serializer.data)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class LogOutAPIView(APIView):

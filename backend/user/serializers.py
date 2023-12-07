@@ -8,13 +8,13 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username")
+        fields = ("id", "username", "email", "first_name", "last_name", "role", "phone_number")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("username", "password", "email")
+        fields = ("username", "password", "email", "first_name", "last_name", "role", "phone_number")
 
     def is_valid(self, raise_exception=False):
         valid = super().is_valid(raise_exception=raise_exception)
