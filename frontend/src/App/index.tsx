@@ -1,10 +1,16 @@
-function App() {
+import { Route, Routes } from "react-router-dom";
+import Login from "./Login";
+import Signup from "./Signup";
+import Kitchen from "./Kitchen";
 
+function App() {
   return (
-    <>
-    <h1>Hello word</h1>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Kitchen />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

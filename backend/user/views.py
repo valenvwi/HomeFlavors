@@ -21,8 +21,14 @@ class RegisterView(viewsets.ModelViewSet):
         def create(self, request, *args, **kwargs):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            headers = self.get_success_headers(serializer.data)
 
+            if User.objects.filter(username=serializer.validated_data['username']).exists():
+                return Response({'error': 'User with this username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            validated_data = serializer.validated_data
+            user = User.objects.create_user(username=validated_data['username'], password=validated_data['password'], email=validated_data['email'], first_name=validated_data['first_name'], last_name=validated_data['last_name'], phone_number=validated_data['phone_number'])
+
+            headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
