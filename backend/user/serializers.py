@@ -6,15 +6,21 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
+    firstName = serializers.CharField(source='first_name')
+    lastName = serializers.CharField(source='last_name')
+    phoneNumber = serializers.CharField(source='phone_number')
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "last_name", "role", "phone_number")
+        fields = ("id", "username", "email", "firstName", "lastName", "role", "phoneNumber")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    firstName = serializers.CharField(source='first_name')
+    lastName = serializers.CharField(source='last_name')
+    phoneNumber = serializers.CharField(source='phone_number')
     class Meta:
         model = User
-        fields = ("username", "password", "email", "first_name", "last_name", "role", "phone_number")
+        fields = ("username", "password", "email", "firstName", "lastName", "role", "phoneNumber")
 
     def is_valid(self, raise_exception=False):
         valid = super().is_valid(raise_exception=raise_exception)
