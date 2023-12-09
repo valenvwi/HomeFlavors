@@ -1,6 +1,9 @@
 import { useAuthStore } from "../store/auth";
 import { kitchensRetrieve } from "../../../api";
 import { useEffect, useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import { Box, Typography } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 type Kitchen = {
   address: string;
@@ -16,6 +19,9 @@ type Kitchen = {
 };
 
 export default function Kitchen() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
+
   const [kitchen, setKitchen] = useState<Kitchen>();
 
   const getKitchen = async () => {
@@ -31,21 +37,58 @@ export default function Kitchen() {
     getKitchen();
   }, []);
 
-  console.log("kitchen", kitchen);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  console.log("is logged in?", isLoggedIn, "in Kitchen");
+  console.log("is logged in: ", isLoggedIn);
   return (
     <>
-      <h1>{kitchen?.name}</h1>
-      <img src={kitchen?.logo} alt="logo" width="200" height="200" />
-      <img src={kitchen?.banner} alt="banner" />
-      <h5>Address: {kitchen?.address}</h5>
-      <h5>Contact Number: {kitchen?.contactNumber}</h5>
-      <h5>Cuisine: {kitchen?.cuisine}</h5>
-      <h5>Description: {kitchen?.description}</h5>
-      <h5>Name: {kitchen?.name}</h5>
-      <h5>Opening Hours: {kitchen?.openingHours}</h5>
-      <h5>Order Accept Time: {kitchen?.orderAcceptTime}</h5>
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "flex-end",
+          backgroundImage: `url(${kitchen?.banner})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          width: "100%",
+          height: "300px",
+        }}
+      >
+        <Avatar
+          alt="logo"
+          src={kitchen?.logo}
+          sx={{
+            transform: "translateY(10%)",
+            width: 150,
+            height: 150,
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          mx: 3,
+          my: 2,
+          display: isSmallScreen ? "flex" : "block",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <Box>
+          <Typography variant="h4">{kitchen?.name}</Typography>
+          <Typography variant="h6">Cuisine: {kitchen?.cuisine}</Typography>
+          <Typography variant="subtitle1">{kitchen?.description}</Typography>
+        </Box>
+        <Box>
+          <Typography variant="subtitle1">{kitchen?.address}</Typography>
+          <Typography variant="subtitle1">
+            Contact Number: {kitchen?.contactNumber}
+          </Typography>
+          <Typography variant="subtitle1">
+            Opening Hours: {kitchen?.openingHours}
+          </Typography>
+        </Box>
+      </Box>
     </>
   );
 }
