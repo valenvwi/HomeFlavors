@@ -1,7 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { apiTokenCreate, apiLogoutCreate } from '../../api/index';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from './store/auth';
+import { useAppDispatch } from './store/root';
+import { authActions } from './store/auth';
+
 
 type LoginInputs = {
   username: string;
@@ -11,8 +13,7 @@ type LoginInputs = {
 export default function Login() {
   const { register, handleSubmit } = useForm<LoginInputs>();
   const navigate = useNavigate();
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
-  const setCurrentUserId = useAuthStore((state) => state.setCurrentUserId);
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     const response = await apiTokenCreate(data);
@@ -20,8 +21,8 @@ export default function Login() {
       console.log('error');
       return;
     }
-    setIsLoggedIn(true);
-    setCurrentUserId(response.data.user_id);
+    dispatch(authActions.setIsLoggedIn(true));
+    dispatch(authActions.setCurrentUserId(response.data.user_id));
     navigate('/');
   };
 
@@ -31,7 +32,7 @@ export default function Login() {
 
   const logout = () => {
     apiLogoutCreate();
-    setIsLoggedIn(false);
+    dispatch(authActions.setIsLoggedIn(false));
   };
 
 

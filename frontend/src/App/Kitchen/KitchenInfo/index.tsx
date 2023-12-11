@@ -1,10 +1,10 @@
-import { useAuthStore } from "../../store/auth";
 import { kitchensRetrieve } from "../../../../api";
 import { useEffect, useState } from "react";
 import Banner from "./Banner";
 import Content from "./Content";
 import { KitchenType } from "../../types/kitchen";
 import EditContent from "./EditContent";
+import { useAppSelector } from "../../store/root";
 
 export default function KitchenInfo() {
   const [kitchen, setKitchen] = useState<KitchenType>();
@@ -21,8 +21,7 @@ export default function KitchenInfo() {
 
   useEffect(() => {
     getKitchen();
-    console.log("kitchen: ", kitchen);
-  }, []);
+  }, [showEdit]);
 
   const onShowEdit = () => {
     setShowEdit(true);
@@ -32,7 +31,7 @@ export default function KitchenInfo() {
     setShowEdit(false);
   };
 
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
   console.log("is logged in: ", isLoggedIn);
   return (
     <>

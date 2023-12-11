@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { KitchenType } from "../../types/kitchen";
-import { useAuthStore } from "../../store/auth";
+import { useAppSelector } from '../../store/root';
 
 type Props = {
   kitchen?: KitchenType;
@@ -12,7 +12,8 @@ type Props = {
 export default function Content(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
-  const currentUserId = useAuthStore((state) => state.currentUserId);
+  const currentUserId = useAppSelector((state ) => state.currentUserId);
+  console.log("current user id: ", currentUserId);
 
   const onShowEdit = () => {
     props.onShowEditClick();

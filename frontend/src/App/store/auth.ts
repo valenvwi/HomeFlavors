@@ -1,15 +1,21 @@
-import { create } from "zustand";
+import { createSlice } from "@reduxjs/toolkit";
 
-type AuthState = {
-  isLoggedIn: boolean;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
-  currentUserId?: string;
-  setCurrentUserId: (currentUserId: string) => void;
-};
+const authSlice = createSlice({
+  name: "auth",
+  initialState: {
+    isLoggedIn: false,
+    currentUserId: null,
+  },
+  reducers: {
+    setIsLoggedIn(state, action) {
+      state.isLoggedIn = action.payload;
+    },
+    setCurrentUserId(state, action) {
+      state.currentUserId = action.payload;
+    },
+  },
+});
 
-export const useAuthStore = create<AuthState>((set) => ({
-  isLoggedIn: false,
-  setIsLoggedIn: (isLoggedIn: boolean) => set({ isLoggedIn }),
-  currentUserId: undefined,
-  setCurrentUserId: (currentUserId: string) => set({ currentUserId }),
-}));
+export const authActions = authSlice.actions;
+
+export default authSlice;
