@@ -3,6 +3,9 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Kitchen from "./Kitchen";
 import { CssBaseline } from "@mui/material";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

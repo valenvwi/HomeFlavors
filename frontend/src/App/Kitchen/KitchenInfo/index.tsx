@@ -21,6 +21,7 @@ export default function KitchenInfo() {
 
   useEffect(() => {
     getKitchen();
+    console.log("kitchen: ", kitchen);
   }, []);
 
   const onShowEdit = () => {

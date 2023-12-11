@@ -118,18 +118,15 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'user.User'
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-]
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    #     'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'user.authenticate.JWTCookieAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'user.authenticate.JWTCookieAuthentication',
+    ],
 }
+
+AUTH_USER_MODEL = 'user.User'
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'HomeFlavors API',

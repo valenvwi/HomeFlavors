@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { KitchenType } from "../../types/kitchen";
+import { useAuthStore } from "../../store/auth";
 
 type Props = {
   kitchen?: KitchenType;
@@ -11,6 +12,7 @@ type Props = {
 export default function Content(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const currentUserId = useAuthStore((state) => state.currentUserId);
 
   const onShowEdit = () => {
     props.onShowEditClick();
@@ -46,7 +48,8 @@ export default function Content(props: Props) {
             Opening Hours: {props.kitchen?.openingHours}
           </Typography>
         </Box>
-        <button onClick={onShowEdit}>Edit</button>
+        { currentUserId === props.kitchen?.owner &&
+        <button onClick={onShowEdit}>Edit</button> }
       </Box>
     </>
   );

@@ -12,6 +12,7 @@ export default function Login() {
   const { register, handleSubmit } = useForm<LoginInputs>();
   const navigate = useNavigate();
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
+  const setCurrentUserId = useAuthStore((state) => state.setCurrentUserId);
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     const response = await apiTokenCreate(data);
@@ -20,6 +21,7 @@ export default function Login() {
       return;
     }
     setIsLoggedIn(true);
+    setCurrentUserId(response.data.user_id);
     navigate('/');
   };
 
