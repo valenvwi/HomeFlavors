@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 class KitchenView(viewsets.ModelViewSet):
     queryset = Kitchen.objects.all()
     serializer_class = KitchenSerializer
-    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         user = request.user
