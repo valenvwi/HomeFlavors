@@ -38,6 +38,7 @@ export default function AppNavBar() {
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
+    navigate("/login");
   };
 
   return (

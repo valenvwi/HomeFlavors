@@ -1,6 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiRegisterCreate } from "../../api";
 import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 type SignupInputs = {
   username: string;
@@ -12,7 +20,11 @@ type SignupInputs = {
 };
 
 export default function Signup() {
-  const { register, handleSubmit } = useForm<SignupInputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupInputs>();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<SignupInputs> = (data) => {
@@ -21,29 +33,109 @@ export default function Signup() {
   };
 
   return (
-    <>
-      <h1>Sign up</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Username: </label>
-        <input {...register("username")} />
-        <br />
-        <label>Password: </label>
-        <input {...register("password")} type="password" />
-        <br />
-        <label>Email: </label>
-        <input {...register("email")} type="email" />
-        <br />
-        <label>First name: </label>
-        <input {...register("firstName")} type="firstName" />
-        <br />
-        <label>Last name: </label>
-        <input {...register("lastName")} type="lastName" />
-        <br />
-        <label>Phone number: </label>
-        <input {...register("phoneNumber")} type="phoneNumber" />
-        <br />
-        <input type="submit" />
-      </form>
-    </>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: "120px",
+          marginBottom: "120px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <TextField
+            {...register("email", { required: "Email is required" })}
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            autoComplete="email"
+            autoFocus
+            error={!!errors.email}
+            helperText={errors.email && errors.email.message}
+          />
+          <TextField
+            {...register("username", { required: "Username is required" })}
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            autoComplete="username"
+            autoFocus
+            error={!!errors.username}
+            helperText={errors.username && errors.username.message}
+          />
+          <TextField
+            {...register("password", { required: "Password is required" })}
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            error={!!errors.password}
+            helperText={errors.password && errors.password.message}
+          />
+          <TextField
+            {...register("firstName", { required: "First name is required" })}
+            margin="normal"
+            required
+            fullWidth
+            name="firstName"
+            label="First name"
+            type="firstName"
+            autoComplete="firstName"
+            error={!!errors.firstName}
+            helperText={errors.firstName && errors.firstName.message}
+          />
+          <TextField
+            {...register("lastName", { required: "Last name is required" })}
+            margin="normal"
+            required
+            fullWidth
+            name="lastName"
+            label="Last name"
+            type="lastName"
+            autoComplete="lastName"
+            error={!!errors.lastName}
+            helperText={errors.lastName && errors.lastName.message}
+          />
+          <TextField
+            {...register("phoneNumber", {
+              required: "Phone number is required",
+            })}
+            margin="normal"
+            required
+            fullWidth
+            name="phoneNumber"
+            label="Phone number"
+            type="phoneNumber"
+            autoComplete="phoneNumber"
+            error={!!errors.phoneNumber}
+            helperText={errors.phoneNumber && errors.phoneNumber.message}
+          />
+          <Button type="submit" fullWidth variant="contained" sx={{ my: 3 }}>
+            Sign up
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Link to="/login">{"Already have an account? Log in"}</Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 }

@@ -31,8 +31,6 @@ export default function KitchenInfo() {
     setShowEdit(false);
   };
 
-  const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
-  console.log("is logged in: ", isLoggedIn);
   return (
     <>
       <Banner banner={kitchen?.banner} logo={kitchen?.logo} />

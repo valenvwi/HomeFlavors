@@ -29,7 +29,8 @@ export const LeftDrawer = () => {
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
-  }
+    navigate("/login");
+  };
 
   return (
     <div>
