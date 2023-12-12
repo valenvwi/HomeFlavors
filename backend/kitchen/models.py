@@ -14,3 +14,28 @@ class Kitchen(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class MenuItem(models.Model):
+    CATEGORY_CHOICES = (
+        ('soup', 'Soup'),
+        ('noodles soup', 'Noodles Soup'),
+        ('chicken', 'Chicken'),
+        ('beef', 'Beef'),
+        ('seafood', 'Seafood'),
+        ('vegetables', 'Vegetables'),
+        ('pasta', 'Pasta'),
+    )
+
+    name = models.CharField(max_length=50, blank=False, null=False)
+    description = models.CharField(max_length=1000)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='kitchen/images', default='')
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    is_available = models.BooleanField(default=True)
+    is_veg = models.BooleanField(default=False)
+    is_spicy = models.BooleanField(default=False)
+    kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE, related_name='menu_items')
+
+    def __str__(self):
+        return self.name

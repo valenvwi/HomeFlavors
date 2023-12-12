@@ -6,11 +6,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from user.views import UserView
-from kitchen.views import KitchenView
+from kitchen.views import KitchenView, MenuItemView
 
 router = DefaultRouter()
 router.register(r'users', UserView, basename='user')
 router.register(r'kitchens', KitchenView, basename='kitchen')
+router.register(r'menuItems', MenuItemView, basename='menuItem')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
