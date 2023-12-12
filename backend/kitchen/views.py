@@ -2,7 +2,6 @@ from rest_framework import status, viewsets
 from .models import Kitchen
 from .serializers import KitchenSerializer
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class KitchenView(viewsets.ModelViewSet):
