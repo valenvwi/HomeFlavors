@@ -53,7 +53,13 @@ export default function Signup() {
           sx={{ mt: 1 }}
         >
           <TextField
-            {...register("email", { required: "Email is required" })}
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
             margin="normal"
             required
             fullWidth
@@ -65,7 +71,13 @@ export default function Signup() {
             helperText={errors.email && errors.email.message}
           />
           <TextField
-            {...register("username", { required: "Username is required" })}
+            {...register("username", {
+              required: "Username is required",
+              minLength: {
+                value: 4,
+                message: "Username must be at least 4 characters long",
+              },
+            })}
             margin="normal"
             required
             fullWidth
@@ -77,7 +89,13 @@ export default function Signup() {
             helperText={errors.username && errors.username.message}
           />
           <TextField
-            {...register("password", { required: "Password is required" })}
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters long",
+              },
+            })}
             margin="normal"
             required
             fullWidth
@@ -89,7 +107,13 @@ export default function Signup() {
             helperText={errors.password && errors.password.message}
           />
           <TextField
-            {...register("firstName", { required: "First name is required" })}
+            {...register("firstName", {
+              required: "First name is required",
+              minLength: {
+                value: 2,
+                message: "First name must be at least 2 characters long",
+              },
+            })}
             margin="normal"
             required
             fullWidth
@@ -101,7 +125,13 @@ export default function Signup() {
             helperText={errors.firstName && errors.firstName.message}
           />
           <TextField
-            {...register("lastName", { required: "Last name is required" })}
+            {...register("lastName", {
+              required: "Last name is required",
+              minLength: {
+                value: 2,
+                message: "Last name must be at least 2 characters long",
+              },
+            })}
             margin="normal"
             required
             fullWidth
@@ -115,6 +145,7 @@ export default function Signup() {
           <TextField
             {...register("phoneNumber", {
               required: "Phone number is required",
+              minLength: { value: 10, message: "Invalid phone number" },
             })}
             margin="normal"
             required
