@@ -14,13 +14,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HistoryIcon from "@mui/icons-material/History";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useAppSelector } from "../store/root";
 import { Link, useNavigate } from "react-router-dom";
+import { apiLogoutCreate } from "../../../api";
+import { authActions } from "../store/auth";
+import { useAppDispatch } from "../store/root";
 
 export default function AppNavBar() {
   const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -28,6 +33,11 @@ export default function AppNavBar() {
 
   const goToLoginPage = () => {
     navigate("/login");
+  };
+
+  const logout = () => {
+    apiLogoutCreate();
+    dispatch(authActions.setIsLoggedIn(false));
   };
 
   return (
@@ -56,15 +66,12 @@ export default function AppNavBar() {
               <>
                 <Button color="inherit">
                   <ShoppingCartIcon />
-                  <Typography variant="subtitle2" sx={{ px: 1 }}>
-                    Shopping Cart
-                  </Typography>
                 </Button>
                 <Button color="inherit">
                   <HistoryIcon />
-                  <Typography variant="subtitle2" sx={{ px: 1 }}>
-                    Order History
-                  </Typography>
+                </Button>
+                <Button color="inherit" onClick={logout}>
+                  <LogoutIcon />
                 </Button>
               </>
             ) : (
