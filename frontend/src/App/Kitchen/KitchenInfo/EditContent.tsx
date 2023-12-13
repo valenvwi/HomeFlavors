@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { KitchenType } from "../../types/kitchen";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -96,8 +96,8 @@ export default function EditContent(props: Props) {
               sx={{ width: "90%", pt: 1, pb: 2 }}
             />
           </Box>
-          <button onClick={onHideEdit}>Cancel</button>
-          <button type="submit">Save</button>
+          <Button onClick={onHideEdit}>Cancel</Button>
+          <Button type="submit">Save</Button>
         </form>
       </Box>
     </>

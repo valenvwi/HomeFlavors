@@ -5,6 +5,7 @@ const authSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     currentUserId: null,
+    isKitchenOwner: false,
   },
   reducers: {
     setIsLoggedIn(state, action) {
@@ -13,6 +14,9 @@ const authSlice = createSlice({
     setCurrentUserId(state, action) {
       state.currentUserId = action.payload;
     },
+    setIsKitchenOwner(state, action) {
+      state.isKitchenOwner = action.payload;
+    }
   },
 });
 

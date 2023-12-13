@@ -1,7 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { KitchenType } from "../../types/kitchen";
-import { useAppSelector } from '../../store/root';
+import { useAppDispatch, useAppSelector } from "../../store/root";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { useEffect } from "react";
+import { authActions } from "../../store/auth";
 
 type Props = {
   kitchen?: KitchenType;
@@ -12,8 +15,21 @@ type Props = {
 export default function Content(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
-  const currentUserId = useAppSelector((state ) => state.currentUserId);
+  const currentUserId = useAppSelector((state) => state.currentUserId);
+  const isKitchenOwner = useAppSelector((state) => state.isKitchenOwner);
+  const dispatch = useAppDispatch();
   console.log("current user id: ", currentUserId);
+  console.log("kitchen owner: ", props.kitchen?.owner);
+
+  const checkIsKitchenOwner = () => {
+    if (props.kitchen?.owner === currentUserId) {
+      dispatch(authActions.setIsKitchenOwner(true));
+    }
+  };
+
+  useEffect(() => {
+    checkIsKitchenOwner();
+  }, [currentUserId]);
 
   const onShowEdit = () => {
     props.onShowEditClick();
@@ -49,8 +65,11 @@ export default function Content(props: Props) {
             Opening Hours: {props.kitchen?.openingHours}
           </Typography>
         </Box>
-        { currentUserId === props.kitchen?.owner &&
-        <button onClick={onShowEdit}>Edit</button> }
+        {isKitchenOwner && (
+          <Button onClick={onShowEdit} style={{ backgroundColor: "white" }}>
+            <ModeEditIcon />
+          </Button>
+        )}
       </Box>
     </>
   );
