@@ -14,11 +14,13 @@ import {
 } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { menuItemsCreate, useMenuItemsList } from "../../../../api";
+import { menuItemsPartialUpdate, useMenuItemsList } from "../../../../api";
 import { useState } from "react";
+import { BASEURL } from "../../../config";
 
-export default function AddMenuItem(props: {
-  ontoggleAddMenuItem: () => void;
+export default function EditMenuItem(props: {
+  menuItem: MenuItemType;
+  onCancelEdit: () => void;
 }) {
   const {
     register,
@@ -44,22 +46,27 @@ export default function AddMenuItem(props: {
     }
   };
 
+  const cancelEdit = () => {
+    props.onCancelEdit();
+  };
+
   const onSubmit: SubmitHandler<MenuItemType> = async (data) => {
     const formData = new FormData();
     if (!selectedImage) {
       return;
     }
-
-    formData.append("image", image);
+    if (image) {
+      formData.append("image", image);
+    }
     formData.append("kitchen", "1");
 
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
-    await menuItemsCreate(formData);
+    await menuItemsPartialUpdate(props.menuItem.id, formData);
     refetch();
-    props.ontoggleAddMenuItem();
+    props.onCancelEdit();
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -84,7 +91,7 @@ export default function AddMenuItem(props: {
             accept="image/*"
             onChange={handleImageChange}
           />
-          {selectedImage && (
+          {selectedImage ? (
             <Card>
               <CardMedia
                 component="img"
@@ -95,12 +102,28 @@ export default function AddMenuItem(props: {
                   objectFit: "cover",
                   borderRadius: "10px",
                   aspectRatio: "1",
-                  margin: "0 auto"
+                  margin: "0 auto",
                 }}
                 image={selectedImage}
               />
             </Card>
-          )}
+          ) : props.menuItem.image ? (
+            <Card>
+              <CardMedia
+                component="img"
+                alt="Menu Item Image"
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                  aspectRatio: "1",
+                  margin: "0 auto",
+                }}
+                image={`${BASEURL}/${props.menuItem.image}`}
+              />
+            </Card>
+          ) : null}
           <TextField
             {...register("name", {
               required: "name is required",
@@ -115,6 +138,7 @@ export default function AddMenuItem(props: {
             id="name"
             label="Name"
             autoComplete="name"
+            defaultValue={props.menuItem.name}
             autoFocus
             error={!!errors.name}
             helperText={errors.name && errors.name.message}
@@ -133,6 +157,7 @@ export default function AddMenuItem(props: {
             id="description"
             label="Description"
             autoComplete="description"
+            defaultValue={props.menuItem.description}
             autoFocus
             multiline
             rows={5}
@@ -150,6 +175,7 @@ export default function AddMenuItem(props: {
             label="Price"
             type="price"
             autoComplete="current-price"
+            defaultValue={props.menuItem.price}
             error={!!errors.price}
             helperText={errors.price && errors.price.message}
           />
@@ -161,9 +187,10 @@ export default function AddMenuItem(props: {
               })}
               label="Category"
               error={!!errors.category}
+              defaultValue={props.menuItem.category}
             >
               <MenuItem value="soup">Soup</MenuItem>
-              <MenuItem value="noodlesSoup">Noodles Soup</MenuItem>
+              <MenuItem value="noodles soup">Noodles Soup</MenuItem>
               <MenuItem value="chicken">Chicken</MenuItem>
               <MenuItem value="beef">Beef</MenuItem>
               <MenuItem value="seafood">Seafood</MenuItem>
@@ -176,7 +203,7 @@ export default function AddMenuItem(props: {
               <Checkbox
                 {...register("isAvailable")}
                 onChange={(e) => setValue("isAvailable", e.target.checked)}
-                defaultChecked
+                defaultChecked={props.menuItem.isAvailable}
               />
             }
             label="Available"
@@ -186,6 +213,7 @@ export default function AddMenuItem(props: {
               <Checkbox
                 {...register("isVeg")}
                 onChange={(e) => setValue("isVeg", e.target.checked)}
+                defaultChecked={props.menuItem.isVeg}
               />
             }
             label="Vegetarian"
@@ -195,13 +223,22 @@ export default function AddMenuItem(props: {
               <Checkbox
                 {...register("isSpicy")}
                 onChange={(e) => setValue("isSpicy", e.target.checked)}
+                defaultChecked={props.menuItem.isSpicy}
               />
             }
             label="Spicy"
           />
 
           <Button type="submit" fullWidth variant="contained" sx={{ my: 3 }}>
-            Add
+            Update
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ my: 3 }}
+            onClick={cancelEdit}
+          >
+            Cancel
           </Button>
         </Box>
       </Box>

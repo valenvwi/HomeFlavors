@@ -3,11 +3,24 @@ import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
 import spicyIcon from "../../../assets/spicy.jpg";
 import vegIcon from "../../../assets/veg.png";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { menuItemsDestroy } from "../../../../api";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
   isOwner: boolean;
+  onSetMenuItem: (menuItem: MenuItemType) => void;
 }) {
+  const onDeleteMenuItem = () => {
+    console.log(props.menuItem.id);
+    menuItemsDestroy(props.menuItem.id);
+  };
+
+  const setMenuItem = () => {
+    props.onSetMenuItem(props.menuItem);
+  }
+
   return (
     <Card sx={{ display: "flex", m: 2, p: 2 }}>
       <img
@@ -39,9 +52,14 @@ export default function MenuItemCard(props: {
         <Typography variant="h6">{props.menuItem.price}</Typography>
       </Box>
       {props.isOwner ? (
-        <Button variant="contained" color="primary">
-          Edit
-        </Button>
+        <>
+          <Button style={{ backgroundColor: "white" }} onClick={setMenuItem}>
+            <ModeEditIcon />
+          </Button>
+          <Button style={{ backgroundColor: "white", color: "#d32f2f" }} onClick={onDeleteMenuItem}>
+            <DeleteIcon />
+          </Button>
+        </>
       ) : (
         <Button variant="contained" color="primary">
           Add to Cart

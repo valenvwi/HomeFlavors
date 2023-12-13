@@ -1,4 +1,5 @@
 export type KitchenType = {
+  id: number;
   address: string;
   banner?: string;
   contactNumber: string;

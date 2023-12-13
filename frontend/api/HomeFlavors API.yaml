@@ -713,6 +713,9 @@ components:
     Kitchen:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 50
@@ -744,6 +747,7 @@ components:
       - contactNumber
       - cuisine
       - description
+      - id
       - name
       - openingHours
       - orderAcceptTime
@@ -751,6 +755,9 @@ components:
     MenuItem:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 50
@@ -777,6 +784,7 @@ components:
       required:
       - category
       - description
+      - id
       - isAvailable
       - isSpicy
       - isVeg
@@ -786,6 +794,9 @@ components:
     PatchedKitchen:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 50
@@ -815,6 +826,9 @@ components:
     PatchedMenuItem:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 50
