@@ -1,6 +1,8 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
+import spicyIcon from "../../../assets/spicy.jpg";
+import vegIcon from "../../../assets/veg.png";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -20,7 +22,17 @@ export default function MenuItemCard(props: {
         }}
       />
       <Box sx={{ flexGrow: 1, m: 2 }}>
-        <Typography variant="h5">{props.menuItem.name}</Typography>
+        <Box
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+        >
+          <Typography variant="h5">{props.menuItem.name}</Typography>
+          {props.menuItem.isSpicy && (
+            <img src={spicyIcon} alt="Spicy icon" width="50" height="50" />
+          )}
+          {props.menuItem.isVeg && (
+            <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
+          )}
+        </Box>
         <Typography variant="subtitle1">
           {props.menuItem.description}
         </Typography>
