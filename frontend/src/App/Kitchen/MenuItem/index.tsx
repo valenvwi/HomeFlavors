@@ -33,7 +33,7 @@ export default function MenuItem() {
         </Button>
       )}
       {showAddMenuItem ? (
-        <AddMenuItem />
+        <AddMenuItem ontoggleAddMenuItem={toggleAddMenuItem} />
       ) : (
         menuItems?.map((item) => (
           <MenuItemCard menuItem={item} key={item.name} isOwner={isKitchenOwner} />

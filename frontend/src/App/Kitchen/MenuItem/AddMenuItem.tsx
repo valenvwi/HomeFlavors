@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Card,
-  CardContent,
   CardMedia,
   Checkbox,
   Container,
@@ -12,35 +11,55 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { menuItemsCreate } from "../../../../api";
+import { menuItemsCreate, useMenuItemsList } from "../../../../api";
 import { useState } from "react";
 
-export default function AddMenuItem() {
+export default function AddMenuItem(props: {
+  ontoggleAddMenuItem: () => void;
+}) {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<MenuItemType>();
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null);
+  const { refetch } = useMenuItemsList();
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setSelectedImage(reader.result as string);
+        }
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[0]);
+      setImage(files[0]);
     }
   };
 
   const onSubmit: SubmitHandler<MenuItemType> = (data) => {
-    menuItemsCreate(data);
+    const formData = new FormData();
+    if (!selectedImage) {
+      return;
+    }
+
+    formData.append("image", image);
+    formData.append("kitchen", "1");
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    menuItemsCreate(formData);
+    refetch();
+    props.ontoggleAddMenuItem();
   };
   return (
     <Container component="main" maxWidth="xs">
