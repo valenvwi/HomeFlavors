@@ -1,11 +1,12 @@
-import { defineConfig } from 'orval';
+import { defineConfig } from "orval";
 
 export default defineConfig({
   api: {
-    input: './HomeFlavors API.yaml',
+    input: "./HomeFlavors API.yaml",
     output: {
-      baseUrl: 'http://localhost:8000',
-      target: './index.ts',
+      baseUrl: "http://localhost:8000",
+      target: "./index.ts",
+      client: "react-query",
       prettier: true,
     },
   },

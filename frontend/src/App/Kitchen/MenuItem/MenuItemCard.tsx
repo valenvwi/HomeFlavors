@@ -1,11 +1,11 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
-import { useAppSelector } from "../../store/root";
 
-export default function MenuItemCard(props: { menuItem: MenuItemType }) {
-  const isKitchenOwner = useAppSelector((state) => state.isKitchenOwner);
-
+export default function MenuItemCard(props: {
+  menuItem: MenuItemType;
+  isOwner: boolean;
+}) {
   return (
     <Card sx={{ display: "flex", m: 2, p: 2 }}>
       <img
@@ -26,7 +26,7 @@ export default function MenuItemCard(props: { menuItem: MenuItemType }) {
         </Typography>
         <Typography variant="h6">{props.menuItem.price}</Typography>
       </Box>
-      {isKitchenOwner ? (
+      {props.isOwner ? (
         <Button variant="contained" color="primary">
           Edit
         </Button>

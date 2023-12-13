@@ -1,26 +1,14 @@
-import { kitchensRetrieve } from "../../../../api";
-import { useEffect, useState } from "react";
+import { useKitchensRetrieve } from "../../../../api";
+import { useState } from "react";
 import Banner from "./Banner";
 import Content from "./Content";
-import { KitchenType } from "../../types/kitchen";
 import EditContent from "./EditContent";
 
 export default function KitchenInfo() {
-  const [kitchen, setKitchen] = useState<KitchenType>();
   const [showEdit, setShowEdit] = useState<boolean>(false);
 
-  const getKitchen = async () => {
-    const response = await kitchensRetrieve(1);
-    if (!response) {
-      console.log("error");
-      return;
-    }
-    setKitchen(response.data);
-  };
-
-  useEffect(() => {
-    getKitchen();
-  }, [showEdit]);
+  const { data: kitchenResponse } = useKitchensRetrieve(1);
+  const kitchen = kitchenResponse?.data;
 
   const onShowEdit = () => {
     setShowEdit(true);
@@ -29,6 +17,7 @@ export default function KitchenInfo() {
   const onHideEdit = () => {
     setShowEdit(false);
   };
+
 
   return (
     <>

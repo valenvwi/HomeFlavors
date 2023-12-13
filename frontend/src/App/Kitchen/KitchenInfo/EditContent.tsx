@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { KitchenType } from "../../types/kitchen";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { kitchensPartialUpdate } from "../../../../api";
+import { kitchensPartialUpdate, useKitchensRetrieve } from "../../../../api";
 
 type Props = {
   kitchen?: KitchenType;
@@ -14,7 +14,7 @@ export default function EditContent(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const { register, handleSubmit } = useForm<KitchenType>();
-
+  const { refetch } = useKitchensRetrieve(1);
   const onHideEdit = () => {
     props.onHideEditClick();
   };
@@ -26,6 +26,7 @@ export default function EditContent(props: Props) {
       console.log("error");
       return;
     }
+    refetch();
     onHideEdit();
   };
 

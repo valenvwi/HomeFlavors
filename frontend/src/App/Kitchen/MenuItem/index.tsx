@@ -1,6 +1,5 @@
-import { menuItemsList } from "../../../../api";
-import { useEffect, useState } from "react";
-import { MenuItemType } from "../../types/menuItem";
+import { useKitchensRetrieve, useMenuItemsList } from "../../../../api";
+import { useState } from "react";
 import { Button, Container, Typography } from "@mui/material";
 import MenuItemCard from "./MenuItemCard";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -8,26 +7,18 @@ import { useAppSelector } from "../../store/root";
 import AddMenuItem from "./AddMenuItem";
 
 export default function MenuItem() {
-  const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
   const [showAddMenuItem, setShowAddMenuItem] = useState<boolean>(false);
-  const isKitchenOwner = useAppSelector((state) => state.isKitchenOwner);
+  const currentUserId = useAppSelector((state) => state.currentUserId);
 
-  const getMenuItem = async () => {
-    const response = await menuItemsList();
-    if (!response) {
-      console.log("error");
-      return;
-    }
-    setMenuItems(response.data);
-  };
+  const { data: kitchenResponse } = useKitchensRetrieve(1);
+  const kitchen = kitchenResponse?.data;
+  const isKitchenOwner = kitchen?.owner === currentUserId;
 
-  useEffect(() => {
-    getMenuItem();
-  }, []);
+  const { data: menuItemsResponse } = useMenuItemsList();
+  const menuItems = menuItemsResponse?.data;
 
   const toggleAddMenuItem = () => {
     setShowAddMenuItem(!showAddMenuItem);
-    console.log(showAddMenuItem);
   };
 
   return (
@@ -44,8 +35,8 @@ export default function MenuItem() {
       {showAddMenuItem ? (
         <AddMenuItem />
       ) : (
-        menuItems.map((item) => (
-          <MenuItemCard menuItem={item} key={item.name} />
+        menuItems?.map((item) => (
+          <MenuItemCard menuItem={item} key={item.name} isOwner={isKitchenOwner} />
         ))
       )}
     </Container>
