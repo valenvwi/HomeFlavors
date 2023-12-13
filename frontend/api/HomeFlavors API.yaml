@@ -126,8 +126,6 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -155,8 +153,6 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -179,8 +175,6 @@ paths:
               $ref: '#/components/schemas/Register'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '201':
@@ -248,8 +242,6 @@ paths:
       tags:
       - kitchens
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -277,8 +269,6 @@ paths:
               $ref: '#/components/schemas/Kitchen'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '201':
@@ -300,8 +290,6 @@ paths:
       tags:
       - kitchens
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -334,8 +322,6 @@ paths:
               $ref: '#/components/schemas/Kitchen'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -367,8 +353,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedKitchen'
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -389,8 +373,158 @@ paths:
       tags:
       - kitchens
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /menuItems/:
+    get:
+      operationId: menuItems_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+        description: Category of the menu items to be retrieved
+      - in: query
+        name: kitchen
+        schema:
+          type: integer
+        description: ID of the kitchen whose menu items are to be retrieved
+      tags:
+      - menuItems
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+          description: ''
+    post:
+      operationId: menuItems_create
+      tags:
+      - menuItems
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+          description: ''
+  /menuItems/{id}/:
+    get:
+      operationId: menuItems_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this menu item.
+        required: true
+      tags:
+      - menuItems
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+          description: ''
+    put:
+      operationId: menuItems_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this menu item.
+        required: true
+      tags:
+      - menuItems
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+          description: ''
+    patch:
+      operationId: menuItems_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this menu item.
+        required: true
+      tags:
+      - menuItems
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMenuItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMenuItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMenuItem'
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+          description: ''
+    delete:
+      operationId: menuItems_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this menu item.
+        required: true
+      tags:
+      - menuItems
+      security:
       - {}
       responses:
         '204':
@@ -401,8 +535,6 @@ paths:
       tags:
       - users
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -430,8 +562,6 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '201':
@@ -453,8 +583,6 @@ paths:
       tags:
       - users
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -487,8 +615,6 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -520,8 +646,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUser'
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '200':
@@ -542,14 +666,30 @@ paths:
       tags:
       - users
       security:
-      - cookieAuth: []
-      - basicAuth: []
       - {}
       responses:
         '204':
           description: No response body
 components:
   schemas:
+    CategoryEnum:
+      enum:
+      - soup
+      - noodles soup
+      - chicken
+      - beef
+      - seafood
+      - vegetables
+      - pasta
+      type: string
+      description: |-
+        * `soup` - Soup
+        * `noodles soup` - Noodles Soup
+        * `chicken` - Chicken
+        * `beef` - Beef
+        * `seafood` - Seafood
+        * `vegetables` - Vegetables
+        * `pasta` - Pasta
     CustomTokenObtainPair:
       type: object
       properties:
@@ -608,6 +748,41 @@ components:
       - openingHours
       - orderAcceptTime
       - owner
+    MenuItem:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+          maxLength: 1000
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        image:
+          type: string
+          format: uri
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        isAvailable:
+          type: boolean
+        isVeg:
+          type: boolean
+        isSpicy:
+          type: boolean
+        kitchen:
+          type: integer
+      required:
+      - category
+      - description
+      - isAvailable
+      - isSpicy
+      - isVeg
+      - kitchen
+      - name
+      - price
     PatchedKitchen:
       type: object
       properties:
@@ -636,6 +811,32 @@ components:
         orderAcceptTime:
           type: string
         owner:
+          type: integer
+    PatchedMenuItem:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+          maxLength: 1000
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        image:
+          type: string
+          format: uri
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        isAvailable:
+          type: boolean
+        isVeg:
+          type: boolean
+        isSpicy:
+          type: boolean
+        kitchen:
           type: integer
     PatchedUser:
       type: object
@@ -731,11 +932,3 @@ components:
       - lastName
       - phoneNumber
       - username
-  securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: sessionid
