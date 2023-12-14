@@ -7,7 +7,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { menuItemsDestroy } from "../../../../api";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import soldOut from "../../../assets/soldOut.png";
+import soldOut from "../../../assets/sold-out.png";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
