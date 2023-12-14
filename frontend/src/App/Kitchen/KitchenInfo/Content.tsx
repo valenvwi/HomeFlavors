@@ -50,7 +50,7 @@ export default function Content(props: Props) {
           </Typography>
         </Box>
         {currentUserId === props.kitchen?.owner && (
-          <Button onClick={onShowEdit} style={{ backgroundColor: "white" }}>
+          <Button onClick={onShowEdit}>
             <ModeEditIcon />
           </Button>
         )}

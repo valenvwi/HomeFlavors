@@ -17,7 +17,7 @@ export default function Banner(props: Props) {
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100%",
-        height: "300px",
+        height: "400px",
       }}
     >
       <Avatar

@@ -57,8 +57,8 @@ export default function AppNavBar() {
               <MenuIcon />
             </IconButton>
             <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              <Typography variant="h6" noWrap component="div">
-                Abc's Kitchen
+              <Typography variant="h6" noWrap component="div" fontFamily="Lobster">
+                Home Flavors
               </Typography>
             </Link>
           </Box>
