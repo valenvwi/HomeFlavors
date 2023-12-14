@@ -197,9 +197,7 @@ export default function EditMenuItem(props: {
               defaultValue={props.menuItem.category}
             >
               <MenuItem value="soup">Soup</MenuItem>
-              <MenuItem value="noodles soup">Noodles Soup</MenuItem>
-              <MenuItem value="chicken">Chicken</MenuItem>
-              <MenuItem value="beef">Beef</MenuItem>
+              <MenuItem value="meat">Meat</MenuItem>
               <MenuItem value="seafood">Seafood</MenuItem>
               <MenuItem value="vegetables">Vegetables</MenuItem>
               <MenuItem value="pasta">Pasta</MenuItem>

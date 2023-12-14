@@ -6,6 +6,7 @@ import vegIcon from "../../../assets/veg.png";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { menuItemsDestroy } from "../../../../api";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -51,23 +52,23 @@ export default function MenuItemCard(props: {
         <Typography variant="subtitle1">
           {props.menuItem.description}
         </Typography>
-        <Typography variant="h6">{props.menuItem.price}</Typography>
+        <Typography variant="h6">{props.menuItem.price} CHF</Typography>
       </Box>
       {props.isOwner ? (
         <>
           <Button style={{ backgroundColor: "white" }} onClick={setMenuItem}>
-            <ModeEditIcon />
+            <ModeEditIcon sx={{ fontSize: "40px" }} />
           </Button>
           <Button
             style={{ backgroundColor: "white", color: "#d32f2f" }}
             onClick={onDeleteMenuItem}
           >
-            <DeleteIcon />
+            <DeleteIcon sx={{ fontSize: "40px" }} />
           </Button>
         </>
       ) : (
-        <Button variant="contained" color="primary">
-          Add to Cart
+        <Button color="primary">
+          <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
         </Button>
       )}
     </Card>

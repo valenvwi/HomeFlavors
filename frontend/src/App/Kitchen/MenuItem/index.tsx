@@ -1,7 +1,14 @@
 import { useKitchensRetrieve, useMenuItemsList } from "../../../../api";
 import { useState } from "react";
-import { Button, Container, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import MenuItemCard from "./MenuItemCard";
+import MenuItemCardMobile from "./MenuItemCardMobile";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useAppSelector } from "../../store/root";
 import AddMenuItem from "./AddMenuItem";
@@ -15,6 +22,8 @@ export default function MenuItem() {
   const currentUserId = useAppSelector((state) => state.currentUserId);
   const [menuItem, setMenuItem] = useState<MenuItemType | null>(null);
   const [category, setCategory] = useState<string>("soup");
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
 
   const { data: kitchenResponse } = useKitchensRetrieve(1);
   const kitchen = kitchenResponse?.data;
@@ -62,14 +71,23 @@ export default function MenuItem() {
       {!showAddMenuItem && !showEditMenuItem && (
         <>
           <Tabbar handleCategoryChange={handleCategoryChange} />
-          {menuItems?.map((item) => (
-            <MenuItemCard
-              menuItem={item}
-              key={item.name}
-              isOwner={isKitchenOwner}
-              onSetMenuItem={onSetMenuItem}
-            />
-          ))}
+          {menuItems?.map((item) =>
+            isSmallScreen ? (
+              <MenuItemCard
+                menuItem={item}
+                key={item.name}
+                isOwner={isKitchenOwner}
+                onSetMenuItem={onSetMenuItem}
+              />
+            ) : (
+              <MenuItemCardMobile
+                menuItem={item}
+                key={item.name}
+                isOwner={isKitchenOwner}
+                onSetMenuItem={onSetMenuItem}
+              />
+            )
+          )}
         </>
       )}
     </Container>

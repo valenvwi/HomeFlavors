@@ -19,9 +19,7 @@ class Kitchen(models.Model):
 class MenuItem(models.Model):
     CATEGORY_CHOICES = (
         ('soup', 'Soup'),
-        ('noodles soup', 'Noodles Soup'),
-        ('chicken', 'Chicken'),
-        ('beef', 'Beef'),
+        ('meat', 'Meat'),
         ('seafood', 'Seafood'),
         ('vegetables', 'Vegetables'),
         ('pasta', 'Pasta'),

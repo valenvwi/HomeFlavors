@@ -163,9 +163,7 @@ export default function AddMenuItem(props: {
               error={!!errors.category}
             >
               <MenuItem value="soup">Soup</MenuItem>
-              <MenuItem value="noodlesSoup">Noodles Soup</MenuItem>
-              <MenuItem value="chicken">Chicken</MenuItem>
-              <MenuItem value="beef">Beef</MenuItem>
+              <MenuItem value="meat">Meat</MenuItem>
               <MenuItem value="seafood">Seafood</MenuItem>
               <MenuItem value="vegetables">Vegetables</MenuItem>
               <MenuItem value="pasta">Pasta</MenuItem>

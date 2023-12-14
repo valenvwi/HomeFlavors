@@ -4,9 +4,7 @@ import { SyntheticEvent } from "react";
 
 const labels = [
   "Soup",
-  "Noodles Soup",
-  "Chicken",
-  "Beef",
+  "Meat",
   "Seafood",
   "Vegetables",
   "Pasta",
@@ -14,9 +12,7 @@ const labels = [
 
 const categories = [
   "soup",
-  "noodles soup",
-  "chicken",
-  "beef",
+  "meat",
   "seafood",
   "vegetables",
   "pasta",

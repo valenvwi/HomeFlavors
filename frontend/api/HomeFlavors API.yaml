@@ -12,123 +12,123 @@ paths:
         - YAML: application/vnd.oai.openapi
         - JSON: application/vnd.oai.openapi+json
       parameters:
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - yaml
-      - in: query
-        name: lang
-        schema:
-          type: string
-          enum:
-          - af
-          - ar
-          - ar-dz
-          - ast
-          - az
-          - be
-          - bg
-          - bn
-          - br
-          - bs
-          - ca
-          - ckb
-          - cs
-          - cy
-          - da
-          - de
-          - dsb
-          - el
-          - en
-          - en-au
-          - en-gb
-          - eo
-          - es
-          - es-ar
-          - es-co
-          - es-mx
-          - es-ni
-          - es-ve
-          - et
-          - eu
-          - fa
-          - fi
-          - fr
-          - fy
-          - ga
-          - gd
-          - gl
-          - he
-          - hi
-          - hr
-          - hsb
-          - hu
-          - hy
-          - ia
-          - id
-          - ig
-          - io
-          - is
-          - it
-          - ja
-          - ka
-          - kab
-          - kk
-          - km
-          - kn
-          - ko
-          - ky
-          - lb
-          - lt
-          - lv
-          - mk
-          - ml
-          - mn
-          - mr
-          - ms
-          - my
-          - nb
-          - ne
-          - nl
-          - nn
-          - os
-          - pa
-          - pl
-          - pt
-          - pt-br
-          - ro
-          - ru
-          - sk
-          - sl
-          - sq
-          - sr
-          - sr-latn
-          - sv
-          - sw
-          - ta
-          - te
-          - tg
-          - th
-          - tk
-          - tr
-          - tt
-          - udm
-          - ug
-          - uk
-          - ur
-          - uz
-          - vi
-          - zh-hans
-          - zh-hant
+        - in: query
+          name: format
+          schema:
+            type: string
+            enum:
+              - json
+              - yaml
+        - in: query
+          name: lang
+          schema:
+            type: string
+            enum:
+              - af
+              - ar
+              - ar-dz
+              - ast
+              - az
+              - be
+              - bg
+              - bn
+              - br
+              - bs
+              - ca
+              - ckb
+              - cs
+              - cy
+              - da
+              - de
+              - dsb
+              - el
+              - en
+              - en-au
+              - en-gb
+              - eo
+              - es
+              - es-ar
+              - es-co
+              - es-mx
+              - es-ni
+              - es-ve
+              - et
+              - eu
+              - fa
+              - fi
+              - fr
+              - fy
+              - ga
+              - gd
+              - gl
+              - he
+              - hi
+              - hr
+              - hsb
+              - hu
+              - hy
+              - ia
+              - id
+              - ig
+              - io
+              - is
+              - it
+              - ja
+              - ka
+              - kab
+              - kk
+              - km
+              - kn
+              - ko
+              - ky
+              - lb
+              - lt
+              - lv
+              - mk
+              - ml
+              - mn
+              - mr
+              - ms
+              - my
+              - nb
+              - ne
+              - nl
+              - nn
+              - os
+              - pa
+              - pl
+              - pt
+              - pt-br
+              - ro
+              - ru
+              - sk
+              - sl
+              - sq
+              - sr
+              - sr-latn
+              - sv
+              - sw
+              - ta
+              - te
+              - tg
+              - th
+              - tk
+              - tr
+              - tt
+              - udm
+              - ug
+              - uk
+              - ur
+              - uz
+              - vi
+              - zh-hans
+              - zh-hant
       tags:
-      - api
+        - api
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/vnd.oai.openapi:
               schema:
@@ -146,43 +146,43 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
-          description: ''
+          description: ""
   /api/logout/:
     post:
       operationId: api_logout_create
       tags:
-      - api
+        - api
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           description: No response body
   /api/register/:
     post:
       operationId: api_register_create
       tags:
-      - api
+        - api
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Register'
+              $ref: "#/components/schemas/Register"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Register'
+              $ref: "#/components/schemas/Register"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Register'
+              $ref: "#/components/schemas/Register"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Register'
-          description: ''
+                $ref: "#/components/schemas/Register"
+          description: ""
   /api/token/:
     post:
       operationId: api_token_create
@@ -190,26 +190,26 @@ paths:
         Takes a set of user credentials and returns an access and refresh JSON web
         token pair to prove the authentication of those credentials.
       tags:
-      - api
+        - api
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomTokenObtainPair'
+              $ref: "#/components/schemas/CustomTokenObtainPair"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/CustomTokenObtainPair'
+              $ref: "#/components/schemas/CustomTokenObtainPair"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/CustomTokenObtainPair'
+              $ref: "#/components/schemas/CustomTokenObtainPair"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomTokenObtainPair'
-          description: ''
+                $ref: "#/components/schemas/CustomTokenObtainPair"
+          description: ""
   /api/token/refresh/:
     post:
       operationId: api_token_refresh_create
@@ -217,476 +217,472 @@ paths:
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - api
+        - api
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/JWTCookieTokenRefresh'
+              $ref: "#/components/schemas/JWTCookieTokenRefresh"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/JWTCookieTokenRefresh'
+              $ref: "#/components/schemas/JWTCookieTokenRefresh"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/JWTCookieTokenRefresh'
+              $ref: "#/components/schemas/JWTCookieTokenRefresh"
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JWTCookieTokenRefresh'
-          description: ''
+                $ref: "#/components/schemas/JWTCookieTokenRefresh"
+          description: ""
   /kitchens/:
     get:
       operationId: kitchens_list
       tags:
-      - kitchens
+        - kitchens
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Kitchen'
-          description: ''
+                  $ref: "#/components/schemas/Kitchen"
+          description: ""
     post:
       operationId: kitchens_create
       tags:
-      - kitchens
+        - kitchens
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Kitchen'
+              $ref: "#/components/schemas/Kitchen"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Kitchen'
+              $ref: "#/components/schemas/Kitchen"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Kitchen'
+              $ref: "#/components/schemas/Kitchen"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Kitchen'
-          description: ''
+                $ref: "#/components/schemas/Kitchen"
+          description: ""
   /kitchens/{id}/:
     get:
       operationId: kitchens_retrieve
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this kitchen.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this kitchen.
+          required: true
       tags:
-      - kitchens
+        - kitchens
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Kitchen'
-          description: ''
+                $ref: "#/components/schemas/Kitchen"
+          description: ""
     put:
       operationId: kitchens_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this kitchen.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this kitchen.
+          required: true
       tags:
-      - kitchens
+        - kitchens
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Kitchen'
+              $ref: "#/components/schemas/Kitchen"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Kitchen'
+              $ref: "#/components/schemas/Kitchen"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Kitchen'
+              $ref: "#/components/schemas/Kitchen"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Kitchen'
-          description: ''
+                $ref: "#/components/schemas/Kitchen"
+          description: ""
     patch:
       operationId: kitchens_partial_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this kitchen.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this kitchen.
+          required: true
       tags:
-      - kitchens
+        - kitchens
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedKitchen'
+              $ref: "#/components/schemas/PatchedKitchen"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedKitchen'
+              $ref: "#/components/schemas/PatchedKitchen"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedKitchen'
+              $ref: "#/components/schemas/PatchedKitchen"
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Kitchen'
-          description: ''
+                $ref: "#/components/schemas/Kitchen"
+          description: ""
     delete:
       operationId: kitchens_destroy
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this kitchen.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this kitchen.
+          required: true
       tags:
-      - kitchens
+        - kitchens
       security:
-      - {}
+        - {}
       responses:
-        '204':
+        "204":
           description: No response body
   /menuItems/:
     get:
       operationId: menuItems_list
       parameters:
-      - in: query
-        name: category
-        schema:
-          type: string
-        description: Category of the menu items to be retrieved
-      - in: query
-        name: kitchen
-        schema:
-          type: integer
-        description: ID of the kitchen whose menu items are to be retrieved
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Category of the menu items to be retrieved
+        - in: query
+          name: kitchen
+          schema:
+            type: integer
+          description: ID of the kitchen whose menu items are to be retrieved
       tags:
-      - menuItems
+        - menuItems
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MenuItem'
-          description: ''
+                  $ref: "#/components/schemas/MenuItem"
+          description: ""
     post:
       operationId: menuItems_create
       tags:
-      - menuItems
+        - menuItems
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: "#/components/schemas/MenuItem"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: "#/components/schemas/MenuItem"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: "#/components/schemas/MenuItem"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
-          description: ''
+                $ref: "#/components/schemas/MenuItem"
+          description: ""
   /menuItems/{id}/:
     get:
       operationId: menuItems_retrieve
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this menu item.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this menu item.
+          required: true
       tags:
-      - menuItems
+        - menuItems
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
-          description: ''
+                $ref: "#/components/schemas/MenuItem"
+          description: ""
     put:
       operationId: menuItems_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this menu item.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this menu item.
+          required: true
       tags:
-      - menuItems
+        - menuItems
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: "#/components/schemas/MenuItem"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: "#/components/schemas/MenuItem"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/MenuItem'
+              $ref: "#/components/schemas/MenuItem"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
-          description: ''
+                $ref: "#/components/schemas/MenuItem"
+          description: ""
     patch:
       operationId: menuItems_partial_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this menu item.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this menu item.
+          required: true
       tags:
-      - menuItems
+        - menuItems
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedMenuItem'
+              $ref: "#/components/schemas/PatchedMenuItem"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedMenuItem'
+              $ref: "#/components/schemas/PatchedMenuItem"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedMenuItem'
+              $ref: "#/components/schemas/PatchedMenuItem"
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
-          description: ''
+                $ref: "#/components/schemas/MenuItem"
+          description: ""
     delete:
       operationId: menuItems_destroy
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this menu item.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this menu item.
+          required: true
       tags:
-      - menuItems
+        - menuItems
       security:
-      - {}
+        - {}
       responses:
-        '204':
+        "204":
           description: No response body
   /users/:
     get:
       operationId: users_list
       tags:
-      - users
+        - users
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
-          description: ''
+                  $ref: "#/components/schemas/User"
+          description: ""
     post:
       operationId: users_create
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
   /users/{id}/:
     get:
       operationId: users_retrieve
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
     put:
       operationId: users_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         required: true
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
     patch:
       operationId: users_partial_update
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: "#/components/schemas/PatchedUser"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: "#/components/schemas/PatchedUser"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUser'
+              $ref: "#/components/schemas/PatchedUser"
       security:
-      - {}
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-          description: ''
+                $ref: "#/components/schemas/User"
+          description: ""
     delete:
       operationId: users_destroy
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this user.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this user.
+          required: true
       tags:
-      - users
+        - users
       security:
-      - {}
+        - {}
       responses:
-        '204':
+        "204":
           description: No response body
 components:
   schemas:
     CategoryEnum:
       enum:
-      - soup
-      - noodles soup
-      - chicken
-      - beef
-      - seafood
-      - vegetables
-      - pasta
+        - soup
+        - meat
+        - seafood
+        - vegetables
+        - pasta
       type: string
       description: |-
         * `soup` - Soup
-        * `noodles soup` - Noodles Soup
-        * `chicken` - Chicken
-        * `beef` - Beef
+        * `meat` - Meat
         * `seafood` - Seafood
         * `vegetables` - Vegetables
         * `pasta` - Pasta
@@ -700,8 +696,8 @@ components:
           type: string
           writeOnly: true
       required:
-      - password
-      - username
+        - password
+        - username
     JWTCookieTokenRefresh:
       type: object
       properties:
@@ -709,7 +705,7 @@ components:
           type: string
           readOnly: true
       required:
-      - access
+        - access
     Kitchen:
       type: object
       properties:
@@ -743,15 +739,15 @@ components:
         owner:
           type: integer
       required:
-      - address
-      - contactNumber
-      - cuisine
-      - description
-      - id
-      - name
-      - openingHours
-      - orderAcceptTime
-      - owner
+        - address
+        - contactNumber
+        - cuisine
+        - description
+        - id
+        - name
+        - openingHours
+        - orderAcceptTime
+        - owner
     MenuItem:
       type: object
       properties:
@@ -772,7 +768,7 @@ components:
           type: string
           format: uri
         category:
-          $ref: '#/components/schemas/CategoryEnum'
+          $ref: "#/components/schemas/CategoryEnum"
         isAvailable:
           type: boolean
         isVeg:
@@ -782,15 +778,15 @@ components:
         kitchen:
           type: integer
       required:
-      - category
-      - description
-      - id
-      - isAvailable
-      - isSpicy
-      - isVeg
-      - kitchen
-      - name
-      - price
+        - category
+        - description
+        - id
+        - isAvailable
+        - isSpicy
+        - isVeg
+        - kitchen
+        - name
+        - price
     PatchedKitchen:
       type: object
       properties:
@@ -843,7 +839,7 @@ components:
           type: string
           format: uri
         category:
-          $ref: '#/components/schemas/CategoryEnum'
+          $ref: "#/components/schemas/CategoryEnum"
         isAvailable:
           type: boolean
         isVeg:
@@ -860,7 +856,8 @@ components:
           readOnly: true
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description:
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -873,7 +870,7 @@ components:
         lastName:
           type: string
         role:
-          $ref: '#/components/schemas/RoleEnum'
+          $ref: "#/components/schemas/RoleEnum"
         phoneNumber:
           type: string
     Register:
@@ -881,7 +878,8 @@ components:
       properties:
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description:
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -897,20 +895,20 @@ components:
         lastName:
           type: string
         role:
-          $ref: '#/components/schemas/RoleEnum'
+          $ref: "#/components/schemas/RoleEnum"
         phoneNumber:
           type: string
       required:
-      - email
-      - firstName
-      - lastName
-      - password
-      - phoneNumber
-      - username
+        - email
+        - firstName
+        - lastName
+        - password
+        - phoneNumber
+        - username
     RoleEnum:
       enum:
-      - owner
-      - user
+        - owner
+        - user
       type: string
       description: |-
         * `owner` - Owner
@@ -923,7 +921,8 @@ components:
           readOnly: true
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description:
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -936,13 +935,13 @@ components:
         lastName:
           type: string
         role:
-          $ref: '#/components/schemas/RoleEnum'
+          $ref: "#/components/schemas/RoleEnum"
         phoneNumber:
           type: string
       required:
-      - email
-      - firstName
-      - id
-      - lastName
-      - phoneNumber
-      - username
+        - email
+        - firstName
+        - id
+        - lastName
+        - phoneNumber
+        - username
