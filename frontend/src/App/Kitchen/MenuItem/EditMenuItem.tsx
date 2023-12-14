@@ -31,6 +31,7 @@ export default function EditMenuItem(props: {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const { refetch } = useMenuItemsList();
+  console.log("errors", errors);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -52,22 +53,28 @@ export default function EditMenuItem(props: {
 
   const onSubmit: SubmitHandler<MenuItemType> = async (data) => {
     const formData = new FormData();
-    if (!selectedImage) {
-      return;
-    }
+
     if (image) {
       formData.append("image", image);
     }
+
     formData.append("kitchen", "1");
 
     Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key !== "image") {
+        formData.append(key, value);
+      }
     });
 
-    await menuItemsPartialUpdate(props.menuItem.id, formData);
-    refetch();
-    props.onCancelEdit();
+    try {
+      await menuItemsPartialUpdate(props.menuItem.id, formData);
+      refetch();
+      props.onCancelEdit();
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -86,7 +93,7 @@ export default function EditMenuItem(props: {
           sx={{ mt: 1 }}
         >
           <input
-            {...register("image", { required: "Image is required" })}
+            {...register("image")}
             type="file"
             accept="image/*"
             onChange={handleImageChange}
@@ -233,6 +240,7 @@ export default function EditMenuItem(props: {
             Update
           </Button>
           <Button
+            type="button"
             fullWidth
             variant="contained"
             sx={{ my: 3 }}
