@@ -7,6 +7,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { menuItemsDestroy } from "../../../../api";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import soldOut from "../../../assets/soldOut.png";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -66,10 +67,18 @@ export default function MenuItemCard(props: {
             <DeleteIcon sx={{ fontSize: "40px" }} />
           </Button>
         </>
-      ) : (
+      ) : props.menuItem.isAvailable ? (
         <Button color="primary">
           <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
         </Button>
+      ) : (
+        <img
+          src={soldOut}
+          alt="Sold Out"
+          width="100"
+          height="100"
+          style={{ margin: "auto" }}
+        />
       )}
     </Card>
   );
