@@ -19,7 +19,7 @@ export default function MenuItemCard(props: {
 
   const setMenuItem = () => {
     props.onSetMenuItem(props.menuItem);
-  }
+  };
 
   return (
     <Card sx={{ display: "flex", m: 2, p: 2 }}>
@@ -38,12 +38,14 @@ export default function MenuItemCard(props: {
         <Box
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          <Typography variant="h5">{props.menuItem.name}</Typography>
-          {props.menuItem.isSpicy && (
-            <img src={spicyIcon} alt="Spicy icon" width="50" height="50" />
-          )}
+          <Typography variant="h5" sx={{ pr: 2 }}>
+            {props.menuItem.name}
+          </Typography>
           {props.menuItem.isVeg && (
             <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
+          )}
+          {props.menuItem.isSpicy && (
+            <img src={spicyIcon} alt="Spicy icon" width="50" height="50" />
           )}
         </Box>
         <Typography variant="subtitle1">
@@ -56,7 +58,10 @@ export default function MenuItemCard(props: {
           <Button style={{ backgroundColor: "white" }} onClick={setMenuItem}>
             <ModeEditIcon />
           </Button>
-          <Button style={{ backgroundColor: "white", color: "#d32f2f" }} onClick={onDeleteMenuItem}>
+          <Button
+            style={{ backgroundColor: "white", color: "#d32f2f" }}
+            onClick={onDeleteMenuItem}
+          >
             <DeleteIcon />
           </Button>
         </>

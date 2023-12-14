@@ -7,18 +7,20 @@ import { useAppSelector } from "../../store/root";
 import AddMenuItem from "./AddMenuItem";
 import EditMenuItem from "./EditMenuItem";
 import { MenuItemType } from "../../types/menuItem";
+import Tabbar from "./Tabbar";
 
 export default function MenuItem() {
   const [showAddMenuItem, setShowAddMenuItem] = useState<boolean>(false);
   const [showEditMenuItem, setShowEditMenuItem] = useState<boolean>(false);
   const currentUserId = useAppSelector((state) => state.currentUserId);
   const [menuItem, setMenuItem] = useState<MenuItemType | null>(null);
+  const [category, setCategory] = useState<string>("soup");
 
   const { data: kitchenResponse } = useKitchensRetrieve(1);
   const kitchen = kitchenResponse?.data;
   const isKitchenOwner = kitchen?.owner === currentUserId;
 
-  const { data: menuItemsResponse } = useMenuItemsList();
+  const { data: menuItemsResponse } = useMenuItemsList({ category: category });
   const menuItems = menuItemsResponse?.data;
 
   const toggleAddMenuItem = () => {
@@ -33,7 +35,11 @@ export default function MenuItem() {
   const onCancelEdit = () => {
     setMenuItem(null);
     setShowEditMenuItem(false);
-  }
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setCategory(category);
+  };
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column" }}>
@@ -49,17 +55,23 @@ export default function MenuItem() {
       {showAddMenuItem && (
         <AddMenuItem ontoggleAddMenuItem={toggleAddMenuItem} />
       )}
-      {showEditMenuItem && <EditMenuItem menuItem={menuItem}  onCancelEdit={onCancelEdit}/>}
-      {!showAddMenuItem &&
-        !showEditMenuItem &&
-        menuItems?.map((item) => (
-          <MenuItemCard
-            menuItem={item}
-            key={item.name}
-            isOwner={isKitchenOwner}
-            onSetMenuItem={onSetMenuItem}
-          />
-        ))}
+
+      {showEditMenuItem && (
+        <EditMenuItem menuItem={menuItem} onCancelEdit={onCancelEdit} />
+      )}
+      {!showAddMenuItem && !showEditMenuItem && (
+        <>
+          <Tabbar handleCategoryChange={handleCategoryChange} />
+          {menuItems?.map((item) => (
+            <MenuItemCard
+              menuItem={item}
+              key={item.name}
+              isOwner={isKitchenOwner}
+              onSetMenuItem={onSetMenuItem}
+            />
+          ))}
+        </>
+      )}
     </Container>
   );
 }
