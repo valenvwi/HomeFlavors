@@ -19,7 +19,7 @@ import Tabbar from "./Tabbar";
 export default function MenuItem() {
   const [showAddMenuItem, setShowAddMenuItem] = useState<boolean>(false);
   const [showEditMenuItem, setShowEditMenuItem] = useState<boolean>(false);
-  const currentUserId = useAppSelector((state) => state.currentUserId);
+  const currentUserId = useAppSelector((state) => state.auth.currentUserId);
   const [menuItem, setMenuItem] = useState<MenuItemType | null>(null);
   const [category, setCategory] = useState<string>("soup");
   const theme = useTheme();

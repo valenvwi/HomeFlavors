@@ -17,19 +17,26 @@ import { apiLogoutCreate } from "../../../api";
 import { authActions } from "../store/auth";
 import { useAppDispatch } from "../store/root";
 
-export const LeftDrawer = () => {
-  const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
+export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const goToLoginPage = () => {
     navigate("/login");
+    props.handleDrawerToggle();
+  };
+
+  const goToCartPage = () => {
+    navigate("/cart");
+    props.handleDrawerToggle();
   };
 
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
     navigate("/login");
+    props.handleDrawerToggle();
   };
 
   return (
@@ -40,7 +47,7 @@ export const LeftDrawer = () => {
         {isLoggedIn ? (
           <>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={goToCartPage}>
                 <ListItemIcon>
                   <ShoppingCartIcon />
                 </ListItemIcon>

@@ -22,7 +22,7 @@ import { authActions } from "../store/auth";
 import { useAppDispatch } from "../store/root";
 
 export default function AppNavBar() {
-  const isLoggedIn = useAppSelector((state) => state.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -33,6 +33,10 @@ export default function AppNavBar() {
 
   const goToLoginPage = () => {
     navigate("/login");
+  };
+
+  const goToCartPage = () => {
+    navigate("/cart");
   };
 
   const logout = () => {
@@ -57,7 +61,12 @@ export default function AppNavBar() {
               <MenuIcon />
             </IconButton>
             <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              <Typography variant="h6" noWrap component="div" fontFamily="Lobster">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                fontFamily="Lobster"
+              >
                 Home Flavors
               </Typography>
             </Link>
@@ -65,7 +74,7 @@ export default function AppNavBar() {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {isLoggedIn ? (
               <>
-                <Button color="inherit">
+                <Button color="inherit" onClick={goToCartPage}>
                   <ShoppingCartIcon />
                 </Button>
                 <Button color="inherit">
@@ -106,7 +115,7 @@ export default function AppNavBar() {
             },
           }}
         >
-          <LeftDrawer />
+          <LeftDrawer handleDrawerToggle={handleDrawerToggle} />
         </Drawer>
       </Box>
     </Box>

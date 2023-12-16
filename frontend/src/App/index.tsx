@@ -5,6 +5,7 @@ import Kitchen from "./Kitchen";
 import { CssBaseline } from "@mui/material";
 import axios from "axios";
 import AppNavBar from "./UI/AppNavBar";
+import Cart from "./Cart";
 
 axios.defaults.withCredentials = true;
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Kitchen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </>
   );

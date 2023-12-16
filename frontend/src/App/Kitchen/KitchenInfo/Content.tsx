@@ -13,7 +13,7 @@ type Props = {
 export default function Content(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
-  const currentUserId = useAppSelector((state) => state.currentUserId);
+  const currentUserId = useAppSelector((state) => state.auth.currentUserId);
 
   const onShowEdit = () => {
     props.onShowEditClick();

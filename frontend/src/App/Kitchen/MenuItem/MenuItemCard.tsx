@@ -8,12 +8,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { menuItemsDestroy } from "../../../../api";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import soldOut from "../../../assets/sold-out.png";
+import { useAppDispatch } from "../../store/root";
+import { cartActions } from "../../store/cart";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
   isOwner: boolean;
   onSetMenuItem: (menuItem: MenuItemType) => void;
 }) {
+
+  const dispatch = useAppDispatch();
+
+  const onAddToCart = () => {
+    dispatch(cartActions.addToCart(props.menuItem));
+  }
+
   const onDeleteMenuItem = () => {
     console.log(props.menuItem.id);
     menuItemsDestroy(props.menuItem.id);
@@ -68,7 +77,7 @@ export default function MenuItemCard(props: {
           </Button>
         </>
       ) : props.menuItem.isAvailable ? (
-        <Button color="primary">
+        <Button color="primary" onClick={onAddToCart}>
           <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
         </Button>
       ) : (
