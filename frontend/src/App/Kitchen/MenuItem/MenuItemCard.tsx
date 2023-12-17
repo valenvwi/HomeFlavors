@@ -8,20 +8,25 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { menuItemsDestroy } from "../../../../api";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import soldOut from "../../../assets/sold-out.png";
-import { useAppDispatch } from "../../store/root";
+import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
+import LoginModal from "../../UI/LoginModal";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
   isOwner: boolean;
   onSetMenuItem: (menuItem: MenuItemType) => void;
+  open: boolean;
+  handleClose: () => void;
+  handleOpen: () => void;
 }) {
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const dispatch = useAppDispatch();
 
   const onAddToCart = () => {
     dispatch(cartActions.addToCart(props.menuItem));
-  }
+  };
 
   const onDeleteMenuItem = () => {
     console.log(props.menuItem.id);
@@ -77,9 +82,18 @@ export default function MenuItemCard(props: {
           </Button>
         </>
       ) : props.menuItem.isAvailable ? (
-        <Button color="primary" onClick={onAddToCart}>
-          <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-        </Button>
+        !isLoggedIn ? (
+          <>
+            <Button color="primary" onClick={props.handleOpen}>
+              <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+            </Button>
+            <LoginModal open={props.open} handleClose={props.handleClose} />
+          </>
+        ) : (
+          <Button color="primary" onClick={onAddToCart}>
+            <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+          </Button>
+        )
       ) : (
         <img
           src={soldOut}

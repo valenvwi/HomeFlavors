@@ -50,6 +50,10 @@ export default function MenuItem() {
     setCategory(category);
   };
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Container sx={{ display: "flex", flexDirection: "column" }}>
       {isKitchenOwner && !showEditMenuItem && (
@@ -78,6 +82,9 @@ export default function MenuItem() {
                 key={item.name}
                 isOwner={isKitchenOwner}
                 onSetMenuItem={onSetMenuItem}
+                open={open}
+                handleOpen={handleOpen}
+                handleClose={handleClose}
               />
             ) : (
               <MenuItemCardMobile
@@ -85,6 +92,9 @@ export default function MenuItem() {
                 key={item.name}
                 isOwner={isKitchenOwner}
                 onSetMenuItem={onSetMenuItem}
+                open={open}
+                handleOpen={handleOpen}
+                handleClose={handleClose}
               />
             )
           )}
