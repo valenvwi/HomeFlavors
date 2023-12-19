@@ -11,6 +11,8 @@ import soldOut from "../../../assets/sold-out.png";
 import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
 import LoginModal from "../../UI/LoginModal";
+import { useState } from "react";
+import { useSpring, animated } from "@react-spring/web";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -37,6 +39,14 @@ export default function MenuItemCard(props: {
     props.onSetMenuItem(props.menuItem);
   };
 
+  const [isHovered, setIsHovered] = useState(false);
+
+  const hoverAnimation = useSpring({
+    to: {
+      transform: isHovered ? "scale(1.1)" : "scale(1)",
+    },
+    config: { mass: 1, tension: 300, friction: 10 },
+  });
   return (
     <Card sx={{ display: "flex", flexDirection: "column", my: 2, p: 2 }}>
       <img
@@ -110,9 +120,15 @@ export default function MenuItemCard(props: {
         ) : props.menuItem.isAvailable ? (
           !isLoggedIn ? (
             <>
-              <Button color="primary" onClick={props.handleOpen}>
-                <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-              </Button>
+              <animated.div
+                style={{ ...hoverAnimation }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <Button color="primary" onClick={props.handleOpen}>
+                  <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+                </Button>
+              </animated.div>
               <LoginModal open={props.open} handleClose={props.handleClose} />
             </>
           ) : (
