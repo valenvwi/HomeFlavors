@@ -11,6 +11,9 @@ import {
 } from "@tanstack/react-query";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./App/theme/theme.tsx";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,15 +27,19 @@ const queryClient = new QueryClient({
   }),
 });
 
+const persistor = persistStore(store);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
+        <PersistGate persistor={persistor}>
         <BrowserRouter>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
         </BrowserRouter>
+        </PersistGate>
       </Provider>
     </QueryClientProvider>
   </React.StrictMode>

@@ -36,38 +36,25 @@ const cartSlice = createSlice({
         (item) => item.id === cartItem.id
       );
       if (existingItem) {
-        existingItem.quantity++;
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        existingItem.quantity++
       } else {
-        state.cartItems.push(cartItem);
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        state.cartItems.push(cartItem)
       }
 
       const totals = updateTotals(state.cartItems);
       state.totalPrice = totals.totalPrice;
-      localStorage.setItem("totalPrice", JSON.stringify(state.totalPrice));
       state.totalQuantity = totals.totalQuantity;
-      localStorage.setItem(
-        "totalQuantity",
-        JSON.stringify(state.totalQuantity)
-      );
     },
 
     increaseQuantity(state, action) {
       const id = action.payload;
       const existingItem = state.cartItems.find((item) => item.id === id);
       if (existingItem) {
-        existingItem.quantity++;
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        existingItem.quantity++
       }
       const totals = updateTotals(state.cartItems);
       state.totalPrice = totals.totalPrice;
-      localStorage.setItem("totalPrice", JSON.stringify(state.totalPrice));
       state.totalQuantity = totals.totalQuantity;
-      localStorage.setItem(
-        "totalQuantity",
-        JSON.stringify(state.totalQuantity)
-      );
     },
     decreaseQuantity(state, action) {
       const id = action.payload;
@@ -79,21 +66,14 @@ const cartSlice = createSlice({
       if (existingItemIndex !== -1) {
         if (state.cartItems[existingItemIndex].quantity > 1) {
           state.cartItems[existingItemIndex].quantity--;
-          localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         } else {
           state.cartItems.splice(existingItemIndex, 1);
-          localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         }
       }
 
       const totals = updateTotals(state.cartItems);
       state.totalPrice = totals.totalPrice;
-      localStorage.setItem("totalPrice", JSON.stringify(state.totalPrice));
       state.totalQuantity = totals.totalQuantity;
-      localStorage.setItem(
-        "totalQuantity",
-        JSON.stringify(state.totalQuantity)
-      );
     },
   },
 });

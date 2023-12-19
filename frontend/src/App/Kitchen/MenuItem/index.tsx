@@ -70,7 +70,7 @@ export default function MenuItem() {
       )}
 
       {showEditMenuItem && (
-        <EditMenuItem menuItem={menuItem} onCancelEdit={onCancelEdit} />
+        <EditMenuItem menuItem={menuItem} onCancelEdit={onCancelEdit} category={category} />
       )}
       {!showAddMenuItem && !showEditMenuItem && (
         <>

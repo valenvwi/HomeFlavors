@@ -21,6 +21,7 @@ import { BASEURL } from "../../../config";
 export default function EditMenuItem(props: {
   menuItem: MenuItemType;
   onCancelEdit: () => void;
+  category: string;
 }) {
   const {
     register,
@@ -30,8 +31,7 @@ export default function EditMenuItem(props: {
   } = useForm<MenuItemType>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
-  const { refetch } = useMenuItemsList();
-  console.log("errors", errors);
+  const { refetch } = useMenuItemsList({ category: props.category });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
