@@ -7,11 +7,14 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from user.views import UserView
 from kitchen.views import KitchenView, MenuItemView
+from order.views import OrderView, OrderItemView
 
 router = DefaultRouter()
 router.register(r'users', UserView, basename='user')
 router.register(r'kitchens', KitchenView, basename='kitchen')
 router.register(r'menuItems', MenuItemView, basename='menuItem')
+router.register(r'orders', OrderView, basename='order')
+router.register(r'orderItems', OrderItemView, basename='orderItem')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

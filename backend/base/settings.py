@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # internal
     'kitchen',
     'user',
+    'order',
 ]
 
 MIDDLEWARE = [
