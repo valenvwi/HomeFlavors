@@ -39,6 +39,10 @@ export default function AppNavBar() {
     navigate("/cart");
   };
 
+  const goToOrderHistoryPage = () => {
+    navigate("/orderHistory");
+  };
+
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
@@ -77,7 +81,7 @@ export default function AppNavBar() {
                 <Button color="inherit" onClick={goToCartPage}>
                   <ShoppingCartIcon />
                 </Button>
-                <Button color="inherit">
+                <Button color="inherit" onClick={goToOrderHistoryPage}>
                   <HistoryIcon />
                 </Button>
                 <Button color="inherit" onClick={logout}>

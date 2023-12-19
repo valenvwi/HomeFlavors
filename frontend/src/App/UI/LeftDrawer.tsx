@@ -32,6 +32,11 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
     props.handleDrawerToggle();
   };
 
+  const goToOrderHistoryPage = () => {
+    navigate("/orderHistory");
+    props.handleDrawerToggle();
+  };
+
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
@@ -55,7 +60,7 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={goToOrderHistoryPage}>
                 <ListItemIcon>
                   <HistoryIcon />
                 </ListItemIcon>
