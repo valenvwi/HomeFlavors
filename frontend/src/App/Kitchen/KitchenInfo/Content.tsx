@@ -32,7 +32,7 @@ export default function Content(props: Props) {
         }}
       >
         <Box>
-          <Typography variant="h4">{props.kitchen?.name}</Typography>
+          <Typography variant="h4" fontWeight={700}>{props.kitchen?.name}</Typography>
           <Typography variant="h6">
             Cuisine: {props.kitchen?.cuisine}
           </Typography>

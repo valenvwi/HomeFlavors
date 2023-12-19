@@ -6,6 +6,7 @@ import { CssBaseline } from "@mui/material";
 import axios from "axios";
 import AppNavBar from "./UI/AppNavBar";
 import Cart from "./Cart";
+import "./App.css";
 
 axios.defaults.withCredentials = true;
 

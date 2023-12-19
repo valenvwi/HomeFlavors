@@ -50,11 +50,11 @@ export default function MenuItemCard(props: {
           aspectRatio: "1",
         }}
       />
-      <Box sx={{ flexGrow: 1, m: 2 }}>
+      <Box sx={{ flexGrow: 1, mx: 3, my: 2 }}>
         <Box
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          <Typography variant="h5" sx={{ pr: 2 }}>
+          <Typography variant="h5" sx={{ pr: 2, fontWeight: 700 }}>
             {props.menuItem.name}
           </Typography>
           {props.menuItem.isVeg && (
@@ -67,7 +67,9 @@ export default function MenuItemCard(props: {
         <Typography variant="subtitle1">
           {props.menuItem.description}
         </Typography>
-        <Typography variant="h6">{props.menuItem.price} CHF</Typography>
+        <Typography variant="h6" fontWeight={700}>
+          {props.menuItem.price} CHF
+        </Typography>
       </Box>
       {props.isOwner ? (
         <>
