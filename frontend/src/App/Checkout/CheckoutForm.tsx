@@ -3,16 +3,21 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 type OrderInputs = {
   name: string;
   contactNumber: string;
-  pickUpDateTime: string;
+  pickUpDateTime: dayjs.Dayjs;
   remark: string;
 };
 
 export default function CheckoutForm() {
-  const { register, control, handleSubmit } = useForm<OrderInputs>();
+  const { register, control, handleSubmit } = useForm<OrderInputs>({
+    defaultValues: {
+      pickUpDateTime: dayjs().add(15, "minute"),
+    },
+  });
 
   const onSubmit: SubmitHandler<OrderInputs> = (data) => {
     console.log(data);
@@ -61,7 +66,7 @@ export default function CheckoutForm() {
                   value={value}
                   onChange={onChange}
                   sx={{ width: "90%", py: 1 }}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
+                  minDateTime={dayjs().add(15, "minute")}
                 />
               )}
             />
@@ -78,7 +83,7 @@ export default function CheckoutForm() {
           ></TextField>
         </Grid>
         <Button type="submit" variant="contained" sx={{ margin: "20px auto" }}>
-          Submit
+          Place Order
         </Button>
       </Grid>
     </Paper>
