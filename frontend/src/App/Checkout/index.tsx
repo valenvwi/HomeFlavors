@@ -7,17 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimePicker } from "@mui/x-date-pickers";
 
 type OrderInputs = {
   name: string;
   contactNumber: string;
-  pickUpDate: string;
-  pickUpTime: string;
+  pickUpDateTime: string;
   remark: string;
 };
 export default function Checkout() {
-  const { register, handleSubmit } = useForm<OrderInputs>();
+  const { register, control, handleSubmit } = useForm<OrderInputs>();
 
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.up("sm"));
@@ -44,7 +46,7 @@ export default function Checkout() {
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          sx={{ mt: 1 }}
+          sx={{ mt: 1, textAlign: "center" }}
         >
           <Grid item xs={12} sm={6}>
             <TextField
@@ -63,22 +65,22 @@ export default function Checkout() {
             ></TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              {...register("pickUpDate")}
-              label="Pick Up Date"
-              variant="standard"
-              sx={{ width: "90%", py: 1 }}
-            >
-              
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              {...register("pickUpTime")}
-              label="Pick Up Time"
-              variant="standard"
-              sx={{ width: "90%", py: 1 }}
-            ></TextField>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Controller
+                name="pickUpDateTime"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <DateTimePicker
+                    label="Date & Time"
+                    value={value}
+                    onChange={onChange}
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                  />
+                )}
+              />
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -92,9 +94,8 @@ export default function Checkout() {
           </Grid>
           <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ margin: "20px auto" }}
           >
             Submit
           </Button>
