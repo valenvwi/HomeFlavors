@@ -8,6 +8,7 @@ import AppNavBar from "./UI/AppNavBar";
 import Cart from "./Cart";
 import "./App.css";
 import OrderHistory from "./OrderHistory";
+import Checkout from "./Checkout";
 
 axios.defaults.withCredentials = true;
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/orderHistory" element={<OrderHistory />} />
       </Routes>
     </>

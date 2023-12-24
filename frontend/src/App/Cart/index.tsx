@@ -20,6 +20,10 @@ export default function Cart() {
     navigate("/");
   };
 
+  const goToCheckoutPage = () => {
+    navigate("/checkout");
+  }
+
   return cartItems.length > 0 ? (
     <Container sx={{ my: 5, py: 5 }}>
       {isMediumScreen && (
@@ -42,7 +46,7 @@ export default function Cart() {
         {isMediumScreen && <br />}
         Total Price: {totalPrice} CHF
       </Typography>
-      <Button variant="contained" sx={{ my: 2 }}>
+      <Button variant="contained" sx={{ my: 2 }} onClick={goToCheckoutPage}>
         Check out
       </Button>
     </Container>

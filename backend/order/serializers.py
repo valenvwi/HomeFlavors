@@ -8,6 +8,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = ["id", "menuItem", "quantity"]
 
+
+
 class OrderSerializer(serializers.ModelSerializer):
     orderItems = OrderItemSerializer(many=True, read_only=True, source='order_items')
     totalPrice = serializers.DecimalField(source='total_price', max_digits=10, decimal_places=2)

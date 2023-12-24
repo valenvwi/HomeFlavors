@@ -12,6 +12,8 @@ class Order(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.PROTECT, related_name='orders')
     kitchen = models.ForeignKey('kitchen.Kitchen', on_delete=models.PROTECT, related_name='orders')
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    contact_number = models.CharField(max_length=20, blank=True, null=True)
     pick_up_date = models.DateField()
     pick_up_time = models.TimeField()
     remark = models.CharField(max_length=1000, blank=True, null=True)
