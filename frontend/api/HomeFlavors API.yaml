@@ -1075,6 +1075,7 @@ components:
           readOnly: true
         user:
           type: integer
+          readOnly: true
         kitchen:
           type: integer
         orderItems:
@@ -1205,6 +1206,7 @@ components:
           readOnly: true
         user:
           type: integer
+          readOnly: true
         kitchen:
           type: integer
         orderItems:

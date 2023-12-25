@@ -12,7 +12,6 @@ export type OrderType = {
   isAccepted: boolean;
   isCancelled: boolean;
   kitchen: number;
-  orderItems: OrderItemType[];
   pickUpDate: string;
   pickUpTime: string;
   remark?: string | null;

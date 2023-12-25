@@ -4,6 +4,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { ordersCreate, orderItemsCreate } from "../../../api";
+import { useAppDispatch, useAppSelector } from "../store/root";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { cartActions } from "../store/cart";
 
 type OrderInputs = {
   name: string;
@@ -19,8 +24,52 @@ export default function CheckoutForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<OrderInputs> = (data) => {
-    console.log(data);
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const totalPrice = useAppSelector((state) => state.cart.totalPrice);
+  const [orderId, setOrderId] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const goToSuccessCheckout = () => {
+    navigate("/successcheckedout");
+  };
+
+  const onSubmit: SubmitHandler<OrderInputs> = async (data) => {
+    const orderData = {
+      kitchen: "1",
+      totalPrice: totalPrice.toString(),
+      name: data.name,
+      contactNumber: data.contactNumber,
+      pickUpDate: data.pickUpDateTime.format("YYYY-MM-DD"),
+      pickUpTime: data.pickUpDateTime.format("HH:mm"),
+      remark: data.remark,
+    };
+
+    await ordersCreate(orderData);
+    try {
+      const response = await ordersCreate(orderData);
+      setOrderId(response.data.id);
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log("Order placed");
+    createOrderItems(orderId);
+  };
+
+  const createOrderItems = (orderId) => {
+    cartItems.map((cartItem) => {
+      const orderItemData = {
+        menu_item: cartItem.id,
+        quantity: cartItem.quantity,
+        order: orderId,
+      };
+      orderItemsCreate(orderItemData);
+      console.log("Order item created", orderItemData);
+    });
+    dispatch(cartActions.resetCart());
+    console.log("Cart items: ", cartItems);
+    goToSuccessCheckout();
   };
 
   return (
