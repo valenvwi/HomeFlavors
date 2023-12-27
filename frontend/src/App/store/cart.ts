@@ -4,6 +4,7 @@ const initialState = {
   cartItems: JSON.parse(localStorage.getItem("cartItems") || "[]"),
   totalPrice: JSON.parse(localStorage.getItem("totalPrice") || "0"),
   totalQuantity: JSON.parse(localStorage.getItem("totalQuantity") || "0"),
+  cartUpdated: false,
 };
 
 const updateTotals = (cartItems: CartItemType[]) => {
@@ -44,6 +45,7 @@ const cartSlice = createSlice({
       const totals = updateTotals(state.cartItems);
       state.totalPrice = totals.totalPrice;
       state.totalQuantity = totals.totalQuantity;
+      state.cartUpdated = true;
     },
 
     increaseQuantity(state, action) {
@@ -80,6 +82,9 @@ const cartSlice = createSlice({
       state.cartItems = [];
       state.totalPrice = 0;
       state.totalQuantity = 0;
+    },
+    setCartUpdated(state, action) {
+      state.cartUpdated = action.payload;
     },
   },
 });

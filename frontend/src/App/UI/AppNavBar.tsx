@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LeftDrawer } from "./LeftDrawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -19,10 +19,13 @@ import { useAppSelector } from "../store/root";
 import { Link, useNavigate } from "react-router-dom";
 import { apiLogoutCreate } from "../../../api";
 import { authActions } from "../store/auth";
+import { cartActions } from "../store/cart";
 import { useAppDispatch } from "../store/root";
+import { useSpring, animated } from "@react-spring/web";
 
 export default function AppNavBar() {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const cartUpdated = useAppSelector((state) => state.cart.cartUpdated);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -48,6 +51,27 @@ export default function AppNavBar() {
     dispatch(authActions.setIsLoggedIn(false));
     navigate("/login");
   };
+
+  const cartAnimation = useSpring({
+    from: {
+      transform: "scale(1)",
+      color: "inherit",
+    },
+    to: {
+      transform: cartUpdated ? "scale(1.3)" : "scale(1)",
+    },
+    reset: cartUpdated,
+  });
+
+  useEffect(() => {
+    if (cartUpdated) {
+      const timer = setTimeout(() => {
+        dispatch(cartActions.setCartUpdated(false));
+      }, 200);
+
+      return () => clearTimeout(timer);
+    }
+  }, [cartUpdated, dispatch]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -79,7 +103,9 @@ export default function AppNavBar() {
             {isLoggedIn ? (
               <>
                 <Button color="inherit" onClick={goToCartPage}>
-                  <ShoppingCartIcon />
+                  <animated.div style={cartAnimation}>
+                    <ShoppingCartIcon />
+                  </animated.div>
                 </Button>
                 <Button color="inherit" onClick={goToOrderHistoryPage}>
                   <HistoryIcon />
