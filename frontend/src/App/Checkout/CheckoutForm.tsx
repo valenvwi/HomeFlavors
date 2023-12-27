@@ -6,7 +6,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { ordersCreate, orderItemsCreate } from "../../../api";
 import { useAppDispatch, useAppSelector } from "../store/root";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart";
 import { useUsersRetrieve } from "../../../api";
@@ -19,7 +19,12 @@ type OrderInputs = {
 };
 
 export default function CheckoutForm() {
-  const { register, control, handleSubmit } = useForm<OrderInputs>({
+  const {
+    register,
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<OrderInputs>({
     defaultValues: {
       pickUpDateTime: dayjs().add(15, "minute"),
     },
@@ -32,11 +37,10 @@ export default function CheckoutForm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { data: usersResponse } = useUsersRetrieve(currentUserId);
+  const { data: usersResponse } = useUsersRetrieve(currentUserId || 0);
   const user = usersResponse?.data;
   const nameInForm = user?.firstName;
   const contactNumberInForm = user?.phoneNumber;
-
 
   const goToSuccessCheckout = () => {
     navigate("/successcheckedout");
@@ -61,7 +65,7 @@ export default function CheckoutForm() {
       console.log(error);
     }
 
-    console.log("Order placed");
+    console.log("Order placed", orderData);
     createOrderItems(orderId);
   };
 
@@ -76,8 +80,24 @@ export default function CheckoutForm() {
       console.log("Order item created", orderItemData);
     });
     dispatch(cartActions.resetCart());
-    console.log("Cart items: ", cartItems);
     goToSuccessCheckout();
+  };
+
+  const isDayValid = (date) => {
+    const day = date.day();
+    if (day === 0 || day === 1) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isTimeValid = (time) => {
+    const hour = time.hour();
+    if (hour < 12 || hour > 19) {
+      return true;
+    }
+    return false;
   };
 
   if (!user) {
@@ -102,19 +122,30 @@ export default function CheckoutForm() {
       >
         <Grid item xs={12} sm={6}>
           <TextField
-            {...register("name")}
+            {...register("name", { required: "Name is required" })}
             label="Name"
             variant="standard"
             defaultValue={nameInForm}
             sx={{ width: "90%", py: 1 }}
+            error={!!errors.name}
+            helperText={errors.name && errors.name.message}
           ></TextField>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            {...register("contactNumber")}
+            {...register("contactNumber", {
+              required: "Contact number is required",
+              pattern: {
+                value: /^[0-9+]{8,15}$/,
+                message:
+                  "Contact number must be 8-15 characters long and can only contain numbers and +",
+              },
+            })}
             label="Contact Number"
             variant="standard"
             defaultValue={contactNumberInForm}
+            error={!!errors.contactNumber}
+            helperText={errors.contactNumber && errors.contactNumber.message}
             sx={{ width: "90%", py: 1 }}
           ></TextField>
         </Grid>
@@ -123,6 +154,7 @@ export default function CheckoutForm() {
             <Controller
               name="pickUpDateTime"
               control={control}
+              rules={{ required: "Pick up date and time are required" }}
               render={({ field: { onChange, value } }) => (
                 <DateTimePicker
                   label="Pick up date & time"
@@ -130,6 +162,8 @@ export default function CheckoutForm() {
                   onChange={onChange}
                   sx={{ width: "90%", py: 1 }}
                   minDateTime={dayjs().add(15, "minute")}
+                  shouldDisableDate={isDayValid}
+                  shouldDisableTime={isTimeValid}
                 />
               )}
             />

@@ -98,7 +98,7 @@ export default function MenuItemCard(props: {
         !isLoggedIn ? (
           <>
             <animated.div
-              style={{ ...hoverAnimation, margin: "auto" }} 
+              style={{ ...hoverAnimation, margin: "auto" }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
