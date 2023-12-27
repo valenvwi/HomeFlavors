@@ -11,6 +11,8 @@ export type OrderType = {
   id: number;
   isAccepted: boolean;
   isCancelled: boolean;
+  name: string;
+  contactNumber: string;
   kitchen: number;
   pickUpDate: string;
   pickUpTime: string;
@@ -18,4 +20,5 @@ export type OrderType = {
   totalPrice: string;
   updatedAt: string;
   user: number;
+  orderItems?: OrderItemType[];
 };

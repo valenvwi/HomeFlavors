@@ -6,7 +6,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_items', null=True)
 
     def __str__(self):
-        return f'{self.quantity} of {self.menu_item.name}'
+        return f'{self.quantity} x {self.menu_item.name}'
 
 class Order(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.PROTECT, related_name='orders')

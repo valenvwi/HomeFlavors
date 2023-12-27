@@ -6,10 +6,10 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { ordersCreate, orderItemsCreate } from "../../../api";
 import { useAppDispatch, useAppSelector } from "../store/root";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart";
 import { useUsersRetrieve } from "../../../api";
+import { CartItemType } from "../types/cartItem";
 
 type OrderInputs = {
   name: string;
@@ -33,7 +33,6 @@ export default function CheckoutForm() {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
   const currentUserId = useAppSelector((state) => state.auth.currentUserId);
-  const [orderId, setOrderId] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -56,21 +55,17 @@ export default function CheckoutForm() {
       pickUpTime: data.pickUpDateTime.format("HH:mm"),
       remark: data.remark,
     };
-
-    await ordersCreate(orderData);
     try {
       const response = await ordersCreate(orderData);
-      setOrderId(response.data.id);
-    } catch (error) {
+      createOrderItems(response.data.id);
+    }
+    catch (error) {
       console.log(error);
     }
-
-    console.log("Order placed", orderData);
-    createOrderItems(orderId);
   };
 
-  const createOrderItems = (orderId) => {
-    cartItems.map((cartItem) => {
+  const createOrderItems = (orderId: number) => {
+    cartItems.map((cartItem: CartItemType) => {
       const orderItemData = {
         menu_item: cartItem.id,
         quantity: cartItem.quantity,
@@ -83,7 +78,7 @@ export default function CheckoutForm() {
     goToSuccessCheckout();
   };
 
-  const isDayValid = (date) => {
+  const isDayValid = (date: dayjs.Dayjs) => {
     const day = date.day();
     if (day === 0 || day === 1) {
       return true;
@@ -92,7 +87,7 @@ export default function CheckoutForm() {
     return false;
   };
 
-  const isTimeValid = (time) => {
+  const isTimeValid = (time: dayjs.Dayjs) => {
     const hour = time.hour();
     if (hour < 12 || hour > 19) {
       return true;
