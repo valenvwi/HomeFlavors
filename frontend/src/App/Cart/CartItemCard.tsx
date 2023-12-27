@@ -14,12 +14,10 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
 
   const onIncreaseQuantity = () => {
     dispatch(cartActions.increaseQuantity(props.cartItem.id));
-    console.log("increase quantity");
   };
 
   const onDecreaseQuantity = () => {
     dispatch(cartActions.decreaseQuantity(props.cartItem.id));
-    console.log("decrease quantity");
   };
 
   return isMediumScreen ? (

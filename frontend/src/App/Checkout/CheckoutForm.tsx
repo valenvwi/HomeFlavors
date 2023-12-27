@@ -6,9 +6,10 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { ordersCreate, orderItemsCreate } from "../../../api";
 import { useAppDispatch, useAppSelector } from "../store/root";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart";
+import { useUsersRetrieve } from "../../../api";
 
 type OrderInputs = {
   name: string;
@@ -26,9 +27,16 @@ export default function CheckoutForm() {
 
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
+  const currentUserId = useAppSelector((state) => state.auth.currentUserId);
   const [orderId, setOrderId] = useState<string | null>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { data: usersResponse } = useUsersRetrieve(currentUserId);
+  const user = usersResponse?.data;
+  const nameInForm = user?.firstName;
+  const contactNumberInForm = user?.phoneNumber;
+
 
   const goToSuccessCheckout = () => {
     navigate("/successcheckedout");
@@ -72,6 +80,10 @@ export default function CheckoutForm() {
     goToSuccessCheckout();
   };
 
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Paper
       variant="outlined"
@@ -93,6 +105,7 @@ export default function CheckoutForm() {
             {...register("name")}
             label="Name"
             variant="standard"
+            defaultValue={nameInForm}
             sx={{ width: "90%", py: 1 }}
           ></TextField>
         </Grid>
@@ -101,6 +114,7 @@ export default function CheckoutForm() {
             {...register("contactNumber")}
             label="Contact Number"
             variant="standard"
+            defaultValue={contactNumberInForm}
             sx={{ width: "90%", py: 1 }}
           ></TextField>
         </Grid>
