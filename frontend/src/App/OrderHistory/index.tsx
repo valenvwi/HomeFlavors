@@ -1,5 +1,6 @@
 import { Container, Typography } from "@mui/material";
 import { useOrdersList } from "../../../api";
+import OrderHistoryCard from "./OrderHistoryCard";
 
 export default function OrderHistory() {
   const { data: orderResponse } = useOrdersList();
@@ -14,11 +15,7 @@ export default function OrderHistory() {
         <Typography variant="h5">No orders yet</Typography>
       )}
       {orders?.map((order) => (
-        <div key={order.id}>
-          <h2>{order.id}</h2>
-          <p>{order.totalPrice}</p>
-          <p>{order.createdAt}</p>
-        </div>
+          <OrderHistoryCard order={order} />
       ))}
     </Container>
   );
