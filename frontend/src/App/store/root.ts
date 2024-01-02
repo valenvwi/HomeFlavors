@@ -4,6 +4,7 @@ import cartSlice from "./cart";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import modalSlice from "./modal";
 
 const persistedCartReducer = persistReducer(
   { key: "cart", storage },
@@ -13,8 +14,8 @@ const persistedCartReducer = persistReducer(
 const rootReducer = combineReducers({
   cart: persistedCartReducer,
   auth: authSlice.reducer,
+  modal: modalSlice.reducer,
 });
-
 
 const store = configureStore({
   reducer: rootReducer,
@@ -22,7 +23,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoreActions: ["persist/PERSIST"],
-      }
+      },
     }),
 });
 

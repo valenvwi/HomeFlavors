@@ -9,7 +9,6 @@ import Cart from "./Cart";
 import "./App.css";
 import OrderHistory from "./OrderHistory";
 import Checkout from "./Checkout";
-import SuccessCheckout from "./SuccessCheckout";
 
 axios.defaults.withCredentials = true;
 
@@ -25,7 +24,6 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orderHistory" element={<OrderHistory />} />
-        <Route path="/successcheckedout" element={<SuccessCheckout />} />
       </Routes>
     </>
   );

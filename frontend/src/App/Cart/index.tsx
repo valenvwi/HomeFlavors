@@ -9,15 +9,21 @@ import { useNavigate } from "react-router-dom";
 const smallScreenConfig = {
   fontVariant: "subtitle1",
   fontStyle: {
-    mt: 2, mx: 1, textAlign: "right", fontWeight: 600
-  }
+    mt: 2,
+    mx: 1,
+    textAlign: "right",
+    fontWeight: 600,
+  },
 } as const;
 
 const largeScreenConfig = {
   fontVariant: "h5",
   fontStyle: {
-    mt: 5, mx: 1, textAlign: "right", fontWeight: 600
-  }
+    mt: 5,
+    mx: 1,
+    textAlign: "right",
+    fontWeight: 600,
+  },
 } as const;
 
 export default function Cart() {
@@ -41,7 +47,7 @@ export default function Cart() {
   };
 
   return cartItems.length > 0 ? (
-    <Container sx={{ my: 5, py: 5, display:"flex", flexDirection:"column" }}>
+    <Container sx={{ my: 5, py: 5, display: "flex", flexDirection: "column" }}>
       {!isSmallScreen && (
         <Typography
           variant={"h5"}
@@ -53,16 +59,17 @@ export default function Cart() {
       {cartItems.map((cartItem: CartItemType) => (
         <CartItemCard key={cartItem.id} cartItem={cartItem} />
       ))}
-      <Typography
-        variant={style.fontVariant}
-        sx={style.fontStyle}
-      >
+      <Typography variant={style.fontVariant} sx={style.fontStyle}>
         Total Quantity: {totalQuantity}
         <br />
         {!isSmallScreen && <br />}
         Total Price: CHF {totalPrice}
       </Typography>
-      <Button variant="contained" sx={{ m: 1, alignSelf:"end" }} onClick={goToCheckoutPage}>
+      <Button
+        variant="contained"
+        sx={{ m: 1, alignSelf: "end" }}
+        onClick={goToCheckoutPage}
+      >
         Check out
       </Button>
     </Container>

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart";
 import { useUsersRetrieve } from "../../../api";
 import { CartItemType } from "../types/cartItem";
+import { modalActions } from "../store/modal";
 
 type OrderInputs = {
   name: string;
@@ -41,8 +42,8 @@ export default function CheckoutForm() {
   const nameInForm = user?.firstName;
   const contactNumberInForm = user?.phoneNumber;
 
-  const goToSuccessCheckout = () => {
-    navigate("/successcheckedout");
+  const goToOrderHistory = () => {
+    navigate("/orderHistory");
   };
 
   const onSubmit: SubmitHandler<OrderInputs> = async (data) => {
@@ -58,8 +59,7 @@ export default function CheckoutForm() {
     try {
       const response = await ordersCreate(orderData);
       createOrderItems(response.data.id);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -75,7 +75,8 @@ export default function CheckoutForm() {
       console.log("Order item created", orderItemData);
     });
     dispatch(cartActions.resetCart());
-    goToSuccessCheckout();
+    dispatch(modalActions.setIsOpened(true));
+    goToOrderHistory();
   };
 
   const isDayValid = (date: dayjs.Dayjs) => {
