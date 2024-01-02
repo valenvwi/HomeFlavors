@@ -2,7 +2,7 @@ export type MenuItemType = {
   id: number;
   name: string;
   description: string;
-  price: string;
+  price: number;
   image?: string| undefined;
   category: string;
   isAvailable: boolean;

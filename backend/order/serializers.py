@@ -11,7 +11,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = OrderItem
-        fields = ["id", "menu_item", "menuItem", "quantity"]
+        fields = ["id", "menu_item", "menuItem", "quantity", "order"]
 
 
 
@@ -20,7 +20,7 @@ class OrderSerializer(serializers.ModelSerializer):
     totalPrice = serializers.DecimalField(source='total_price', max_digits=10, decimal_places=2)
     pickUpDate = serializers.DateField(source='pick_up_date')
     pickUpTime = serializers.TimeField(source='pick_up_time')
-    contactNumber = serializers.CharField(source='contact_number') 
+    contactNumber = serializers.CharField(source='contact_number')
     isAccepted = serializers.BooleanField(source='is_accepted', required=False)
     isCancelled = serializers.BooleanField(source='is_cancelled', required=False)
     createdAt = serializers.DateTimeField(source='created_at', read_only=True)

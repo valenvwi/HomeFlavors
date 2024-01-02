@@ -3,7 +3,7 @@ import { MenuItemType } from "./menuItem";
 export type OrderItemType = {
   id: number;
   menuItem: MenuItemType;
-  quantity?: number;
+  quantity: number;
 };
 
 export type OrderType = {
@@ -20,5 +20,5 @@ export type OrderType = {
   totalPrice: string;
   updatedAt: string;
   user: number;
-  orderItems?: OrderItemType[];
+  orderItems: OrderItemType[];
 };

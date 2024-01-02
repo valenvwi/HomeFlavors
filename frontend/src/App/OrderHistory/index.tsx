@@ -15,7 +15,7 @@ export default function OrderHistory() {
         <Typography variant="h5">No orders yet</Typography>
       )}
       {orders?.map((order) => (
-          <OrderHistoryCard order={order} />
+          <OrderHistoryCard order={order} key={order.id} />
       ))}
     </Container>
   );

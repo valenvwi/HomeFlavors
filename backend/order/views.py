@@ -13,7 +13,7 @@ class OrderView(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
 
     def list(self, request):
-        queryset = Order.objects.filter(user=request.user)
+        queryset = Order.objects.filter(user=request.user).order_by('-created_at')
         serializer = OrderSerializer(queryset, many=True)
         return Response(serializer.data)
 
