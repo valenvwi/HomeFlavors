@@ -14,7 +14,9 @@ import { useAppSelector } from "../../store/root";
 import AddMenuItem from "./AddMenuItem";
 import EditMenuItem from "./EditMenuItem";
 import { MenuItemType } from "../../types/menuItem";
-import Tabbar from "./Tabbar";
+import Tabbar from "./CategoryNavBar/Tabbar";
+import Selectionbar from "./CategoryNavBar/Selectionbar";
+import { keepPreviousData } from "@tanstack/react-query";
 
 export default function MenuItem() {
   const [showAddMenuItem, setShowAddMenuItem] = useState<boolean>(false);
@@ -23,13 +25,16 @@ export default function MenuItem() {
   const [menuItem, setMenuItem] = useState<MenuItemType | null>(null);
   const [category, setCategory] = useState<string>("soup");
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { data: kitchenResponse } = useKitchensRetrieve(1);
   const kitchen = kitchenResponse?.data;
   const isKitchenOwner = kitchen?.owner === currentUserId;
 
-  const { data: menuItemsResponse } = useMenuItemsList({ category: category });
+  const { data: menuItemsResponse } = useMenuItemsList(
+    { category: category },
+    { query: { placeholderData: keepPreviousData } }
+  );
   const menuItems = menuItemsResponse?.data;
 
   const toggleAddMenuItem = () => {
@@ -70,14 +75,22 @@ export default function MenuItem() {
       )}
 
       {showEditMenuItem && (
-        <EditMenuItem menuItem={menuItem} onCancelEdit={onCancelEdit} category={category} />
+        <EditMenuItem
+          menuItem={menuItem}
+          onCancelEdit={onCancelEdit}
+          category={category}
+        />
       )}
       {!showAddMenuItem && !showEditMenuItem && (
         <>
-          <Tabbar handleCategoryChange={handleCategoryChange} />
+          {isSmallScreen ? (
+            <Selectionbar handleCategoryChange={handleCategoryChange} />
+          ) : (
+            <Tabbar handleCategoryChange={handleCategoryChange} />
+          )}
           {menuItems?.map((item) =>
             isSmallScreen ? (
-              <MenuItemCard
+              <MenuItemCardMobile
                 menuItem={item}
                 key={item.name}
                 isOwner={isKitchenOwner}
@@ -87,7 +100,7 @@ export default function MenuItem() {
                 handleClose={handleClose}
               />
             ) : (
-              <MenuItemCardMobile
+              <MenuItemCard
                 menuItem={item}
                 key={item.name}
                 isOwner={isKitchenOwner}

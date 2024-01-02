@@ -10,10 +10,24 @@ type Props = {
   onShowEditClick: () => void;
 };
 
+const smallScreenConfig = {
+  fontTitleVariant: "h6",
+  fontSubtitleVariant: "subtitle1",
+  fontContentVariant: "subtitle2",
+} as const;
+
+const largeScreenConfig = {
+  fontTitleVariant: "h4",
+  fontSubtitleVariant: "h6",
+  fontContentVariant: "subtitle1",
+} as const;
+
 export default function Content(props: Props) {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const currentUserId = useAppSelector((state) => state.auth.currentUserId);
+
+  const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
 
   const onShowEdit = () => {
     props.onShowEditClick();
@@ -25,28 +39,28 @@ export default function Content(props: Props) {
         sx={{
           mx: 3,
           my: 2,
-          display: isSmallScreen ? "flex" : "block",
+          display: isSmallScreen ? "block": "flex",
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
         }}
       >
         <Box>
-          <Typography variant="h4" fontWeight={700}>{props.kitchen?.name}</Typography>
-          <Typography variant="h6">
-            Cuisine: {props.kitchen?.cuisine}
+          <Typography variant={style.fontTitleVariant} fontWeight={700}>{props.kitchen?.name}</Typography>
+          <Typography variant={style.fontSubtitleVariant} sx={{ }}>
+            <i>{props.kitchen?.description}</i>
           </Typography>
-          <Typography variant="subtitle1">
-            {props.kitchen?.description}
+          <Typography variant={style.fontContentVariant}>
+            Cuisine: {props.kitchen?.cuisine}
           </Typography>
         </Box>
         <Box>
-          <Typography variant="subtitle1">{props.kitchen?.address}</Typography>
-          <Typography variant="subtitle1">
-            Contact Number: {props.kitchen?.contactNumber}
-          </Typography>
-          <Typography variant="subtitle1">
+          <Typography variant={style.fontContentVariant}>
             Opening Hours: {props.kitchen?.openingHours}
+          </Typography>
+          <Typography variant={style.fontContentVariant}>Address: {props.kitchen?.address}</Typography>
+          <Typography variant={style.fontContentVariant}>
+            Contact Number: {props.kitchen?.contactNumber}
           </Typography>
         </Box>
         {currentUserId === props.kitchen?.owner && (
