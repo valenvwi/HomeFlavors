@@ -5,6 +5,40 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useState } from "react";
 import { BASEURL } from "../../config";
+import { useTheme, useMediaQuery } from "@mui/material";
+
+const smallScreenConfig = {
+  cardStyle: {
+    my: 2,
+    p: 1,
+  },
+  fontTitleVariant: "subtitle1",
+  fontContentVariant: "body2",
+  imageStyle: {
+    width: "50px",
+    height: "50px",
+    borderRadius: "5px",
+    margin: "10px 0px",
+    objectFit: "cover",
+    flexShrink: 0,
+  },
+} as const;
+
+const largeScreenConfig = {
+  cardStyle: {
+    my: 2,
+    p: 4,
+  },
+  fontTitleVariant: "h5",
+  fontContentVariant: "h6",
+  imageStyle: {
+    width: "120px",
+    height: "120px",
+    borderRadius: "5px",
+    margin: "10px 0px",
+    objectFit: "cover",
+  },
+} as const;
 
 export default function OrderHistoryCard(props: { order: OrderType }) {
   const formattedCreatedAtDate = dayjs(props.order.createdAt).format(
@@ -16,11 +50,15 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
 
   const [expanded, setExpanded] = useState(false);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
+
   return (
-    <Card sx={{ my: 2, p: 4 }}>
+    <Card sx={style.cardStyle}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6" fontWeight={700}>
-          Order created at {formattedCreatedAtDate}
+        <Typography variant={style.fontTitleVariant} fontWeight={700}>
+          {!isSmallScreen && "Order created at"} {formattedCreatedAtDate}
         </Typography>
 
         {expanded ? (
@@ -39,13 +77,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
             <img
               src={BASEURL + "/" + props.order.orderItems[0].menuItem.image}
               alt={props.order.orderItems[0].menuItem.name}
-              style={{
-                width: "120px",
-                height: "120px",
-                borderRadius: "5px",
-                margin: "10px 0px",
-                objectFit: "cover",
-              }}
+              style={style.imageStyle}
             />
             <Box
               sx={{
@@ -55,11 +87,11 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
                 mx: 2,
               }}
             >
-              <Typography variant="subtitle1">
+              <Typography variant={style.fontContentVariant}>
                 Pick up time: {formattedPickUpDateTime}
               </Typography>
-              <Typography variant="subtitle1">
-                Price: {props.order.totalPrice}
+              <Typography variant={style.fontContentVariant}>
+                Price: CHF {props.order.totalPrice}
               </Typography>
             </Box>
           </Box>
@@ -67,7 +99,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
         </Box>
       )}
       {expanded && (
-        <Box>
+        <Box key={props.order.id}>
           {props.order.orderItems?.map((orderItem) => (
             <Box
               sx={{
@@ -79,26 +111,55 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
               <img
                 src={BASEURL + "/" + orderItem.menuItem.image}
                 alt={orderItem.menuItem.name}
-                style={{
-                  width: "120px",
-                  height: "120px",
-                  borderRadius: "10px",
-                  margin: "10px 0px",
-                  objectFit: "cover",
-                }}
+                style={style.imageStyle}
               />
-              <Typography variant="h6">
-                {orderItem.menuItem.name} x {orderItem.quantity}
-              </Typography>
-              <Typography variant="h6">
+              {isSmallScreen ? (
+                <>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      flexGrow: "1",
+                      ml: 1,
+                      minWidth: "0",
+                    }}
+                  >
+                    <Typography
+                      variant={style.fontContentVariant}
+                      sx={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        maxWidth: "90%",
+                      }}
+                    >
+                      {orderItem.menuItem.name}
+                    </Typography>
+                    <Typography variant={style.fontContentVariant}>
+                      x {orderItem.quantity}
+                    </Typography>
+                  </Box>
+                </>
+              ) : (
+                <Typography variant={style.fontContentVariant}>
+                  {orderItem.menuItem.name} x {orderItem.quantity}
+                </Typography>
+              )}
+              <Typography variant={style.fontContentVariant}>
                 CHF {orderItem.menuItem.price * orderItem.quantity}
               </Typography>
             </Box>
           ))}
           {props.order.remark && (
-            <Typography variant="h6">Remarks: {props.order.remark}</Typography>
+            <Typography variant={style.fontContentVariant} sx={{ pt: 1 }}>
+              Remarks: {props.order.remark}
+            </Typography>
           )}
-          <Typography variant="h6" fontWeight={700} textAlign="right">
+          <Typography
+            variant={style.fontContentVariant}
+            fontWeight={700}
+            textAlign="right"
+          >
             Total price: CHF {props.order.totalPrice}{" "}
           </Typography>
         </Box>
