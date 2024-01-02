@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   CssBaseline,
@@ -26,6 +27,8 @@ import { useSpring, animated } from "@react-spring/web";
 export default function AppNavBar() {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const cartUpdated = useAppSelector((state) => state.cart.cartUpdated);
+  const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -79,16 +82,25 @@ export default function AppNavBar() {
       <AppBar position="fixed">
         <Toolbar>
           <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
+            {isLoggedIn && (
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                marginLeft: "5px",
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
               <Typography
                 variant="h6"
                 noWrap
@@ -104,7 +116,9 @@ export default function AppNavBar() {
               <>
                 <Button color="inherit" onClick={goToCartPage}>
                   <animated.div style={cartAnimation}>
-                    <ShoppingCartIcon />
+                    <Badge badgeContent={totalQuantity} color="primary">
+                      <ShoppingCartIcon />
+                    </Badge>
                   </animated.div>
                 </Button>
                 <Button color="inherit" onClick={goToOrderHistoryPage}>
@@ -117,9 +131,22 @@ export default function AppNavBar() {
             ) : (
               <Button color="inherit" onClick={goToLoginPage}>
                 <LoginIcon />
-                <Typography variant="subtitle2" sx={{ px: 1 }}>
-                  Login
-                </Typography>
+              </Button>
+            )}
+          </Box>
+
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            {isLoggedIn ? (
+              <Button color="inherit" onClick={goToCartPage}>
+                <animated.div style={cartAnimation}>
+                  <Badge badgeContent={totalQuantity} color="primary">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </animated.div>
+              </Button>
+            ) : (
+              <Button color="inherit" onClick={goToLoginPage}>
+                <LoginIcon />
               </Button>
             )}
           </Box>
