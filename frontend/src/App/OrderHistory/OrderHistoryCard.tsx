@@ -99,7 +99,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
         </Box>
       )}
       {expanded && (
-        <Box key={props.order.id}>
+        <Box>
           {props.order.orderItems?.map((orderItem) => (
             <Box
               sx={{
@@ -107,6 +107,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
+              key={orderItem.id}
             >
               <img
                 src={BASEURL + "/" + orderItem.menuItem.image}
