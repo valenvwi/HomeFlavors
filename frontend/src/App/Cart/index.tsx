@@ -6,9 +6,25 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import emptyCart from "../../assets/empty-cart.png";
 import { useNavigate } from "react-router-dom";
 
+const smallScreenConfig = {
+  fontVariant: "subtitle1",
+  fontStyle: {
+    mt: 2, mx: 1, textAlign: "right", fontWeight: 600
+  }
+} as const;
+
+const largeScreenConfig = {
+  fontVariant: "h5",
+  fontStyle: {
+    mt: 5, mx: 1, textAlign: "right", fontWeight: 600
+  }
+} as const;
+
 export default function Cart() {
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
 
   const navigate = useNavigate();
 
@@ -22,13 +38,13 @@ export default function Cart() {
 
   const goToCheckoutPage = () => {
     navigate("/checkout");
-  }
+  };
 
   return cartItems.length > 0 ? (
-    <Container sx={{ my: 5, py: 5 }}>
-      {isMediumScreen && (
+    <Container sx={{ my: 5, py: 5, display:"flex", flexDirection:"column" }}>
+      {!isSmallScreen && (
         <Typography
-          variant={isMediumScreen ? "h5" : "subtitle1"}
+          variant={"h5"}
           sx={{ mt: 5, mx: 2, textAlign: "left", fontWeight: 600 }}
         >
           Your cart
@@ -38,15 +54,15 @@ export default function Cart() {
         <CartItemCard key={cartItem.id} cartItem={cartItem} />
       ))}
       <Typography
-        variant={isMediumScreen ? "h5" : "subtitle1"}
-        sx={{ mt: 5, mx: 2, textAlign: "right", fontWeight: 600 }}
+        variant={style.fontVariant}
+        sx={style.fontStyle}
       >
         Total Quantity: {totalQuantity}
         <br />
-        {isMediumScreen && <br />}
-        Total Price: {totalPrice} CHF
+        {!isSmallScreen && <br />}
+        Total Price: CHF {totalPrice}
       </Typography>
-      <Button variant="contained" sx={{ my: 2 }} onClick={goToCheckoutPage}>
+      <Button variant="contained" sx={{ m: 1, alignSelf:"end" }} onClick={goToCheckoutPage}>
         Check out
       </Button>
     </Container>

@@ -7,9 +7,29 @@ import { useAppDispatch } from "../store/root";
 import { cartActions } from "../store/cart";
 import { useTheme, useMediaQuery } from "@mui/material";
 
+const smallScreenConfig = {
+  imageStyle: {
+    width: "50px",
+    height: "50px",
+    objectFit: "cover",
+    borderRadius: "10px",
+    aspectRatio: "1",
+  },
+} as const;
+
+const largeScreenConfig = {
+  imageStyle: {
+    width: "150px",
+    height: "150px",
+    objectFit: "cover",
+    borderRadius: "10px",
+    aspectRatio: "1",
+  },
+} as const;
+
 export default function CartItemCard(props: { cartItem: CartItemType }) {
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const dispatch = useAppDispatch();
 
   const onIncreaseQuantity = () => {
@@ -20,51 +40,21 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
     dispatch(cartActions.decreaseQuantity(props.cartItem.id));
   };
 
-  return isMediumScreen ? (
-    <>
-      <Card sx={{ display: "flex", m: 2, p: 2 }}>
-        <img
-          src={`${BASEURL}/${props.cartItem.image}`}
-          alt={props.cartItem.name}
-          style={{
-            width: "150px",
-            height: "150px",
-            objectFit: "cover",
-            borderRadius: "10px",
-            aspectRatio: "1",
-            display: isMediumScreen ? "block" : "none",
-          }}
-        />
+  const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
 
-        <Box sx={{ flexGrow: 1, my: 2, mx: 4 }}>
-          <Typography variant="h5" fontWeight={700}>
-            {props.cartItem.name}
-          </Typography>
-          <Typography variant="h6">{props.cartItem.price} CHF</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Button color="primary" onClick={onDecreaseQuantity}>
-            <RemoveCircleOutlineIcon sx={{ fontSize: "40px" }} />
-          </Button>
-          <Typography variant="h6">Qty: {props.cartItem.quantity}</Typography>
-          <Button color="primary" onClick={onIncreaseQuantity}>
-            <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-          </Button>
-        </Box>
-      </Card>
-    </>
-  ) : (
+  return isSmallScreen ? (
     <>
       <Card sx={{ my: 2, p: 2 }}>
-        <Typography variant="body1" fontWeight={700} sx={{ pr: 2 }}>
-          {props.cartItem.name}
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={`${BASEURL}/${props.cartItem.image}`}
+            alt={props.cartItem.name}
+            style={style.imageStyle}
+          />
+          <Typography variant="subtitle1" fontWeight={700} sx={{ p: 1 }}>
+            {props.cartItem.name}
+          </Typography>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -74,7 +64,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
           }}
         >
           <Typography variant="subtitle2">
-            {props.cartItem.price} CHF
+            CHF {props.cartItem.price}
           </Typography>
 
           <Box
@@ -94,6 +84,39 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               <AddCircleOutlineIcon sx={{ fontSize: "28px" }} />
             </Button>
           </Box>
+        </Box>
+      </Card>
+    </>
+  ) : (
+    <>
+      {" "}
+      <Card sx={{ display: "flex", m: 2, p: 2 }}>
+        <img
+          src={`${BASEURL}/${props.cartItem.image}`}
+          alt={props.cartItem.name}
+          style={style.imageStyle}
+        />
+
+        <Box sx={{ flexGrow: 1, my: 2, mx: 4 }}>
+          <Typography variant="h5" fontWeight={700}>
+            {props.cartItem.name}
+          </Typography>
+          <Typography variant="h6"> CHF {props.cartItem.price}</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button color="primary" onClick={onDecreaseQuantity}>
+            <RemoveCircleOutlineIcon sx={{ fontSize: "40px" }} />
+          </Button>
+          <Typography variant="h6">Qty: {props.cartItem.quantity}</Typography>
+          <Button color="primary" onClick={onIncreaseQuantity}>
+            <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+          </Button>
         </Box>
       </Card>
     </>

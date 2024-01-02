@@ -9,9 +9,9 @@ export type OrderItemType = {
 export type OrderType = {
   createdAt: string;
   id: number;
-  isAccepted: boolean;
-  isCancelled: boolean;
-  name: string;
+  isAccepted?: boolean;
+  isCancelled?: boolean;
+  name?: string | null;
   contactNumber: string;
   kitchen: number;
   pickUpDate: string;
