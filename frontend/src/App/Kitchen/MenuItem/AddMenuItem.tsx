@@ -30,6 +30,10 @@ export default function AddMenuItem(props: {
   const [image, setImage] = useState<File | null>(null);
   const { refetch } = useMenuItemsList();
 
+  const cancelAddMenuItem = () => {
+    props.ontoggleAddMenuItem();
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
@@ -95,7 +99,7 @@ export default function AddMenuItem(props: {
                   objectFit: "cover",
                   borderRadius: "10px",
                   aspectRatio: "1",
-                  margin: "0 auto"
+                  margin: "0 auto",
                 }}
                 image={selectedImage}
               />
@@ -200,6 +204,15 @@ export default function AddMenuItem(props: {
 
           <Button type="submit" fullWidth variant="contained" sx={{ my: 3 }}>
             Add
+          </Button>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            sx={{ my: 1 }}
+            onClick={cancelAddMenuItem}
+          >
+            Cancel
           </Button>
         </Box>
       </Box>
