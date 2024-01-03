@@ -90,7 +90,7 @@ export default function Cart() {
           alignItems: "center",
         }}
       >
-        <img src={emptyCart} alt="empty shopping cart" width="180" />
+        <img src={emptyCart} alt="empty shopping cart" width="250" />
         <Typography variant="h5">Your cart is empty</Typography>
         <Button variant="contained" sx={{ my: 3 }} onClick={goToHomePage}>
           Shop now

@@ -6,7 +6,7 @@ import { BASEURL } from "../../config";
 export default function PendingOrderCard(props: { order: OrderType }) {
   return (
     <Container sx={{ m: 2, p: 4, width: "100%" }}>
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{ p: 3, mb: 4, backgroundColor: "#f1ddca" }}>
         <Typography variant="h5" fontWeight={700}>
           Order details
         </Typography>
@@ -16,7 +16,7 @@ export default function PendingOrderCard(props: { order: OrderType }) {
         </Typography>
         <br />
         <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-          <Paper sx={{ px: 3, py: 2, backgroundColor: "#faf4f0" }}>
+          <Paper sx={{ px: 3, py: 2 }}>
             <Typography variant="subtitle1">
               Pick up Date & Time
               <br />
@@ -26,7 +26,7 @@ export default function PendingOrderCard(props: { order: OrderType }) {
               </b>
             </Typography>
           </Paper>
-          <Paper sx={{ px: 3, py: 2, backgroundColor: "#faf4f0" }}>
+          <Paper sx={{ px: 3, py: 2 }}>
             <Typography variant="subtitle1">
               Contact number
               <br />
