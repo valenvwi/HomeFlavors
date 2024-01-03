@@ -44,7 +44,10 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
 
   return isSmallScreen ? (
     <>
-      <Card sx={{ my: 2, p: 2 }}>
+      <Card
+        elevation={6}
+        sx={{ my: 2, p: 2, backgroundColor: "#fff6f2", borderRadius: "15px" }}
+      >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <img
             src={`${BASEURL}/${props.cartItem.image}`}
@@ -63,7 +66,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
             my: 1,
           }}
         >
-          <Typography variant="subtitle2">
+          <Typography variant="subtitle2" fontWeight={700}>
             CHF {props.cartItem.price}
           </Typography>
 
@@ -77,7 +80,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
             <Button color="primary" onClick={onDecreaseQuantity}>
               <RemoveCircleOutlineIcon sx={{ fontSize: "28px" }} />
             </Button>
-            <Typography variant="body2">
+            <Typography variant="body2" fontWeight={700}>
               Qty: {props.cartItem.quantity}
             </Typography>
             <Button color="primary" onClick={onIncreaseQuantity}>
@@ -90,7 +93,16 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
   ) : (
     <>
       {" "}
-      <Card sx={{ display: "flex", m: 2, p: 2 }}>
+      <Card
+        elevation={6}
+        sx={{
+          display: "flex",
+          m: 2,
+          p: 2,
+          backgroundColor: "#fff6f2",
+          borderRadius: "15px",
+        }}
+      >
         <img
           src={`${BASEURL}/${props.cartItem.image}`}
           alt={props.cartItem.name}
@@ -101,7 +113,10 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
           <Typography variant="h5" fontWeight={700}>
             {props.cartItem.name}
           </Typography>
-          <Typography variant="h6"> CHF {props.cartItem.price}</Typography>
+          <Typography variant="h6" fontWeight={700}>
+            {" "}
+            CHF {props.cartItem.price}
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -113,7 +128,9 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
           <Button color="primary" onClick={onDecreaseQuantity}>
             <RemoveCircleOutlineIcon sx={{ fontSize: "40px" }} />
           </Button>
-          <Typography variant="h6">Qty: {props.cartItem.quantity}</Typography>
+          <Typography variant="h6" fontWeight={700}>
+            Qty: {props.cartItem.quantity}
+          </Typography>
           <Button color="primary" onClick={onIncreaseQuantity}>
             <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
           </Button>

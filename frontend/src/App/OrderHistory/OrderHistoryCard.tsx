@@ -11,6 +11,8 @@ const smallScreenConfig = {
   cardStyle: {
     my: 2,
     p: 1,
+    borderRadius: "15px",
+    backgroundColor: "#fff6f2",
   },
   fontTitleVariant: "subtitle1",
   fontContentVariant: "body2",
@@ -28,6 +30,8 @@ const largeScreenConfig = {
   cardStyle: {
     my: 2,
     p: 4,
+    borderRadius: "15px",
+    backgroundColor: "#fff6f2",
   },
   fontTitleVariant: "h5",
   fontContentVariant: "h6",
@@ -55,7 +59,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
   const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
 
   return (
-    <Card sx={style.cardStyle}>
+    <Card elevation={6} sx={style.cardStyle}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant={style.fontTitleVariant} fontWeight={700}>
           {!isSmallScreen && "Order created at"} {formattedCreatedAtDate}

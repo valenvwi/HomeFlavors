@@ -1,7 +1,7 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
-import spicyIcon from "../../../assets/spicy.jpg";
+import spicyIcon from "../../../assets/spicy.png";
 import vegIcon from "../../../assets/veg.png";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -48,7 +48,17 @@ export default function MenuItemCard(props: {
     config: { mass: 1, tension: 300, friction: 10 },
   });
   return (
-    <Card sx={{ display: "flex", flexDirection: "column", my: 2, p: 2 }}>
+    <Card
+      elevation={6}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        my: 2,
+        p: 2,
+        backgroundColor: "#fff6f2",
+        borderRadius: "15px",
+      }}
+    >
       <img
         src={`${BASEURL}/${props.menuItem.image}`}
         alt={props.menuItem.name}
@@ -77,7 +87,7 @@ export default function MenuItemCard(props: {
           <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
         )}
         {props.menuItem.isSpicy && (
-          <img src={spicyIcon} alt="Spicy icon" width="50" height="50" />
+          <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
         )}
       </Box>
       <Typography variant="subtitle2" sx={{ mx: 1 }}>
@@ -92,7 +102,7 @@ export default function MenuItemCard(props: {
         }}
       >
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          {props.menuItem.price} CHF
+          CHF {props.menuItem.price}
         </Typography>
         {props.isOwner ? (
           <>

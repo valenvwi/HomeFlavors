@@ -35,9 +35,6 @@ export default function OrderHistory() {
       }}
     >
       <SuccessCheckoutModal open={isOpened} handleClose={handleClose} />
-      {/* <Typography variant="h4" fontWeight={700}>
-        Your orders
-      </Typography> */}
       {orders?.length === 0 && (
         <Box
           sx={{
