@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Card, IconButton, Typography } from "@mui/material";
 import { OrderType } from "../types/order";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -66,13 +66,13 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
         </Typography>
 
         {expanded ? (
-          <Button onClick={() => setExpanded(false)}>
+          <IconButton onClick={() => setExpanded(false)}>
             <ExpandLessIcon />
-          </Button>
+          </IconButton>
         ) : (
-          <Button onClick={() => setExpanded(true)}>
+          <IconButton onClick={() => setExpanded(true)}>
             <ExpandMoreIcon />
-          </Button>
+          </IconButton>
         )}
       </Box>
       {!expanded && (

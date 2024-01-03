@@ -114,13 +114,13 @@ export default function MenuItemCard(props: {
               }}
             >
               <Button
-                style={{ backgroundColor: "white" }}
+                style={{ backgroundColor: "#fff6f2" }}
                 onClick={setMenuItem}
               >
                 <ModeEditIcon sx={{ fontSize: "32px" }} />
               </Button>
               <Button
-                style={{ backgroundColor: "white", color: "#d32f2f" }}
+                style={{ backgroundColor: "#fff6f2", color: "#d32f2f" }}
                 onClick={onDeleteMenuItem}
               >
                 <DeleteIcon sx={{ fontSize: "32px" }} />

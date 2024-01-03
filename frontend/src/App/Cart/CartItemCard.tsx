@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Card, IconButton, Typography } from "@mui/material";
 import { CartItemType } from "../types/cartItem";
 import { BASEURL } from "../../config";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -77,15 +77,15 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               alignItems: "center",
             }}
           >
-            <Button color="primary" onClick={onDecreaseQuantity}>
+            <IconButton color="primary" onClick={onDecreaseQuantity}>
               <RemoveCircleOutlineIcon sx={{ fontSize: "28px" }} />
-            </Button>
+            </IconButton>
             <Typography variant="body2" fontWeight={700}>
               Qty: {props.cartItem.quantity}
             </Typography>
-            <Button color="primary" onClick={onIncreaseQuantity}>
+            <IconButton color="primary" onClick={onIncreaseQuantity}>
               <AddCircleOutlineIcon sx={{ fontSize: "28px" }} />
-            </Button>
+            </IconButton>
           </Box>
         </Box>
       </Card>
@@ -125,15 +125,15 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
             alignItems: "center",
           }}
         >
-          <Button color="primary" onClick={onDecreaseQuantity}>
+          <IconButton color="primary" onClick={onDecreaseQuantity}>
             <RemoveCircleOutlineIcon sx={{ fontSize: "40px" }} />
-          </Button>
+          </IconButton>
           <Typography variant="h6" fontWeight={700}>
             Qty: {props.cartItem.quantity}
           </Typography>
-          <Button color="primary" onClick={onIncreaseQuantity}>
+          <IconButton color="primary" onClick={onIncreaseQuantity}>
             <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-          </Button>
+          </IconButton>
         </Box>
       </Card>
     </>

@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, IconButton, Typography } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
 import spicyIcon from "../../../assets/spicy.png";
@@ -39,17 +39,26 @@ export default function MenuItemCard(props: {
     props.onSetMenuItem(props.menuItem);
   };
 
-  const [isHovered, setIsHovered] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
 
-  const hoverAnimation = useSpring({
-    to: {
-      transform: isHovered ? "scale(1.1)" : "scale(1)",
-    },
-    config: { mass: 1, tension: 300, friction: 10 },
-  });
+  // const hoverAnimation = useSpring({
+  //   to: {
+  //     transform: isHovered ? "scale(1.1)" : "scale(1)",
+  //   },
+  //   config: { mass: 1, tension: 300, friction: 10 },
+  // });
 
   return (
-    <Card elevation={6} sx={{ display: "flex", m: 2, p: 2, backgroundColor: "#fff6f2", borderRadius: "15px" }}>
+    <Card
+      elevation={6}
+      sx={{
+        display: "flex",
+        m: 2,
+        p: 2,
+        backgroundColor: "#fff6f2",
+        borderRadius: "15px",
+      }}
+    >
       <img
         src={`${BASEURL}/${props.menuItem.image}`}
         alt={props.menuItem.name}
@@ -84,11 +93,11 @@ export default function MenuItemCard(props: {
       </Box>
       {props.isOwner ? (
         <>
-          <Button style={{ backgroundColor: "white" }} onClick={setMenuItem}>
+          <Button style={{ backgroundColor: "#fff6f2" }} onClick={setMenuItem}>
             <ModeEditIcon sx={{ fontSize: "40px" }} />
           </Button>
           <Button
-            style={{ backgroundColor: "white", color: "#d32f2f" }}
+            style={{ backgroundColor: "#fff6f2", color: "#d32f2f" }}
             onClick={onDeleteMenuItem}
           >
             <DeleteIcon sx={{ fontSize: "40px" }} />
@@ -96,22 +105,38 @@ export default function MenuItemCard(props: {
         </>
       ) : props.menuItem.isAvailable ? (
         !isLoggedIn ? (
-          <>
-            <animated.div
-              style={{ ...hoverAnimation, margin: "auto" }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IconButton
+              color="primary"
+              onClick={props.handleOpen}
+              sx={{ height: " 60px", width: "60px" }}
             >
-              <Button color="primary" onClick={props.handleOpen}>
-                <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-              </Button>
-            </animated.div>
+              <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+            </IconButton>
             <LoginModal open={props.open} handleClose={props.handleClose} />
-          </>
+          </Box>
         ) : (
-          <Button color="primary" onClick={onAddToCart}>
-            <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-          </Button>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IconButton
+              color="primary"
+              onClick={onAddToCart}
+              sx={{ height: " 60px", width: "60px" }}
+            >
+              <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+            </IconButton>
+          </Box>
         )
       ) : (
         <img

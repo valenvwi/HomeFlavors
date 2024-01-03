@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { KitchenType } from "../../types/kitchen";
 import { useAppSelector } from "../../store/root";
@@ -39,15 +39,17 @@ export default function Content(props: Props) {
         sx={{
           mx: 3,
           my: 2,
-          display: isSmallScreen ? "block": "flex",
+          display: isSmallScreen ? "block" : "flex",
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
         }}
       >
         <Box>
-          <Typography variant={style.fontTitleVariant} fontWeight={700}>{props.kitchen?.name}</Typography>
-          <Typography variant={style.fontSubtitleVariant} sx={{ }}>
+          <Typography variant={style.fontTitleVariant} fontWeight={700}>
+            {props.kitchen?.name}
+          </Typography>
+          <Typography variant={style.fontSubtitleVariant} sx={{}}>
             <i>{props.kitchen?.description}</i>
           </Typography>
           <Typography variant={style.fontContentVariant}>
@@ -58,15 +60,21 @@ export default function Content(props: Props) {
           <Typography variant={style.fontContentVariant}>
             Opening Hours: {props.kitchen?.openingHours}
           </Typography>
-          <Typography variant={style.fontContentVariant}>Address: {props.kitchen?.address}</Typography>
+          <Typography variant={style.fontContentVariant}>
+            Address: {props.kitchen?.address}
+          </Typography>
           <Typography variant={style.fontContentVariant}>
             Contact Number: {props.kitchen?.contactNumber}
           </Typography>
         </Box>
         {currentUserId === props.kitchen?.owner && (
-          <Button onClick={onShowEdit}>
-            <ModeEditIcon />
-          </Button>
+          <IconButton
+            onClick={onShowEdit}
+            color="primary"
+            sx={{ height: " 60px", width: "60px" }}
+          >
+            <ModeEditIcon sx={{ fontSize: "40px" }} />
+          </IconButton>
         )}
       </Box>
     </>
