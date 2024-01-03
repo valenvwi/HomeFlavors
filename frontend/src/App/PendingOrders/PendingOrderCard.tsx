@@ -1,29 +1,83 @@
-import { Card, Typography } from "@mui/material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
+import { BASEURL } from "../../config";
 
 export default function PendingOrderCard(props: { order: OrderType }) {
   return (
-    <Card sx={{ m: 2, p: 2 }}>
-      <Typography variant="h5">
-        {props.order.pickUpDate}{" "}
-        {dayjs(props.order.pickUpTime, "HH:mm:ss").format("HH:mm")}
-      </Typography>
-      {props.order.orderItems?.map((orderItem) => (
-        <Typography key={orderItem.id}>
-          {orderItem.menuItem.name} x {orderItem.quantity}
+    <Container sx={{ m: 2, p: 4, width: "100%" }}>
+      <Paper sx={{ p: 2 }}>
+        <Typography variant="h6" fontWeight={700}>
+          Order details
         </Typography>
+        <Typography>
+          Order for <b>{props.order.name}</b> created at{" "}
+          {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
+        </Typography>
+        <br />
+        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+          <Paper sx={{ px: 3, py: 2, backgroundColor: "#faf4f0" }}>
+            <Typography>
+              Pick up Date & Time
+              <br />
+              <b>
+                {props.order.pickUpDate}{" "}
+                {dayjs(props.order.pickUpTime, "HH:mm:ss").format("HH:mm")}
+              </b>
+            </Typography>
+          </Paper>
+          <Paper sx={{ px: 3, py: 2, backgroundColor: "#faf4f0" }}>
+            <Typography>
+              Contact number
+              <br />
+              <b>{props.order.contactNumber}</b>
+            </Typography>
+          </Paper>
+        </Box>
+      </Paper>
+
+      {props.order.orderItems?.map((orderItem) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 2,
+          }}
+        >
+          <img
+            src={`${BASEURL}/${orderItem.menuItem.image}`}
+            alt={orderItem.menuItem.name}
+            width="100px"
+            height="100px"
+            style={{ objectFit: "cover", borderRadius: "10px" }}
+          />
+
+          <Typography key={orderItem.id}>
+            {orderItem.menuItem.name} x {orderItem.quantity}
+          </Typography>
+          <Typography>
+            CHF {orderItem.menuItem.price * orderItem.quantity}
+          </Typography>
+        </Box>
       ))}
-      <Typography>Total price: CHF {props.order.totalPrice}</Typography>
       {props.order.remark && (
-        <Typography>Remark: {props.order.remark}</Typography>
+        <Typography variant="subtitle1">
+          Remark: {props.order.remark}
+        </Typography>
       )}
-      <Typography>Name: {props.order.name}</Typography>
-      <Typography>Contact number: {props.order.contactNumber}</Typography>
-      <Typography>
-        Order created at{" "}
-        {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
+      <br />
+      <Typography fontWeight={700} sx={{ textAlign: "right" }}>
+        Total price: CHF {props.order.totalPrice}
       </Typography>
-    </Card>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="contained" color="success" sx={{ m: 2 }}>
+          Accept
+        </Button>
+        <Button variant="contained" color="error" sx={{ my: 2 }}>
+          Cancel
+        </Button>
+      </Box>
+    </Container>
   );
 }

@@ -16,9 +16,11 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HistoryIcon from "@mui/icons-material/History";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useAppSelector } from "../store/root";
 import { Link, useNavigate } from "react-router-dom";
-import { apiLogoutCreate } from "../../../api";
+import { apiLogoutCreate, useKitchensRetrieve } from "../../../api";
 import { authActions } from "../store/auth";
 import { cartActions } from "../store/cart";
 import { useAppDispatch } from "../store/root";
@@ -28,6 +30,11 @@ export default function AppNavBar() {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const cartUpdated = useAppSelector((state) => state.cart.cartUpdated);
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
+  const currentUserId = useAppSelector((state) => state.auth.currentUserId);
+
+  const { data: kitchenResponse } = useKitchensRetrieve(1);
+  const kitchen = kitchenResponse?.data;
+  const isKitchenOwner = kitchen?.owner === currentUserId;
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
@@ -47,6 +54,10 @@ export default function AppNavBar() {
 
   const goToOrderHistoryPage = () => {
     navigate("/orderHistory");
+  };
+
+  const goToPendingOrderPage = () => {
+    navigate("/pendingOrders");
   };
 
   const logout = () => {
@@ -112,7 +123,20 @@ export default function AppNavBar() {
             </Link>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {isLoggedIn ? (
+            {isLoggedIn && isKitchenOwner && (
+              <>
+                <Button color="inherit" onClick={goToPendingOrderPage}>
+                  <NotificationsIcon />
+                </Button>
+                <Button color="inherit" onClick={goToOrderHistoryPage}>
+                  <LeaderboardIcon />
+                </Button>
+                <Button color="inherit" onClick={logout}>
+                  <LogoutIcon />
+                </Button>
+              </>
+            )}
+            {isLoggedIn && !isKitchenOwner && (
               <>
                 <Button color="inherit" onClick={goToCartPage}>
                   <animated.div style={cartAnimation}>
@@ -128,7 +152,8 @@ export default function AppNavBar() {
                   <LogoutIcon />
                 </Button>
               </>
-            ) : (
+            )}
+            {!isLoggedIn && (
               <Button color="inherit" onClick={goToLoginPage}>
                 <LoginIcon />
               </Button>

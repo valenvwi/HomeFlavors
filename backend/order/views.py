@@ -31,11 +31,11 @@ class OrderView(viewsets.ModelViewSet):
             return Response(serializer.data)
 
         if kitchen_pending_orders == 'true':
-            queryset = Order.objects.filter(is_accepted=False, is_cancelled=False).order_by('-created_at')
+            queryset = Order.objects.filter(is_accepted=False, is_cancelled=False).order_by('pick_up_date', 'pick_up_time')
             serializer = OrderSerializer(queryset, many=True)
             return Response(serializer.data)
         elif kitchen_pending_orders == 'false':
-            queryset = Order.objects.filter(is_accepted=True, is_cancelled=False).order_by('-created_at')
+            queryset = Order.objects.filter(is_accepted=True, is_cancelled=False).order_by('pick_up_date', 'pick_up_time')
             serializer = OrderSerializer(queryset, many=True)
             return Response(serializer.data)
 
