@@ -3,7 +3,20 @@ import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BASEURL } from "../../config";
 
-export default function PendingOrderCard(props: { order: OrderType }) {
+type Props = {
+  order: OrderType;
+  acceptOrder: (orderId: number) => void;
+  cancelOrder: (orderId: number) => void;
+};
+export default function RightOrderDetailCard(props: Props) {
+  const onAcceptOrder = () => {
+    props.acceptOrder(props.order.id);
+  };
+
+  const onCancelOrder = () => {
+    props.cancelOrder(props.order.id);
+  };
+
   return (
     <Container sx={{ m: 2, p: 4, width: "100%" }}>
       <Paper sx={{ p: 3, mb: 4, backgroundColor: "#f1ddca" }}>
@@ -48,8 +61,8 @@ export default function PendingOrderCard(props: { order: OrderType }) {
           <img
             src={`${BASEURL}/${orderItem.menuItem.image}`}
             alt={orderItem.menuItem.name}
-            width="100px"
-            height="100px"
+            width="150px"
+            height="150px"
             style={{ objectFit: "cover", borderRadius: "10px" }}
           />
 
@@ -70,14 +83,26 @@ export default function PendingOrderCard(props: { order: OrderType }) {
       <Typography fontWeight={700} sx={{ textAlign: "right" }}>
         Total price: CHF {props.order.totalPrice}
       </Typography>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button variant="contained" color="success" sx={{ m: 2 }}>
-          Accept
-        </Button>
-        <Button variant="contained" color="error" sx={{ my: 2 }}>
-          Cancel
-        </Button>
-      </Box>
+      {!props.order.isAccepted && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ m: 2 }}
+            onClick={onAcceptOrder}
+          >
+            Accept
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ my: 2 }}
+            onClick={onCancelOrder}
+          >
+            Cancel
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 }

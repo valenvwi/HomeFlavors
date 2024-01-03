@@ -4,6 +4,7 @@ from .serializers import OrderSerializer, OrderItemSerializer
 from rest_framework.response import Response
 from django.core.mail import EmailMessage
 from .schema import order_list_docs
+from datetime import datetime
 
 class OrderItemView(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
@@ -35,7 +36,25 @@ class OrderView(viewsets.ModelViewSet):
             serializer = OrderSerializer(queryset, many=True)
             return Response(serializer.data)
         elif kitchen_pending_orders == 'false':
-            queryset = Order.objects.filter(is_accepted=True, is_cancelled=False).order_by('pick_up_date', 'pick_up_time')
+            today = datetime.today().date().strftime('%Y-%m-%d')
+            now = datetime.now().time()
+
+            queryset_today = Order.objects.filter(
+            is_accepted=True,
+            is_cancelled=False,
+            pick_up_date=today,
+            pick_up_time__gte=now)
+
+            queryset_future = Order.objects.filter(
+            is_accepted=True,
+            is_cancelled=False,
+            pick_up_date__gt = today,
+            )
+
+            queryset = queryset_future | queryset_today
+
+            queryset = queryset.order_by('pick_up_date', 'pick_up_time')
+
             serializer = OrderSerializer(queryset, many=True)
             return Response(serializer.data)
 
