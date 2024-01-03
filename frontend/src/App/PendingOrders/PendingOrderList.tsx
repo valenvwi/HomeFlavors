@@ -37,10 +37,10 @@ export default function PendingOrderList(props: Props) {
     <Drawer
       variant="permanent"
       sx={{
-        width: "30%",
+        width: "25%",
         flexShrink: 0,
         zIndex: 0,
-        [`& .MuiDrawer-paper`]: { width: "30%", boxSizing: "border-box" },
+        [`& .MuiDrawer-paper`]: { width: "25%", boxSizing: "border-box" },
       }}
     >
       <Toolbar />
@@ -57,11 +57,16 @@ export default function PendingOrderList(props: Props) {
         <ToggleButton value="past">Past</ToggleButton>
       </ToggleButtonGroup>
       <Box sx={{ overflow: "auto", p: 2, my: 1 }}>
-        <List >
+        <List>
           {props.orders.map((order) => (
             <ListItem key={order.id} disablePadding>
-              <ListItemButton onClick={() => changeOrder(order)} sx={{ justifyContent: "center"}}>
-                <Paper sx={{ p: 3, display: "flex", alignItems: "top"}}>
+              <ListItemButton
+                onClick={() => changeOrder(order)}
+                sx={{ justifyContent: "center" }}
+              >
+                <Paper
+                  sx={{ p: 3, display: "flex", alignItems: "top", justifyContent: "space-between", flexGrow: 1 }}
+                >
                   <Box>
                     <Typography variant="h6" fontWeight={700}>
                       Order #{order.id}

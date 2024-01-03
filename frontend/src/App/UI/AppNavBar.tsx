@@ -17,10 +17,14 @@ import HistoryIcon from "@mui/icons-material/History";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useAppSelector } from "../store/root";
 import { Link, useNavigate } from "react-router-dom";
-import { apiLogoutCreate, useKitchensRetrieve } from "../../../api";
+import {
+  apiLogoutCreate,
+  useKitchensRetrieve,
+  useOrdersList,
+} from "../../../api";
 import { authActions } from "../store/auth";
 import { cartActions } from "../store/cart";
 import { useAppDispatch } from "../store/root";
@@ -31,6 +35,12 @@ export default function AppNavBar() {
   const cartUpdated = useAppSelector((state) => state.cart.cartUpdated);
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
   const currentUserId = useAppSelector((state) => state.auth.currentUserId);
+
+  const { data: ordersResponse } = useOrdersList({
+    kitchen_pending_orders: true,
+  });
+  const orders = ordersResponse?.data;
+  const notificationCount = orders?.length;
 
   const { data: kitchenResponse } = useKitchensRetrieve(1);
   const kitchen = kitchenResponse?.data;
@@ -126,7 +136,9 @@ export default function AppNavBar() {
             {isLoggedIn && isKitchenOwner && (
               <>
                 <Button color="inherit" onClick={goToPendingOrderPage}>
-                  <NotificationsIcon />
+                  <Badge badgeContent={notificationCount} color="primary">
+                    <NotificationsIcon />
+                  </Badge>
                 </Button>
                 <Button color="inherit" onClick={goToOrderHistoryPage}>
                   <LeaderboardIcon />

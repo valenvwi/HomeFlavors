@@ -6,18 +6,18 @@ import { BASEURL } from "../../config";
 export default function PendingOrderCard(props: { order: OrderType }) {
   return (
     <Container sx={{ m: 2, p: 4, width: "100%" }}>
-      <Paper sx={{ p: 2 }}>
-        <Typography variant="h6" fontWeight={700}>
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h5" fontWeight={700}>
           Order details
         </Typography>
-        <Typography>
+        <Typography variant="subtitle1">
           Order for <b>{props.order.name}</b> created at{" "}
           {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
         </Typography>
         <br />
         <Box sx={{ display: "flex", justifyContent: "space-around" }}>
           <Paper sx={{ px: 3, py: 2, backgroundColor: "#faf4f0" }}>
-            <Typography>
+            <Typography variant="subtitle1">
               Pick up Date & Time
               <br />
               <b>
@@ -27,7 +27,7 @@ export default function PendingOrderCard(props: { order: OrderType }) {
             </Typography>
           </Paper>
           <Paper sx={{ px: 3, py: 2, backgroundColor: "#faf4f0" }}>
-            <Typography>
+            <Typography variant="subtitle1">
               Contact number
               <br />
               <b>{props.order.contactNumber}</b>
