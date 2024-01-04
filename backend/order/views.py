@@ -118,7 +118,11 @@ class SalesDataView(APIView):
                 order__pick_up_date__range=(start_date, end_date),
                 order__is_accepted=True,
                 order__is_cancelled=False
-            ).values('menu_item__name').annotate(
+            ).values(
+                'menu_item__id',  # Include the menuItem id
+                'menu_item__image',  # Include the menuItem image
+                'menu_item__name'
+            ).annotate(
                 total_quantity=Sum('quantity'),
                 total_revenue=ExpressionWrapper(
                     F('quantity') * F('menu_item__price'),
@@ -129,6 +133,8 @@ class SalesDataView(APIView):
             menu_items_summary = []
             for item_total in menu_items_totals:
                 menu_items_summary.append({
+                    'id': item_total['menu_item__id'],
+                    'image': f"/media/{item_total['menu_item__image']}",
                     'name': item_total['menu_item__name'],
                     'revenue': item_total['total_revenue'] or 0.0,
                     'quantity': item_total['total_quantity'] or 0

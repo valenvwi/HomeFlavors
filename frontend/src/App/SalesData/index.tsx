@@ -4,6 +4,7 @@ import { useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
 import { useState } from "react";
 import SalesDateSelect from "./SalesDateSelect";
+import TopSalesCard from "./TopSalesCard";
 
 export default function SalesData() {
   const today = new Date();
@@ -19,6 +20,8 @@ export default function SalesData() {
   const salesByItem = salesDataResponse?.data?.itemsSalesSummary;
   const salesByPeriod = salesDataResponse?.data?.salesByPeriod;
   const salesByHour = salesDataResponse?.data?.salesByHour;
+
+  console.log(salesByItem);
 
   const onSetDate = (startDate: string, endDate: string) => {
     setStartDate(startDate);
@@ -72,6 +75,27 @@ export default function SalesData() {
       <Typography variant="h5" fontWeight={700}>
         Sales by Item
       </Typography>
+
+      {salesByItem && (
+        <Grid container sx={{ my: 3, mx: 1, justifyContent: "center" }}>
+          <TopSalesCard
+            name={salesByItem[0].name}
+            image={salesByItem[0].image}
+            quantity={salesByItem[0].quantity}
+          />
+          <TopSalesCard
+            name={salesByItem[1].name}
+            image={salesByItem[1].image}
+            quantity={salesByItem[1].quantity}
+          />
+          <TopSalesCard
+            name={salesByItem[2].name}
+            image={salesByItem[2].image}
+            quantity={salesByItem[2].quantity}
+          />
+        </Grid>
+      )}
+
       {salesByItem && <SalesItemTable sales={salesByItem} />}
     </Container>
   );
