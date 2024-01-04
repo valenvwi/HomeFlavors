@@ -50,6 +50,7 @@ export default function CheckoutForm() {
     const orderData = {
       kitchen: "1",
       totalPrice: totalPrice.toString(),
+      totalQuantity: cartItems.length.toString(),
       name: data.name,
       contactNumber: data.contactNumber,
       pickUpDate: data.pickUpDateTime.format("YYYY-MM-DD"),

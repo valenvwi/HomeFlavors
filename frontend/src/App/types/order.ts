@@ -18,6 +18,7 @@ export type OrderType = {
   pickUpTime: string;
   remark?: string | null;
   totalPrice: string;
+  totalQuantity: number;
   updatedAt: string;
   user: number;
   orderItems: OrderItemType[];

@@ -95,6 +95,9 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
                 Pick up time: {formattedPickUpDateTime}
               </Typography>
               <Typography variant={style.fontContentVariant}>
+                Total Quantity: {props.order.totalQuantity}
+              </Typography>
+              <Typography variant={style.fontContentVariant}>
                 Price: CHF {props.order.totalPrice}
               </Typography>
             </Box>
@@ -165,6 +168,8 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
             fontWeight={700}
             textAlign="right"
           >
+            Total Quantity: {props.order.totalQuantity}
+            <br />
             Total price: CHF {props.order.totalPrice}{" "}
           </Typography>
         </Box>

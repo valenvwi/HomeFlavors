@@ -19,7 +19,10 @@ export default function RightOrderDetailCard(props: Props) {
 
   return (
     <Container sx={{ m: 2, p: 4, width: "100%" }}>
-      <Paper elevation={6} sx={{ p: 3, mb: 4, borderRadius: "15px", backgroundColor: "#fff6f2" }}>
+      <Paper
+        elevation={6}
+        sx={{ p: 3, mb: 4, borderRadius: "15px", backgroundColor: "#fff6f2" }}
+      >
         <Typography variant="h5" fontWeight={700}>
           Order details
         </Typography>
@@ -80,6 +83,9 @@ export default function RightOrderDetailCard(props: Props) {
         </Typography>
       )}
       <br />
+      <Typography fontWeight={700} sx={{ textAlign: "right" }}>
+        Total quantity: {props.order.totalQuantity}
+      </Typography>
       <Typography fontWeight={700} sx={{ textAlign: "right" }}>
         Total price: CHF {props.order.totalPrice}
       </Typography>
