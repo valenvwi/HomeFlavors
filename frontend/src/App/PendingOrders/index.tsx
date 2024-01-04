@@ -9,6 +9,7 @@ export default function PendingOrders() {
   const { data: ordersResponse } = useOrdersList({
     kitchen_pending_orders: true,
   });
+
   const pendingOrders = ordersResponse?.data;
 
   const { data: upcomingOrdersResponse } = useOrdersList({
@@ -16,14 +17,12 @@ export default function PendingOrders() {
   });
   const upcomingOrders = upcomingOrdersResponse?.data;
 
-  console.log("Pending orders: " , pendingOrders)
-  console.log("Upcoming orders: " , upcomingOrders)
+  console.log("Pending orders: ", pendingOrders);
+  console.log("Upcoming orders: ", upcomingOrders);
 
   const { refetch } = useOrdersList({
     kitchen_pending_orders: true,
   });
-
-
 
   const [order, setOrder] = useState<OrderType | null>(null);
 
@@ -48,7 +47,13 @@ export default function PendingOrders() {
   return (
     <>
       <Container sx={{ pt: 5, display: "flex" }}>
-        {pendingOrders && upcomingOrders && <LeftOrderList pendingOrders={pendingOrders} upcomingOrders={upcomingOrders} onSetOrder={setOrder} />}
+        {pendingOrders && upcomingOrders && (
+          <LeftOrderList
+            pendingOrders={pendingOrders}
+            upcomingOrders={upcomingOrders}
+            onSetOrder={setOrder}
+          />
+        )}
         <Box
           sx={{
             display: "flex",

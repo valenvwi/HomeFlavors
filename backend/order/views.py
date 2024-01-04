@@ -9,6 +9,7 @@ from django.db.models import Sum, Count
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 from rest_framework.views import APIView
 from collections import OrderedDict
+from rest_framework import status
 
 
 class OrderItemView(viewsets.ModelViewSet):
@@ -37,10 +38,14 @@ class OrderView(viewsets.ModelViewSet):
             return Response(serializer.data)
 
         if kitchen_pending_orders == 'true':
+            if request.user.role != 'owner':
+                return Response({'error': 'You are not authorized to update this kitchen.'}, status=status.HTTP_401_UNAUTHORIZED)
             queryset = Order.objects.filter(is_accepted=False, is_cancelled=False).order_by('pick_up_date', 'pick_up_time')
             serializer = OrderSerializer(queryset, many=True)
             return Response(serializer.data)
         elif kitchen_pending_orders == 'false':
+            if request.user.role != 'owner':
+                return Response({'error': 'You are not authorized to update this kitchen.'}, status=status.HTTP_401_UNAUTHORIZED)
             today = datetime.today().date().strftime('%Y-%m-%d')
             now = datetime.now().time()
 
@@ -106,6 +111,10 @@ class SalesDataView(APIView):
 
     @sales_data_docs
     def get(self, request):
+
+        if request.user.role != 'owner':
+            return Response({'error': 'You are not authorized to update this kitchen.'}, status=status.HTTP_401_UNAUTHORIZED)
+
         start_date_str = request.query_params.get('start_date')
         end_date_str = request.query_params.get('end_date')
 
