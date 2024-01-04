@@ -70,6 +70,10 @@ export default function AppNavBar() {
     navigate("/pendingOrders");
   };
 
+  const goToSalesDataPage = () => {
+    navigate("/salesData");
+  }
+
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
@@ -140,7 +144,7 @@ export default function AppNavBar() {
                     <NotificationsIcon />
                   </Badge>
                 </Button>
-                <Button color="inherit" onClick={goToOrderHistoryPage}>
+                <Button color="inherit" onClick={goToSalesDataPage}>
                   <LeaderboardIcon />
                 </Button>
                 <Button color="inherit" onClick={logout}>
