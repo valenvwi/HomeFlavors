@@ -31,7 +31,6 @@ type Props = {
 }[];
 
 export default function SalesItemTable(props: { sales: Props }) {
-  console.log("SalesItemTable: ", props.sales);
   return (
     <TableContainer style={cardStyle} sx={{ my: 4 }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

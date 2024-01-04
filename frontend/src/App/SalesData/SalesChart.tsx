@@ -10,14 +10,10 @@ type salesProps = {
 };
 
 export default function SalesChart(props: { data: string; sales: salesProps }) {
-  console.log("SalesChart: ", props.sales);
   const dataType = props.data;
-  console.log("dataType: ", dataType);
   const time = props.sales.map((r) => r.time);
   const data = props.sales.map((d) => parseFloat(d[dataType]));
 
-  console.log("time: ", time);
-  console.log("data: ", data);
   return (
     <LineChart
       xAxis={[{ data: time, scaleType: "band" }]}

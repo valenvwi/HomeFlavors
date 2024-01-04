@@ -1,29 +1,48 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
 import { useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
+import { useState } from "react";
+import SalesDateSelect from "./SalesDateSelect";
 
 export default function SalesData() {
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+
+  const [startDate, setStartDate] = useState(todayString);
+  const [endDate, setEndDate] = useState(todayString);
+
   const { data: salesDataResponse } = useSalesDataList({
-    start_date: "2024-01-04",
-    end_date: "2024-01-04",
+    start_date: startDate,
+    end_date: endDate,
   });
   const salesByItem = salesDataResponse?.data?.itemsSalesSummary;
   const salesByPeriod = salesDataResponse?.data?.salesByPeriod;
   const salesByHour = salesDataResponse?.data?.salesByHour;
 
+  const onSetDate = (startDate: string, endDate: string) => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
+
   return (
     <Container sx={{ my: 5, py: 5 }} maxWidth="xl">
-      <Typography variant="h4" fontWeight={900}>
+      <Typography variant="h3" fontWeight={900}>
         Dashboard
       </Typography>
-      <Typography variant="subtitle1">
-        A tab to filter by days, weeks, months, years etc. Default by today
-      </Typography>
 
-      <Typography variant="h5" fontWeight={700}>
-        Daily Report
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" fontWeight={700}>
+          {startDate === endDate ? startDate : startDate + " - " + endDate}
+        </Typography>
+        <SalesDateSelect onSetDate={onSetDate} />
+      </Box>
 
       <Grid container spacing={2} sx={{ my: 3, mx: 1 }}>
         {salesByHour && (

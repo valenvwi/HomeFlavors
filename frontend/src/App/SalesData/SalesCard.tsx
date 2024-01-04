@@ -31,7 +31,6 @@ type Props = {
 
 export default function SalesCard(props: Props) {
 
-  console.log("SalesCard: ", props.sales)
   return (
     <Grid xs={4}>
       <Card sx={cardStyle}>
