@@ -45,7 +45,7 @@ export default function LeftOrderCard(props: Props) {
           </Box>
           <Typography fontWeight={700} sx={{ color: "green" }}>
             {" "}
-            CHF {props.order.totalPrice}
+            CHF {parseFloat(props.order.totalPrice).toFixed(2)}
           </Typography>
         </Paper>
       </ListItemButton>

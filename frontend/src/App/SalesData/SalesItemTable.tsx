@@ -5,6 +5,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
+  styled,
 } from "@mui/material";
 
 const rows = [
@@ -15,14 +17,23 @@ const rows = [
 
 const cardStyle = {
   borderRadius: "15px",
-  backgroundColor: "#fff6f2",
 };
 
 const tableCellTitleStyle = {
   fontSize: "18px",
   fontWeight: 700,
-  color: "#8b8989",
+  color: "white",
 };
+
+const tableCellContentStyle = {
+  fontSize: "16px",
+};
+
+const StyledTableRow = styled(TableRow)(() => ({
+  "&:nth-of-type(even)": {
+    backgroundColor: "#fff6f2",
+  },
+}));
 
 type Props = {
   name: string;
@@ -34,28 +45,36 @@ export default function SalesItemTable(props: { sales: Props }) {
   return (
     <TableContainer style={cardStyle} sx={{ my: 4 }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead sx={{ backgroundColor: "#EA5C2B" }}>
           <TableRow>
             <TableCell style={tableCellTitleStyle}>Menu Item</TableCell>
             <TableCell style={tableCellTitleStyle} align="right">
               Item sold
             </TableCell>
             <TableCell style={tableCellTitleStyle} align="right">
-              Item Revenue
+              Item Revenue (CHF)
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.sales.map((row) => (
-            <TableRow
+            <StyledTableRow
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell
+                component="th"
+                scope="row"
+                style={tableCellContentStyle}
+              >
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.quantity}</TableCell>
-              <TableCell align="right">CHF {row.revenue}</TableCell>
-            </TableRow>
+              <TableCell align="right" style={tableCellContentStyle}>
+                {row.quantity}
+              </TableCell>
+              <TableCell align="right" style={tableCellContentStyle}>
+                {parseFloat(row.revenue).toFixed(2)}
+              </TableCell>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>

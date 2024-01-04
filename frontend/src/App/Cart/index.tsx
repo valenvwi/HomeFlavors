@@ -63,7 +63,7 @@ export default function Cart() {
         Total Quantity: {totalQuantity}
         <br />
         {!isSmallScreen && <br />}
-        Total Price: CHF {totalPrice}
+        Total Price: CHF {totalPrice.toFixed(2)}
       </Typography>
       <Button
         variant="contained"

@@ -73,7 +73,7 @@ export default function RightOrderDetailCard(props: Props) {
             {orderItem.menuItem.name} x {orderItem.quantity}
           </Typography>
           <Typography>
-            CHF {orderItem.menuItem.price * orderItem.quantity}
+            CHF {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
           </Typography>
         </Box>
       ))}
@@ -87,7 +87,7 @@ export default function RightOrderDetailCard(props: Props) {
         Total quantity: {props.order.totalQuantity}
       </Typography>
       <Typography fontWeight={700} sx={{ textAlign: "right" }}>
-        Total price: CHF {props.order.totalPrice}
+        Total price: CHF {parseFloat(props.order.totalPrice).toFixed(2)}
       </Typography>
       {!props.order.isAccepted && (
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

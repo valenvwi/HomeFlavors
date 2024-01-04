@@ -45,7 +45,7 @@ export default function CartItem() {
                 </TableCell>
                 <TableCell align="right">{cartItem.quantity}</TableCell>
                 <TableCell align="right">
-                  {cartItem.price * cartItem.quantity}
+                  {(cartItem.price * cartItem.quantity).toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}
@@ -53,7 +53,7 @@ export default function CartItem() {
         </Table>
         <Box sx={{ textAlign: "right" }}>
           <Typography variant="h5" fontWeight={700}>
-            Final price: {totalPrice} CHF
+            Final price: {totalPrice.toFixed(2)} CHF
           </Typography>
         </Box>
       </TableContainer>

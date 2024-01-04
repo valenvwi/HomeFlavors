@@ -154,7 +154,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
                 </Typography>
               )}
               <Typography variant={style.fontContentVariant}>
-                CHF {orderItem.menuItem.price * orderItem.quantity}
+                CHF {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
               </Typography>
             </Box>
           ))}
@@ -170,7 +170,9 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
           >
             Total Quantity: {props.order.totalQuantity}
             <br />
-            Total price: CHF {props.order.totalPrice}{" "}
+            Total price: CHF {parseFloat(props.order.totalPrice).toFixed(
+              2
+            )}{" "}
           </Typography>
         </Box>
       )}

@@ -67,7 +67,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
           }}
         >
           <Typography variant="subtitle2" fontWeight={700}>
-            CHF {props.cartItem.price}
+            CHF {props.cartItem.price.toFixed(2)}
           </Typography>
 
           <Box
@@ -115,7 +115,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
           </Typography>
           <Typography variant="h6" fontWeight={700}>
             {" "}
-            CHF {props.cartItem.price}
+            CHF {props.cartItem.price.toFixed(2)}
           </Typography>
         </Box>
         <Box
