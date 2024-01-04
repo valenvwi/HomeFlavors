@@ -30,3 +30,9 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ["id", "user", "kitchen", "orderItems", "name", "contactNumber", "totalPrice", "pickUpDate", "pickUpTime", "remark", "isAccepted", "isCancelled", "createdAt", "updatedAt"]
         read_only_fields = ["user", "createdAt", "updatedAt"]
+
+
+class SalesDataSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    revenue = serializers.DecimalField(max_digits=10, decimal_places=2)
+    quantity= serializers.IntegerField()

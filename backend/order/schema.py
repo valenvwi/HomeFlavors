@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
 
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, SalesDataSerializer
 
 order_list_docs = extend_schema(
     responses=OrderSerializer(many=True),
@@ -29,6 +29,24 @@ order_list_docs = extend_schema(
             description='Get all cancel orders from the kitchen',
             location=OpenApiParameter.QUERY,
             type=OpenApiTypes.BOOL,
+        ),
+    ],
+)
+
+sales_data_docs = extend_schema(
+    responses=SalesDataSerializer(many=True),
+    parameters=[
+                OpenApiParameter(
+            name='start_date',
+            description='Get total revenue from the kitchen',
+            location=OpenApiParameter.QUERY,
+            type=OpenApiTypes.STR,
+        ),
+        OpenApiParameter(
+            name='end_date',
+            description='Get total revenue from the kitchen',
+            location=OpenApiParameter.QUERY,
+            type=OpenApiTypes.STR,
         ),
     ],
 )

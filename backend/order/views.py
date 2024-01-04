@@ -1,10 +1,13 @@
 from rest_framework import viewsets
 from .models import Order, OrderItem
-from .serializers import OrderSerializer, OrderItemSerializer
+from .serializers import OrderSerializer, OrderItemSerializer, SalesDataSerializer
 from rest_framework.response import Response
 from django.core.mail import EmailMessage
-from .schema import order_list_docs
+from .schema import order_list_docs, sales_data_docs
 from datetime import datetime
+from django.db.models import Sum
+from django.db.models import Sum, F, ExpressionWrapper, DecimalField
+from rest_framework.views import APIView
 
 class OrderItemView(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
@@ -68,7 +71,6 @@ class OrderView(viewsets.ModelViewSet):
             serializer = OrderSerializer(queryset, many=True)
             return Response(serializer.data)
 
-
         queryset = Order.objects.filter(user=request.user).order_by('-created_at')
         serializer = OrderSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -93,3 +95,43 @@ class OrderView(viewsets.ModelViewSet):
         to=[self.request.user.email],
         )
         email_message.send()
+
+
+class SalesDataView(APIView):
+
+    @sales_data_docs
+    def get(self, request):
+        start_date_str = request.query_params.get('start_date')
+        end_date_str = request.query_params.get('end_date')
+
+        if start_date_str and end_date_str:
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+
+            menu_items_totals = OrderItem.objects.filter(
+                order__pick_up_date__range=(start_date, end_date),
+                order__is_accepted=True,
+                order__is_cancelled=False
+            ).values('menu_item__name').annotate(
+                total_quantity=Sum('quantity'),
+                total_revenue=ExpressionWrapper(
+                    F('quantity') * F('menu_item__price'),
+                    output_field=DecimalField(max_digits=10, decimal_places=2)
+                )
+            )
+
+            menu_items_summary = []
+            for item_total in menu_items_totals:
+                menu_items_summary.append({
+                    'name': item_total['menu_item__name'],
+                    'revenue': item_total['total_revenue'] or 0.0,
+                    'quantity': item_total['total_quantity'] or 0
+                })
+
+            items_sales_summary = sorted(menu_items_summary, key=lambda k: k['quantity'], reverse=True)
+
+            serialized_sales_data = SalesDataSerializer(items_sales_summary, many=True)
+
+            return Response(serialized_sales_data.data)
+
+        return Response([])

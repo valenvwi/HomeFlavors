@@ -8,6 +8,7 @@ from rest_framework.routers import DefaultRouter
 from user.views import UserView
 from kitchen.views import KitchenView, MenuItemView
 from order.views import OrderView, OrderItemView
+from order.views import SalesDataView
 
 router = DefaultRouter()
 router.register(r'users', UserView, basename='user')
@@ -24,6 +25,7 @@ urlpatterns = [
     path("api/token/refresh/", JWTCookieTokenRefreshView.as_view(), name="token_refresh"),
     path("api/logout/", LogOutAPIView.as_view(), name="logout"),
     path("api/register/", RegisterView.as_view({'post': 'create'}), name="register"),
+    path('sales-data/', SalesDataView.as_view(), name='sales-data'),
 ] + router.urls
 
 
