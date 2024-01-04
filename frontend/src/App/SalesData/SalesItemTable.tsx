@@ -1,5 +1,4 @@
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -25,30 +24,38 @@ const tableCellTitleStyle = {
   color: "#8b8989",
 };
 
-export default function SalesItemTable() {
+type Props = {
+  name: string;
+  quantity: number;
+  revenue: string;
+}[];
+
+export default function SalesItemTable(props: { sales: Props }) {
+  console.log("SalesItemTable: ", props.sales);
   return (
     <TableContainer style={cardStyle} sx={{ my: 4 }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell style={tableCellTitleStyle}>Menu Item</TableCell>
-            <TableCell style={tableCellTitleStyle} align="right">Item sold</TableCell>
-            <TableCell style={tableCellTitleStyle} align="right">Item Revenue</TableCell>
+            <TableCell style={tableCellTitleStyle} align="right">
+              Item sold
+            </TableCell>
+            <TableCell style={tableCellTitleStyle} align="right">
+              Item Revenue
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.sales.map((row) => (
             <TableRow
-              key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
               <TableCell align="right">{row.quantity}</TableCell>
-              <TableCell align="right">
-                CHF {row.price * row.quantity}
-              </TableCell>
+              <TableCell align="right">CHF {row.revenue}</TableCell>
             </TableRow>
           ))}
         </TableBody>

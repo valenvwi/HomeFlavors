@@ -1,5 +1,7 @@
 import { Card, Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
+import { useSalesDataList } from "../../../api";
+import SalesChart from "./SalesChart";
 
 const cardStyle = {
   m: 2,
@@ -18,8 +20,16 @@ const fontContentStyle = {
 };
 
 export default function SalesData() {
+  const { data: salesDataResponse } = useSalesDataList({
+    start_date: "2024-01-04",
+    end_date: "2024-01-04",
+  });
+  const salesByItem = salesDataResponse?.data?.itemsSalesSummary;
+  const salesByPeriod = salesDataResponse?.data?.salesByPeriod;
+  const salesByHour = salesDataResponse?.data?.salesByHour;
+
   return (
-    <Container sx={{ my: 5, py: 5 }}>
+    <Container sx={{ my: 5, py: 5 }} maxWidth="xl">
       <Typography variant="h4" fontWeight={900}>
         Dashboard
       </Typography>
@@ -38,8 +48,9 @@ export default function SalesData() {
               Total Sales
             </Typography>
             <Typography variant="h5" style={fontContentStyle}>
-              CHF 1,000
+              CHF {salesByPeriod?.revenue}
             </Typography>
+            {salesByHour && <SalesChart sales={salesByHour} />}
           </Card>
         </Grid>
         <Grid xs={4}>
@@ -48,7 +59,7 @@ export default function SalesData() {
               Total Orders
             </Typography>
             <Typography variant="h5" style={fontContentStyle}>
-              150
+              {salesByPeriod?.orders}
             </Typography>
           </Card>
         </Grid>
@@ -58,7 +69,7 @@ export default function SalesData() {
               Total items sold
             </Typography>
             <Typography variant="h5" style={fontContentStyle}>
-              600
+              {salesByPeriod?.quantity}
             </Typography>
           </Card>
         </Grid>
@@ -67,7 +78,7 @@ export default function SalesData() {
       <Typography variant="h5" fontWeight={700}>
         Sales by Item
       </Typography>
-      <SalesItemTable />
+      {salesByItem && <SalesItemTable sales={salesByItem} />}
     </Container>
   );
 }

@@ -1434,7 +1434,7 @@ components:
     SalesData:
       type: object
       properties:
-        saleByPeriod:
+        salesByPeriod:
           $ref: '#/components/schemas/SalesByPeriod'
         itemsSalesSummary:
           type: array
@@ -1446,8 +1446,8 @@ components:
           items:
             $ref: '#/components/schemas/SalesByHour'
       required:
-      - saleByPeriod
       - salesByHour
+      - salesByPeriod
     User:
       type: object
       properties:

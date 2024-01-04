@@ -45,6 +45,6 @@ class SalesByHourSerializer(serializers.Serializer):
     ordersCount = serializers.IntegerField(source="orders_by_hour")
 
 class SalesDataSerializer(serializers.Serializer):
-    saleByPeriod = SalesByPeriodSerializer(source="sales_by_period")
+    salesByPeriod = SalesByPeriodSerializer(source="sales_by_period")
     itemsSalesSummary = serializers.ListField(child=serializers.DictField(), required=False, source="items_sales_summary")
     salesByHour = SalesByHourSerializer(many=True, source="sales_by_hour_summary")
