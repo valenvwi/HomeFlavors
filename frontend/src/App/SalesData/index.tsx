@@ -5,6 +5,9 @@ import SalesCard from "./SalesCard";
 import { useState } from "react";
 import SalesDateSelect from "./SalesDateSelect";
 import TopSalesCard from "./TopSalesCard";
+import gold from "../../assets/medals/gold.png";
+import silver from "../../assets/medals/silver.png";
+import bronze from "../../assets/medals/bronze.png";
 
 export default function SalesData() {
   const today = new Date();
@@ -30,15 +33,12 @@ export default function SalesData() {
 
   return (
     <Container sx={{ my: 5, py: 5 }} maxWidth="xl">
-      <Typography variant="h3" fontWeight={900}>
-        Dashboard
-      </Typography>
-
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          mt: 2,
         }}
       >
         <Typography variant="h4" fontWeight={700}>
@@ -46,6 +46,10 @@ export default function SalesData() {
         </Typography>
         <SalesDateSelect onSetDate={onSetDate} />
       </Box>
+
+      <Typography variant="h5" fontWeight={700}>
+        Overview
+      </Typography>
 
       <Grid container spacing={2} sx={{ my: 3, mx: 1 }}>
         {salesByHour && (
@@ -73,7 +77,7 @@ export default function SalesData() {
       </Grid>
 
       <Typography variant="h5" fontWeight={700}>
-        Sales by Item
+        Top 3 Sales
       </Typography>
 
       {salesByItem && (
@@ -82,19 +86,26 @@ export default function SalesData() {
             name={salesByItem[0].name}
             image={salesByItem[0].image}
             quantity={salesByItem[0].quantity}
+            medal={gold}
           />
           <TopSalesCard
             name={salesByItem[1].name}
             image={salesByItem[1].image}
             quantity={salesByItem[1].quantity}
+            medal={silver}
           />
           <TopSalesCard
             name={salesByItem[2].name}
             image={salesByItem[2].image}
             quantity={salesByItem[2].quantity}
+            medal={bronze}
           />
         </Grid>
       )}
+
+      <Typography variant="h5" fontWeight={700}>
+        Sales by Item
+      </Typography>
 
       {salesByItem && <SalesItemTable sales={salesByItem} />}
     </Container>

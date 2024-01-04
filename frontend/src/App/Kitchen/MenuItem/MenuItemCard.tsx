@@ -11,8 +11,6 @@ import soldOut from "../../../assets/sold-out.png";
 import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
 import LoginModal from "../../UI/LoginModal";
-import { useSpring, animated } from "@react-spring/web";
-import { useState } from "react";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -38,15 +36,6 @@ export default function MenuItemCard(props: {
   const setMenuItem = () => {
     props.onSetMenuItem(props.menuItem);
   };
-
-  // const [isHovered, setIsHovered] = useState(false);
-
-  // const hoverAnimation = useSpring({
-  //   to: {
-  //     transform: isHovered ? "scale(1.1)" : "scale(1)",
-  //   },
-  //   config: { mass: 1, tension: 300, friction: 10 },
-  // });
 
   return (
     <Card
