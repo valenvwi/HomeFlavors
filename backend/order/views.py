@@ -4,7 +4,7 @@ from .serializers import OrderSerializer, OrderItemSerializer, SalesDataSerializ
 from rest_framework.response import Response
 from django.core.mail import EmailMessage
 from .schema import order_list_docs, sales_data_docs
-from datetime import datetime, time
+from datetime import datetime
 from django.db.models import Sum, Count
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 from rest_framework.views import APIView
