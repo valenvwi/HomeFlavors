@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import flyingPan from "../assets/frying-pan.png";
 
 type SignupInputs = {
   username: string;
@@ -43,8 +44,23 @@ export default function Signup() {
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <img
+          src={flyingPan}
+          alt="flying pan"
+          width="100px"
+          height="100px"
+          color="orange"
+        />
+
+        <Typography component="h1" variant="h4" fontWeight={700} sx={{ py: 2 }}>
           Sign up
+        </Typography>
+        <Typography
+          component="h1"
+          variant="body1"
+          sx={{ color: "#8b8989", textAlign: "center" }}
+        >
+          Please enter your detail below
         </Typography>
         <Box
           component="form"

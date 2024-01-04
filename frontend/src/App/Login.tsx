@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { isAxiosError } from "axios";
+import flyingPan from "../assets/frying-pan.png";
 
 type LoginInputs = {
   username: string;
@@ -48,14 +49,29 @@ export default function Login() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: "200px",
+          marginTop: "130px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Log in
+        <img
+          src={flyingPan}
+          alt="flying pan"
+          width="100px"
+          height="100px"
+          color="orange"
+        />
+
+        <Typography component="h1" variant="h4" fontWeight={700} sx={{ py: 2 }}>
+          Welcome back
+        </Typography>
+        <Typography
+          component="h1"
+          variant="body1"
+          sx={{ color: "#8b8989", textAlign: "center" }}
+        >
+          We are happy to see you again!
         </Typography>
         <Box
           component="form"
