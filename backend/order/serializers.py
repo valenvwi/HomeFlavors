@@ -18,6 +18,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     orderItems = OrderItemSerializer(many=True, read_only=True, source='order_items')
     totalPrice = serializers.DecimalField(source='total_price', max_digits=10, decimal_places=2)
+    totalQuantity = serializers.IntegerField(source='total_quantity', required=False)
     pickUpDate = serializers.DateField(source='pick_up_date')
     pickUpTime = serializers.TimeField(source='pick_up_time')
     contactNumber = serializers.CharField(source='contact_number')
@@ -28,11 +29,22 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ["id", "user", "kitchen", "orderItems", "name", "contactNumber", "totalPrice", "pickUpDate", "pickUpTime", "remark", "isAccepted", "isCancelled", "createdAt", "updatedAt"]
+        fields = ["id", "user", "kitchen", "orderItems", "name", "contactNumber", "totalPrice", "totalQuantity","pickUpDate", "pickUpTime", "remark", "isAccepted", "isCancelled", "createdAt", "updatedAt"]
         read_only_fields = ["user", "createdAt", "updatedAt"]
 
 
+class SalesByPeriodSerializer(serializers.Serializer):
+    revenue = serializers.DecimalField(max_digits=10, decimal_places=2, source="total_revenue")
+    quantity = serializers.IntegerField(source="total_quantity")
+    orders = serializers.IntegerField(source="total_orders")
+
+class SalesByHourSerializer(serializers.Serializer):
+    time = serializers.CharField()
+    revenue = serializers.DecimalField(max_digits=10, decimal_places=2, source="revenue_by_hour")
+    quantity= serializers.IntegerField(source="quantity_by_hour")
+    ordersCount = serializers.IntegerField(source="orders_by_hour")
+
 class SalesDataSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    revenue = serializers.DecimalField(max_digits=10, decimal_places=2)
-    quantity= serializers.IntegerField()
+    saleByPeriod = SalesByPeriodSerializer(source="sales_by_period")
+    itemsSalesSummary = serializers.ListField(child=serializers.DictField(), required=False, source="items_sales_summary")
+    salesByHour = SalesByHourSerializer(many=True, source="sales_by_hour_summary")

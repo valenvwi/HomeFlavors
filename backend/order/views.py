@@ -4,10 +4,12 @@ from .serializers import OrderSerializer, OrderItemSerializer, SalesDataSerializ
 from rest_framework.response import Response
 from django.core.mail import EmailMessage
 from .schema import order_list_docs, sales_data_docs
-from datetime import datetime
-from django.db.models import Sum
+from datetime import datetime, time
+from django.db.models import Sum, Count
 from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 from rest_framework.views import APIView
+from collections import OrderedDict
+
 
 class OrderItemView(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
@@ -72,8 +74,11 @@ class OrderView(viewsets.ModelViewSet):
             return Response(serializer.data)
 
         queryset = Order.objects.filter(user=request.user).order_by('-created_at')
+        # Below line is saved for testing purpose
+        # queryset = Order.objects.all().order_by('-created_at')
         serializer = OrderSerializer(queryset, many=True)
         return Response(serializer.data)
+
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -108,6 +113,7 @@ class SalesDataView(APIView):
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
 
+            # Sales by item in the period
             menu_items_totals = OrderItem.objects.filter(
                 order__pick_up_date__range=(start_date, end_date),
                 order__is_accepted=True,
@@ -130,7 +136,47 @@ class SalesDataView(APIView):
 
             items_sales_summary = sorted(menu_items_summary, key=lambda k: k['quantity'], reverse=True)
 
-            serialized_sales_data = SalesDataSerializer(items_sales_summary, many=True)
+            # Total sales within the start date and end date in the period
+            sales_by_period = Order.objects.filter(
+                pick_up_date__range=(start_date, end_date),
+                is_accepted=True,
+                is_cancelled=False
+            ).aggregate(
+                total_revenue=Sum('total_price'),
+                total_quantity=Sum('total_quantity'),
+                total_orders=Count('id')
+            )
+
+            # Sales by hour in the period
+            sales_by_hour_summary = []
+
+            # from 12:00-20:00
+            for i in range(12, 21):
+                sales_by_hour = Order.objects.filter(
+                    pick_up_date__range=(start_date, end_date),
+                    pick_up_time__hour=i,
+                    is_accepted=True,
+                    is_cancelled=False
+                ).aggregate(
+                    total_revenue=Sum('total_price'),
+                    total_quantity=Sum('total_quantity'),
+                    total_orders=Count('id')
+                )
+
+                sales_by_hour_summary.append({
+                    'time': f'{i}:00',
+                    'revenue_by_hour': sales_by_hour['total_revenue'] or 0.0,
+                    'quantity_by_hour': sales_by_hour['total_quantity'] or 0,
+                    'orders_by_hour': sales_by_hour['total_orders'] or 0
+                })
+
+            # Combine all sales data in a single response
+            summary = OrderedDict([
+                ('sales_by_period', sales_by_period),
+                ('items_sales_summary', items_sales_summary),
+                ('sales_by_hour_summary', sales_by_hour_summary)
+            ])
+            serialized_sales_data = SalesDataSerializer(summary)
 
             return Response(serialized_sales_data.data)
 
