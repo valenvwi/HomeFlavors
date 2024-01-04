@@ -1,23 +1,7 @@
-import { Card, Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
 import { useSalesDataList } from "../../../api";
-import SalesChart from "./SalesChart";
-
-const cardStyle = {
-  m: 2,
-  p: 3,
-  borderRadius: "15px",
-  backgroundColor: "#fff6f2",
-};
-
-const fontTitleStyle = {
-  fontWeight: 700,
-  color: "#8b8989",
-};
-
-const fontContentStyle = {
-  fontWeight: 700,
-};
+import SalesCard from "./SalesCard";
 
 export default function SalesData() {
   const { data: salesDataResponse } = useSalesDataList({
@@ -42,37 +26,28 @@ export default function SalesData() {
       </Typography>
 
       <Grid container spacing={2} sx={{ my: 3, mx: 1 }}>
-        <Grid xs={4}>
-          <Card sx={cardStyle}>
-            <Typography variant="h6" style={fontTitleStyle}>
-              Total Sales
-            </Typography>
-            <Typography variant="h5" style={fontContentStyle}>
-              CHF {salesByPeriod?.revenue}
-            </Typography>
-            {salesByHour && <SalesChart sales={salesByHour} />}
-          </Card>
-        </Grid>
-        <Grid xs={4}>
-          <Card sx={cardStyle}>
-            <Typography variant="h6" style={fontTitleStyle}>
-              Total Orders
-            </Typography>
-            <Typography variant="h5" style={fontContentStyle}>
-              {salesByPeriod?.orders}
-            </Typography>
-          </Card>
-        </Grid>
-        <Grid xs={4}>
-          <Card sx={cardStyle}>
-            <Typography variant="h6" style={fontTitleStyle}>
-              Total items sold
-            </Typography>
-            <Typography variant="h5" style={fontContentStyle}>
-              {salesByPeriod?.quantity}
-            </Typography>
-          </Card>
-        </Grid>
+        {salesByHour && (
+          <>
+            <SalesCard
+              title="Total Sales"
+              subtitle={"CHF " + (salesByPeriod?.revenue ?? "0.00")}
+              sales={salesByHour}
+              data="revenue"
+            />
+            <SalesCard
+              title="Total Orders"
+              subtitle={salesByPeriod.orders}
+              sales={salesByHour}
+              data="ordersCount"
+            />
+            <SalesCard
+              title="Total Items Sold"
+              subtitle={salesByPeriod.quantity}
+              sales={salesByHour}
+              data="quantity"
+            />
+          </>
+        )}
       </Grid>
 
       <Typography variant="h5" fontWeight={700}>

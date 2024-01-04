@@ -1,26 +1,30 @@
 import { LineChart } from "@mui/x-charts/LineChart";
 
-type Props = {
-  time: string;
-  name: string;
-  quantity: number;
-  revenue: string;
-}[];
+type salesProps = {
+  sales: {
+    time: string;
+    ordersCount: number;
+    quantity: number;
+    revenue: string;
+  }[];
+};
 
-export default function SalesChart(props: { sales: Props }) {
+export default function SalesChart(props: { data: string; sales: salesProps }) {
   console.log("SalesChart: ", props.sales);
-  const time = props.sales.map((row) => row.time);
-  const revenue = props.sales.map((row) => parseFloat(row.revenue));
+  const dataType = props.data;
+  console.log("dataType: ", dataType);
+  const time = props.sales.map((r) => r.time);
+  const data = props.sales.map((d) => parseFloat(d[dataType]));
 
   console.log("time: ", time);
-  console.log("revenue: ", revenue);
+  console.log("data: ", data);
   return (
     <LineChart
       xAxis={[{ data: time, scaleType: "band" }]}
       series={[
         {
-          id: "revenue",
-          data: revenue,
+          id: "data",
+          data: data,
         },
       ]}
       width={350}
