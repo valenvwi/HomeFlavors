@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { apiRegisterCreate } from "../../api";
+import { apiRegisterCreate, apiTokenCreate } from "../../api";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Box,
@@ -10,6 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import flyingPan from "../assets/frying-pan.png";
+import { useAppDispatch } from "./store/root";
+import { authActions } from "./store/auth";
 
 type SignupInputs = {
   username: string;
@@ -26,11 +28,26 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignupInputs>();
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<SignupInputs> = (data) => {
-    apiRegisterCreate(data);
-    navigate("/login");
+  const onSubmit: SubmitHandler<SignupInputs> = async (data) => {
+    await apiRegisterCreate(data);
+    try {
+      const response = await apiTokenCreate({
+        password: data.password,
+        username: data.username,
+      });
+      dispatch(authActions.setIsLoggedIn(true));
+      dispatch(authActions.setCurrentUserId(response.data.user_id));
+      dispatch(authActions.setNewUser(true));
+      dispatch(authActions.setUsername(data.username))
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
   return (
