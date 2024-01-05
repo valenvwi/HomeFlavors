@@ -3,26 +3,57 @@ import { ordersPartialUpdate, useOrdersList } from "../../../api/index";
 import { useState } from "react";
 import { OrderType } from "../types/order";
 import selectImg from "../../assets/select-img.png";
+import noOrder from "../../assets/no-pending-orders.png";
 import LeftOrderList from "./LeftOrderList";
 import RightOrderDetailCard from "./RightOrderDetailCard";
+
+const containerStyle = {
+  pt: 5,
+  display: "flex",
+};
+
+const outerBoxStyle = {
+  display: "flex",
+  flexDirection: "column",
+  mt: 5,
+  flexGrow: 1,
+  minHeight: "90vh",
+};
+
+const innerBoxStyle = {
+  display: "flex",
+  flexDirection: "column",
+  flexGrow: 1,
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const fontTitleStyle = {
+  fontWeight: 700,
+  textAlign: "center",
+  pt: 2,
+};
+
+const fontContentStyle = {
+  textAlign: "center",
+  color: "#8b8989",
+};
+
 export default function PendingOrders() {
-  const { data: ordersResponse } = useOrdersList({
+  const { data: ordersResponse, refetch: refetchPending } = useOrdersList({
     kitchen_pending_orders: true,
   });
 
   const pendingOrders = ordersResponse?.data;
 
-  const { data: upcomingOrdersResponse } = useOrdersList({
-    kitchen_pending_orders: false,
-  });
+  const { data: upcomingOrdersResponse, refetch: refetchUpcoming } =
+    useOrdersList({
+      kitchen_pending_orders: false,
+    });
   const upcomingOrders = upcomingOrdersResponse?.data;
 
   console.log("Pending orders: ", pendingOrders);
   console.log("Upcoming orders: ", upcomingOrders);
-
-  const { refetch } = useOrdersList({
-    kitchen_pending_orders: true,
-  });
 
   const [order, setOrder] = useState<OrderType | null>(null);
 
@@ -32,7 +63,8 @@ export default function PendingOrders() {
     });
 
     setOrder(null);
-    refetch();
+    refetchPending();
+    refetchUpcoming();
   };
 
   const cancelOrder = async (orderId: number) => {
@@ -41,12 +73,12 @@ export default function PendingOrders() {
     });
 
     setOrder(null);
-    refetch();
+    refetchPending();
   };
 
   return (
     <>
-      <Container sx={{ pt: 5, display: "flex" }}>
+      <Container sx={containerStyle}>
         {pendingOrders && upcomingOrders && (
           <LeftOrderList
             pendingOrders={pendingOrders}
@@ -54,15 +86,7 @@ export default function PendingOrders() {
             onSetOrder={setOrder}
           />
         )}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            mt: 5,
-            flexGrow: 1,
-            minHeight: "90vh",
-          }}
-        >
+        <Box sx={outerBoxStyle}>
           {order != null ? (
             <RightOrderDetailCard
               order={order}
@@ -70,19 +94,28 @@ export default function PendingOrders() {
               cancelOrder={cancelOrder}
             />
           ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                flexGrow: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img src={selectImg} alt="Sold Out" width="250" />
-              <Typography variant="h4" sx={{ textAlign: "center" }}>
-                Click on an order to view details
-              </Typography>
+            <Box sx={innerBoxStyle}>
+              {pendingOrders?.length === 0 ? (
+                <>
+                  <img src={noOrder} alt="Sold Out" width="250" />
+                  <Typography variant="h4" sx={fontTitleStyle}>
+                    You have no pending orders
+                  </Typography>
+                  <Typography variant="h6" sx={fontContentStyle}>
+                    Check out the upcoming orders
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <img src={selectImg} alt="Sold Out" width="250" />
+                  <Typography variant="h4" sx={fontTitleStyle}>
+                    You have <b>{pendingOrders?.length}</b> pending orders
+                  </Typography>
+                  <Typography variant="h6" sx={fontContentStyle}>
+                    Click on an order to view details
+                  </Typography>
+                </>
+              )}
             </Box>
           )}
         </Box>

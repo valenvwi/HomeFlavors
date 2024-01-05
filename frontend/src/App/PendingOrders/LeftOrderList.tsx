@@ -8,8 +8,40 @@ import {
   Typography,
 } from "@mui/material";
 import { OrderType } from "../types/order";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import LeftOrderCard from "./LeftOrderCard";
+import dayjs from "dayjs";
+import Divider from "@mui/material/Divider";
+
+const drawerStyler = {
+  width: "25%",
+  flexShrink: 0,
+  zIndex: 0,
+  [`& .MuiDrawer-paper`]: { width: "25%", boxSizing: "border-box" },
+};
+
+const boxStyle = {
+  overflow: "auto",
+  px: 2,
+  my: 1,
+};
+
+const toggleButtonStyle = {
+  m: "0 auto",
+  pt: 4,
+};
+
+const fontStyle = {
+  textAlign: "center",
+  py: 5,
+  fontWeight: 700,
+};
+
+const dateStyle = {
+  textAlign: "center",
+  fontWeight: 700,
+  py: 2,
+};
 
 type Props = {
   pendingOrders: OrderType[];
@@ -19,38 +51,40 @@ type Props = {
 
 export default function LeftOrderList(props: Props) {
   const [alignment, setAlignment] = useState("pending");
-  const [orders, setOrders] = useState<OrderType[]>([]);
 
-  useEffect(() => {
-    if (alignment === "pending") {
-      setOrders(props.pendingOrders);
-    } else {
-      setOrders(props.upcomingOrders);
-    }
-  }, [alignment, props.pendingOrders, props.upcomingOrders]);
+  const orders =
+    alignment === "pending" ? props.pendingOrders : props.upcomingOrders;
+  const today = dayjs().format("YYYY-MM-DD");
+  const tomorrow = dayjs().add(1, "day").format("YYYY-MM-DD");
+  const todayOrders = useMemo(
+    () => orders.filter((order) => order.pickUpDate === today),
+    [orders, today]
+  );
+
+  const tomorrowOrders = useMemo(
+    () => orders.filter((order) => order.pickUpDate === tomorrow),
+    [orders, tomorrow]
+  );
+  const upcomingOrders = useMemo(
+    () => orders.filter((order) => order.pickUpDate > tomorrow),
+    [orders, tomorrow]
+  );
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
+    newAlignment: string | null
   ) => {
-    setAlignment(newAlignment);
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
   };
 
   const changeOrder = (order: OrderType) => {
     props.onSetOrder(order);
-    console.log("order:", order);
   };
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: "25%",
-        flexShrink: 0,
-        zIndex: 0,
-        [`& .MuiDrawer-paper`]: { width: "25%", boxSizing: "border-box" },
-      }}
-    >
+    <Drawer variant="permanent" sx={drawerStyler}>
       <Toolbar />
       <ToggleButtonGroup
         color="primary"
@@ -58,29 +92,61 @@ export default function LeftOrderList(props: Props) {
         exclusive
         onChange={handleChange}
         aria-label="Platform"
-        sx={{ m: "0 auto", pt: 4 }}
+        sx={toggleButtonStyle}
       >
         <ToggleButton value="pending">Pending</ToggleButton>
         <ToggleButton value="upcoming">Upcoming</ToggleButton>
       </ToggleButtonGroup>
-      <Box sx={{ overflow: "auto", p: 2, my: 1 }}>
+
+      <Box sx={boxStyle}>
         <List>
           {orders && orders.length === 0 ? (
-            <Typography
-              variant="h6"
-              fontWeight={700}
-              sx={{ textAlign: "center", py: 5 }}
-            >
+            <Typography variant="h6" sx={fontStyle}>
               No {alignment} orders
             </Typography>
           ) : (
-            orders.map((order) => (
-              <LeftOrderCard
-                key={order.id}
-                order={order}
-                changeOrder={changeOrder}
-              />
-            ))
+            <>
+              {todayOrders.length > 0 && (
+                <>
+                  <Typography sx={dateStyle}>Today</Typography>
+                  {todayOrders.map((order) => (
+                    <LeftOrderCard
+                      key={order.id}
+                      order={order}
+                      changeOrder={changeOrder}
+                    />
+                  ))}
+                  {(tomorrowOrders.length > 0 || upcomingOrders.length > 0) && (
+                    <Divider sx={{ mt: 3 }} />
+                  )}
+                </>
+              )}
+              {tomorrowOrders.length > 0 && (
+                <>
+                  <Typography sx={dateStyle}>Tomorrow</Typography>
+                  {tomorrowOrders.map((order) => (
+                    <LeftOrderCard
+                      key={order.id}
+                      order={order}
+                      changeOrder={changeOrder}
+                    />
+                  ))}
+                  {upcomingOrders.length > 0 && <Divider sx={{ mt: 3 }} />}
+                </>
+              )}
+              {upcomingOrders.length > 0 && (
+                <>
+                  <Typography sx={dateStyle}>Upcoming</Typography>
+                  {upcomingOrders.map((order) => (
+                    <LeftOrderCard
+                      key={order.id}
+                      order={order}
+                      changeOrder={changeOrder}
+                    />
+                  ))}
+                </>
+              )}
+            </>
           )}
         </List>
       </Box>

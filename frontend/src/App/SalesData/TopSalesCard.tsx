@@ -1,4 +1,4 @@
-import { Card, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { BASEURL } from "../../config";
 
 const cardStyle = {
@@ -9,6 +9,10 @@ const cardStyle = {
   backgroundColor: "#fff6f2",
   position: "relative",
   overflow: "visible",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const medalStyle = {
@@ -18,6 +22,18 @@ const medalStyle = {
   top: 0,
   right: 0,
   transform: "translate(30%, -30%)",
+};
+
+const imgStyle = {
+  borderRadius: "50%",
+  width: "280px",
+  height: "280px",
+};
+
+const fontStyle = {
+  fontWeight: 700,
+  textAlign: "center",
+  pt: 2,
 };
 
 type Props = {
@@ -33,12 +49,10 @@ export default function TopSalesCard(props: Props) {
       <img
         src={`${BASEURL}/${props.image}`}
         alt={props.name}
-        width="280px"
-        height="280px"
-        style={{ borderRadius: "50%" }}
+        style={imgStyle}
       />
-      <img src={props.medal} alt="gold" style={medalStyle} />
-      <Typography variant="h6" fontWeight={700} sx={{ textAlign: "center" }}>
+      <Box component="img" src={props.medal} alt="gold" sx={medalStyle} />
+      <Typography variant="subtitle1" sx={fontStyle}>
         {props.name} x {props.quantity}
       </Typography>
     </Card>

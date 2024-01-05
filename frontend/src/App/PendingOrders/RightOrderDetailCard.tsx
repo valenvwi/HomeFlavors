@@ -3,6 +3,52 @@ import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BASEURL } from "../../config";
 
+const containerStyle = {
+  m: 2,
+  p: 4,
+  width: "100%",
+};
+
+const orderDetailBox = {
+  p: 3,
+  mb: 4,
+  borderRadius: "15px",
+  backgroundColor: "#fff6f2",
+};
+
+const orderDetailSmallBox = {
+  display: "flex",
+  justifyContent: "space-around",
+};
+
+const smallPaperStyle = {
+  px: 3,
+  py: 2,
+};
+
+const boldFontStyle = {
+  fontWeight: 700,
+};
+
+const orderItemBox = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  my: 2,
+};
+
+const imgStyle = {
+  objectFit: "cover",
+  borderRadius: "10px",
+  width: "150px",
+  height: "150px",
+};
+
+const fontSummary = {
+  textAlign: "right",
+  fontWeight: 700,
+};
+
 type Props = {
   order: OrderType;
   acceptOrder: (orderId: number) => void;
@@ -18,12 +64,9 @@ export default function RightOrderDetailCard(props: Props) {
   };
 
   return (
-    <Container sx={{ m: 2, p: 4, width: "100%" }}>
-      <Paper
-        elevation={6}
-        sx={{ p: 3, mb: 4, borderRadius: "15px", backgroundColor: "#fff6f2" }}
-      >
-        <Typography variant="h5" fontWeight={700}>
+    <Container sx={containerStyle}>
+      <Paper elevation={6} sx={orderDetailBox}>
+        <Typography variant="h5" style={boldFontStyle}>
           Order details
         </Typography>
         <Typography variant="subtitle1">
@@ -31,8 +74,8 @@ export default function RightOrderDetailCard(props: Props) {
           {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
         </Typography>
         <br />
-        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-          <Paper sx={{ px: 3, py: 2 }}>
+        <Box sx={orderDetailSmallBox}>
+          <Paper sx={smallPaperStyle}>
             <Typography variant="subtitle1">
               Pick up Date & Time
               <br />
@@ -42,7 +85,7 @@ export default function RightOrderDetailCard(props: Props) {
               </b>
             </Typography>
           </Paper>
-          <Paper sx={{ px: 3, py: 2 }}>
+          <Paper sx={smallPaperStyle}>
             <Typography variant="subtitle1">
               Contact number
               <br />
@@ -53,20 +96,12 @@ export default function RightOrderDetailCard(props: Props) {
       </Paper>
 
       {props.order.orderItems?.map((orderItem) => (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            my: 2,
-          }}
-        >
-          <img
+        <Box sx={orderItemBox}>
+          <Box
+            component="img"
             src={`${BASEURL}/${orderItem.menuItem.image}`}
             alt={orderItem.menuItem.name}
-            width="150px"
-            height="150px"
-            style={{ objectFit: "cover", borderRadius: "10px" }}
+            sx={imgStyle}
           />
 
           <Typography key={orderItem.id}>
@@ -83,10 +118,10 @@ export default function RightOrderDetailCard(props: Props) {
         </Typography>
       )}
       <br />
-      <Typography fontWeight={700} sx={{ textAlign: "right" }}>
+      <Typography sx={fontSummary}>
         Total quantity: {props.order.totalQuantity}
       </Typography>
-      <Typography fontWeight={700} sx={{ textAlign: "right" }}>
+      <Typography sx={fontSummary}>
         Total price: CHF {parseFloat(props.order.totalPrice).toFixed(2)}
       </Typography>
       {!props.order.isAccepted && (

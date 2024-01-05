@@ -72,7 +72,7 @@ export default function AppNavBar() {
 
   const goToSalesDataPage = () => {
     navigate("/salesData");
-  }
+  };
 
   const logout = () => {
     apiLogoutCreate();

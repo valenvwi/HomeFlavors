@@ -24,8 +24,6 @@ export default function SalesData() {
   const salesByPeriod = salesDataResponse?.data?.salesByPeriod;
   const salesByHour = salesDataResponse?.data?.salesByHour;
 
-  console.log(salesByItem);
-
   const onSetDate = (startDate: string, endDate: string) => {
     setStartDate(startDate);
     setEndDate(endDate);

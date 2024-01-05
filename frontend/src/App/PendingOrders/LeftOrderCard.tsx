@@ -8,6 +8,13 @@ import {
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 
+const paperStyle = {
+  p: 3,
+  display: "flex",
+  alignItems: "top",
+  justifyContent: "space-between",
+  flexGrow: 1,
+};
 type Props = {
   order: OrderType;
   changeOrder: (order: OrderType) => void;
@@ -25,15 +32,7 @@ export default function LeftOrderCard(props: Props) {
         onClick={() => changeOrder(props.order)}
         sx={{ justifyContent: "center" }}
       >
-        <Paper
-          sx={{
-            p: 3,
-            display: "flex",
-            alignItems: "top",
-            justifyContent: "space-between",
-            flexGrow: 1,
-          }}
-        >
+        <Paper sx={paperStyle}>
           <Box>
             <Typography variant="h6" fontWeight={700}>
               Order #{props.order.id}
