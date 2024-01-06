@@ -52,9 +52,6 @@ export default function PendingOrders() {
     });
   const upcomingOrders = upcomingOrdersResponse?.data;
 
-  console.log("Pending orders: ", pendingOrders);
-  console.log("Upcoming orders: ", upcomingOrders);
-
   const [order, setOrder] = useState<OrderType | null>(null);
 
   const acceptOrder = async (orderId: number) => {

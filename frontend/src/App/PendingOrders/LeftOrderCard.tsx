@@ -23,7 +23,6 @@ type Props = {
 export default function LeftOrderCard(props: Props) {
   const changeOrder = (order: OrderType) => {
     props.changeOrder(order);
-    console.log("order:", order);
   };
 
   return (

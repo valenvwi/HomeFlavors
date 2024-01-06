@@ -40,8 +40,8 @@ const orderItemBox = {
 const imgStyle = {
   objectFit: "cover",
   borderRadius: "10px",
-  width: "150px",
-  height: "150px",
+  width: "100px",
+  height: "100px",
 };
 
 const fontSummary = {

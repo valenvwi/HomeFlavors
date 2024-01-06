@@ -54,9 +54,14 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
             alt={props.cartItem.name}
             style={style.imageStyle}
           />
-          <Typography variant="subtitle1" fontWeight={700} sx={{ p: 1 }}>
-            {props.cartItem.name}
-          </Typography>
+          <Box>
+            <Typography variant="subtitle1" fontWeight={700} sx={{ px: 2 }}>
+              {props.cartItem.name}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "#8b8989", px: 2 }}>
+              {props.cartItem.description}
+            </Typography>
+          </Box>
         </Box>
         <Box
           sx={{
@@ -112,6 +117,9 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
         <Box sx={{ flexGrow: 1, my: 2, mx: 4 }}>
           <Typography variant="h5" fontWeight={700}>
             {props.cartItem.name}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ color: "#8b8989" }}>
+            {props.cartItem.description}
           </Typography>
           <Typography variant="h6" fontWeight={700}>
             {" "}

@@ -44,6 +44,9 @@ export default function OrderHistory() {
     navigate("/");
   };
 
+  console.log("Pending orders", pendingOrders);
+  console.log("Accepted orders", acceptedOrders);
+
   return (
     <Container
       sx={{

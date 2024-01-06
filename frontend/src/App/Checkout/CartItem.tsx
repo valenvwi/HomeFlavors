@@ -1,62 +1,75 @@
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useAppSelector } from "../store/root";
-import { CartItemType } from "../types/cartItem";
+import { BASEURL } from "../../config";
 
 export default function CartItem() {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
-
   return (
-    <>
-      <TableContainer
-        component={Paper}
-        variant="outlined"
-        sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-      >
-        <Typography variant="h5" fontWeight={700} sx={{ m: 2 }}>
-          Order review
-        </Typography>
-        <Table sx={{ minWidth: 280, my: 2 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Order</TableCell>
-              <TableCell align="right">Quantity</TableCell>
-              <TableCell align="right">Total Price</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cartItems.map((cartItem: CartItemType) => (
-              <TableRow
-                key={cartItem.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {cartItem.name}
-                </TableCell>
-                <TableCell align="right">{cartItem.quantity}</TableCell>
-                <TableCell align="right">
-                  {(cartItem.price * cartItem.quantity).toFixed(2)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Box sx={{ textAlign: "right" }}>
-          <Typography variant="h5" fontWeight={700}>
-            Final price: {totalPrice.toFixed(2)} CHF
-          </Typography>
+    <Paper
+      elevation={0}
+      sx={{
+        mt: { md: 3 },
+        p: 2,
+        borderRadius: "10px",
+      }}
+    >
+      <Typography variant="h5" fontWeight={700} sx={{ py: 1 }}>
+        Summary
+      </Typography>
+      {cartItems.map((cartItem) => (
+        <Box
+          key={cartItem.name}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
+              my: 2,
+            }}
+          >
+            <img
+              src={`${BASEURL}/${cartItem.image}`}
+              alt={cartItem.name}
+              width="50px"
+              height="50px"
+              style={{ borderRadius: "10px" }}
+            />
+            <Box sx={{ display: "flex", flexDirection: "column", ml: 2 }}>
+              <Typography variant="subtitle1" fontWeight={700}>
+                {cartItem.name}
+              </Typography>
+              <Typography variant="subtitle2" sx={{ color: "#8b8989" }}>
+                {cartItem.quantity}x
+              </Typography>
+            </Box>
+          </Box>
+          <Typography variant="body1">{cartItem.price} </Typography>
         </Box>
-      </TableContainer>
-    </>
+      ))}
+      <Divider sx={{ mt: 3 }} />
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          my: 3,
+        }}
+      >
+        <Typography variant="subtitle1" fontWeight={700}>
+          Total
+        </Typography>
+        <Typography variant="h5" fontWeight={700}>
+          CHF {totalPrice.toFixed(2)}
+        </Typography>
+      </Box>
+    </Paper>
   );
 }

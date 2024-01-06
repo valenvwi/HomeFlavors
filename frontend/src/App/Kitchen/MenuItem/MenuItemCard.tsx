@@ -29,7 +29,6 @@ export default function MenuItemCard(props: {
   };
 
   const onDeleteMenuItem = () => {
-    console.log(props.menuItem.id);
     menuItemsDestroy(props.menuItem.id);
   };
 
@@ -73,7 +72,7 @@ export default function MenuItemCard(props: {
             <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
           )}
         </Box>
-        <Typography variant="subtitle1">
+        <Typography variant="subtitle1" sx={{ color: "#8b8989" }}>
           {props.menuItem.description}
         </Typography>
         <Typography variant="h6" fontWeight={700}>

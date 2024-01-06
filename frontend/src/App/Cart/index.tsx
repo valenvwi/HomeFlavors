@@ -20,6 +20,7 @@ const largeScreenConfig = {
   fontVariant: "h5",
   fontStyle: {
     mt: 5,
+    mb: 2,
     mx: 1,
     textAlign: "right",
     fontWeight: 600,
@@ -53,25 +54,47 @@ export default function Cart() {
           variant={"h5"}
           sx={{ mt: 5, mx: 2, textAlign: "left", fontWeight: 600 }}
         >
-          Your cart
+          Your cart ({totalQuantity})
         </Typography>
       )}
       {cartItems.map((cartItem: CartItemType) => (
         <CartItemCard key={cartItem.id} cartItem={cartItem} />
       ))}
-      <Typography variant={style.fontVariant} sx={style.fontStyle}>
-        Total Quantity: {totalQuantity}
-        <br />
-        {!isSmallScreen && <br />}
-        Total Price: CHF {totalPrice.toFixed(2)}
-      </Typography>
-      <Button
-        variant="contained"
-        sx={{ m: 1, alignSelf: "end" }}
-        onClick={goToCheckoutPage}
-      >
-        Check out
-      </Button>
+      {isSmallScreen ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 2,
+          }}
+        >
+          <Box>
+            <Typography variant="subtitle2" sx={{}}>
+              Total Price
+            </Typography>
+            <Typography variant="subtitle1" sx={{ my: 1 }}>
+              CHF <b>{totalPrice.toFixed(2)}</b>
+            </Typography>
+          </Box>
+          <Button variant="contained" sx={{ m: 1 }} onClick={goToCheckoutPage}>
+            Check out
+          </Button>
+        </Box>
+      ) : (
+        <>
+          <Typography variant={style.fontVariant} sx={style.fontStyle}>
+            Total Price: CHF {totalPrice.toFixed(2)}
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{ m: 1, alignSelf: "end" }}
+            onClick={goToCheckoutPage}
+          >
+            Check out
+          </Button>
+        </>
+      )}
     </Container>
   ) : (
     <Container

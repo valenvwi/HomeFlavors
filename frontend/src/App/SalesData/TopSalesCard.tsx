@@ -3,7 +3,7 @@ import { BASEURL } from "../../config";
 
 const cardStyle = {
   my: 2,
-  mx: 4,
+  mx: 2,
   p: 3,
   borderRadius: "15px",
   backgroundColor: "#fff6f2",
@@ -28,6 +28,7 @@ const imgStyle = {
   borderRadius: "50%",
   width: "280px",
   height: "280px",
+  objectFit: "cover",
 };
 
 const fontStyle = {

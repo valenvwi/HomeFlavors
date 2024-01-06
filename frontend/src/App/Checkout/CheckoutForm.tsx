@@ -50,7 +50,9 @@ export default function CheckoutForm() {
     const orderData = {
       kitchen: "1",
       totalPrice: totalPrice.toString(),
-      totalQuantity: cartItems.length.toString(),
+      totalQuantity: cartItems
+        .map((cartItem) => cartItem.quantity)
+        .reduce((a, b) => a + b, 0),
       name: data.name,
       contactNumber: data.contactNumber,
       pickUpDate: data.pickUpDateTime.format("YYYY-MM-DD"),
@@ -65,19 +67,24 @@ export default function CheckoutForm() {
     }
   };
 
-  const createOrderItems = (orderId: number) => {
-    cartItems.map((cartItem: CartItemType) => {
-      const orderItemData = {
-        menu_item: cartItem.id,
-        quantity: cartItem.quantity,
-        order: orderId,
-      };
-      orderItemsCreate(orderItemData);
-      console.log("Order item created", orderItemData);
-    });
-    dispatch(cartActions.resetCart());
-    dispatch(modalActions.setIsOpened(true));
-    goToOrderHistory();
+  const createOrderItems = async (orderId: number) => {
+    try {
+      for (const cartItem of cartItems) {
+        const orderItemData = {
+          menu_item: cartItem.id,
+          quantity: cartItem.quantity,
+          order: orderId,
+        };
+        await orderItemsCreate(orderItemData);
+        console.log("Order item created", orderItemData);
+      }
+      console.log("All order items created");
+      dispatch(cartActions.resetCart());
+      dispatch(modalActions.setIsOpened(true));
+      goToOrderHistory();
+    } catch (error) {
+      console.error("Error creating order items", error);
+    }
   };
 
   const isDayValid = (date: dayjs.Dayjs) => {
@@ -103,8 +110,13 @@ export default function CheckoutForm() {
 
   return (
     <Paper
-      variant="outlined"
-      sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+      elevation={6}
+      sx={{
+        mt: { xs: 1, md: 5 },
+        p: 2,
+        backgroundColor: "#fff6f2",
+        borderRadius: "10px",
+      }}
     >
       <Typography variant="h5" fontWeight={700} sx={{ m: 2 }}>
         Order information

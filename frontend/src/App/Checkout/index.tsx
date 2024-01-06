@@ -1,22 +1,20 @@
-import { Container, Typography } from "@mui/material";
-import { useTheme, useMediaQuery } from "@mui/material";
-import CartItem from "./CartItem";
+import { Container, Grid } from "@mui/material";
 import CheckoutForm from "./CheckoutForm";
+import CartItem from "./CartItem";
+import PaymentForm from "./PaymentForm";
 
 export default function Checkout() {
-  const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.up("sm"));
-
   return (
     <Container sx={{ my: 5, py: 5 }}>
-      <Typography
-        variant={isMediumScreen ? "h4" : "subtitle1"}
-        sx={{ m: 2, textAlign: "left", fontWeight: 600 }}
-      >
-        Place your order
-      </Typography>
-      <CartItem />
-      <CheckoutForm />
+      <Grid container spacing={5}>
+        <Grid item xs={12} md={4}>
+          <CartItem />
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <PaymentForm />
+          <CheckoutForm />
+        </Grid>
+      </Grid>
     </Container>
   );
 }

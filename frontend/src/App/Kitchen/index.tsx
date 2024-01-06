@@ -18,14 +18,6 @@ export default function Kitchen() {
   const justLoggedIn = useAppSelector((state) => state.auth.justLoggedIn);
   const username = useAppSelector((state) => state.auth.username);
   const dispatch = useAppDispatch();
-  console.log(
-    "current user id",
-    useAppSelector((state) => state.auth.currentUserId)
-  );
-  console.log(
-    "is owner",
-    useAppSelector((state) => state.auth.isOwner)
-  );
 
   setTimeout(() => {
     dispatch({ type: "auth/setNewUser", payload: false });

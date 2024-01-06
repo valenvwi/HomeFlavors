@@ -29,6 +29,7 @@ const cartSlice = createSlice({
         id: newItem.id,
         name: newItem.name,
         price: Number(newItem.price),
+        description: newItem.description,
         image: newItem.image,
         quantity: 1,
       };
@@ -63,7 +64,6 @@ const cartSlice = createSlice({
       const existingItemIndex = state.cartItems.findIndex(
         (item) => item.id === id
       );
-      console.log(existingItemIndex);
 
       if (existingItemIndex !== -1) {
         if (state.cartItems[existingItemIndex].quantity > 1) {
