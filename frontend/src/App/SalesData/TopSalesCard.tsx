@@ -1,23 +1,22 @@
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import { BASEURL } from "../../config";
 
 const cardStyle = {
-  my: 2,
-  mx: 2,
-  p: 3,
-  borderRadius: "15px",
-  backgroundColor: "#fff6f2",
-  position: "relative",
-  overflow: "visible",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  pt: 2,
+  m: 2,
+  borderRadius: "15px",
+  backgroundColor: "#fff6f2",
+  position: "relative",
+  overflow: "visible",
 };
 
 const medalStyle = {
-  width: "100px",
-  height: "100px",
+  width: "50px",
+  height: "50px",
   position: "absolute",
   top: 0,
   right: 0,
@@ -26,15 +25,16 @@ const medalStyle = {
 
 const imgStyle = {
   borderRadius: "50%",
-  width: "280px",
-  height: "280px",
+  width: "120px",
+  height: "120px",
   objectFit: "cover",
 };
 
 const fontStyle = {
   fontWeight: 700,
   textAlign: "center",
-  pt: 2,
+  py: 2,
+  px: 2,
 };
 
 type Props = {
@@ -46,16 +46,19 @@ type Props = {
 
 export default function TopSalesCard(props: Props) {
   return (
-    <Card sx={cardStyle}>
-      <img
-        src={`${BASEURL}/${props.image}`}
-        alt={props.name}
-        style={imgStyle}
-      />
-      <Box component="img" src={props.medal} alt="gold" sx={medalStyle} />
-      <Typography variant="subtitle1" sx={fontStyle}>
-        {props.name} x {props.quantity}
-      </Typography>
-    </Card>
+    <Grid md={3}>
+      <Card sx={cardStyle}>
+        <Box
+          component="img"
+          src={`${BASEURL}/${props.image}`}
+          alt={props.name}
+          sx={imgStyle}
+        />
+        <Box component="img" src={props.medal} alt="gold" sx={medalStyle} />
+        <Typography variant="subtitle2" sx={fontStyle}>
+          {props.name}
+        </Typography>
+      </Card>
+    </Grid>
   );
 }

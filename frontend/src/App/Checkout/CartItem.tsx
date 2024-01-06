@@ -10,8 +10,7 @@ export default function CartItem() {
       elevation={0}
       sx={{
         mt: { md: 3 },
-        p: 2,
-        borderRadius: "10px",
+        px: 1,
       }}
     >
       <Typography variant="h5" fontWeight={700} sx={{ py: 1 }}>
@@ -42,7 +41,7 @@ export default function CartItem() {
               style={{ borderRadius: "10px" }}
             />
             <Box sx={{ display: "flex", flexDirection: "column", ml: 2 }}>
-              <Typography variant="subtitle1" fontWeight={700}>
+              <Typography variant="subtitle2" fontWeight={700}>
                 {cartItem.name}
               </Typography>
               <Typography variant="subtitle2" sx={{ color: "#8b8989" }}>
@@ -50,7 +49,7 @@ export default function CartItem() {
               </Typography>
             </Box>
           </Box>
-          <Typography variant="body1">{cartItem.price} </Typography>
+          <Typography variant="body2">{cartItem.price} </Typography>
         </Box>
       ))}
       <Divider sx={{ mt: 3 }} />
@@ -66,7 +65,7 @@ export default function CartItem() {
         <Typography variant="subtitle1" fontWeight={700}>
           Total
         </Typography>
-        <Typography variant="h5" fontWeight={700}>
+        <Typography variant="h6" fontWeight={700}>
           CHF {totalPrice.toFixed(2)}
         </Typography>
       </Box>

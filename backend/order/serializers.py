@@ -44,7 +44,13 @@ class SalesByHourSerializer(serializers.Serializer):
     quantity= serializers.IntegerField(source="quantity_by_hour")
     ordersCount = serializers.IntegerField(source="orders_by_hour")
 
+class OrderStatusSerializer(serializers.Serializer):
+    acceptedOrders = serializers.IntegerField(source='accepted_orders')
+    cancelledOrders = serializers.IntegerField(source='cancelled_orders')
+    cancelPercentage = serializers.DecimalField(max_digits=10, decimal_places=2, source='cancel_percentage')
+
 class SalesDataSerializer(serializers.Serializer):
     salesByPeriod = SalesByPeriodSerializer(source="sales_by_period")
     itemsSalesSummary = serializers.ListField(child=serializers.DictField(), required=False, source="items_sales_summary")
     salesByHour = SalesByHourSerializer(many=True, source="sales_by_hour_summary")
+    orderStatus = OrderStatusSerializer(source="order_status")

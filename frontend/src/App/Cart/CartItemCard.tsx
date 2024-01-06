@@ -1,4 +1,4 @@
-import { Box, Card, IconButton, Typography } from "@mui/material";
+import { Box, Button, Card, IconButton, Typography } from "@mui/material";
 import { CartItemType } from "../types/cartItem";
 import { BASEURL } from "../../config";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -6,6 +6,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useAppDispatch } from "../store/root";
 import { cartActions } from "../store/cart";
 import { useTheme, useMediaQuery } from "@mui/material";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const smallScreenConfig = {
   imageStyle: {
@@ -19,8 +20,8 @@ const smallScreenConfig = {
 
 const largeScreenConfig = {
   imageStyle: {
-    width: "150px",
-    height: "150px",
+    width: "100px",
+    height: "100px",
     objectFit: "cover",
     borderRadius: "10px",
     aspectRatio: "1",
@@ -38,6 +39,10 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
 
   const onDecreaseQuantity = () => {
     dispatch(cartActions.decreaseQuantity(props.cartItem.id));
+  };
+
+  const onDeleteCartItem = () => {
+    dispatch(cartActions.deleteItem(props.cartItem.id));
   };
 
   const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
@@ -92,6 +97,13 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               <AddCircleOutlineIcon sx={{ fontSize: "28px" }} />
             </IconButton>
           </Box>
+
+          <Button
+          style={{ backgroundColor: "#fff6f2", color: "primary" }}
+          onClick={onDeleteCartItem}
+        >
+          <DeleteOutlineIcon sx={{ fontSize: "28px", ml: 1 }} />
+        </Button>
         </Box>
       </Card>
     </>
@@ -103,9 +115,11 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
         sx={{
           display: "flex",
           m: 2,
-          p: 2,
+          px: 3,
+          py: 2,
           backgroundColor: "#fff6f2",
           borderRadius: "15px",
+          alignItems: "center",
         }}
       >
         <img
@@ -115,15 +129,11 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
         />
 
         <Box sx={{ flexGrow: 1, my: 2, mx: 4 }}>
-          <Typography variant="h5" fontWeight={700}>
+          <Typography variant="h6" fontWeight={700}>
             {props.cartItem.name}
           </Typography>
-          <Typography variant="subtitle1" sx={{ color: "#8b8989" }}>
+          <Typography variant="body2" sx={{ color: "#8b8989" }}>
             {props.cartItem.description}
-          </Typography>
-          <Typography variant="h6" fontWeight={700}>
-            {" "}
-            CHF {props.cartItem.price.toFixed(2)}
           </Typography>
         </Box>
         <Box
@@ -131,18 +141,28 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            mx: 4,
           }}
         >
           <IconButton color="primary" onClick={onDecreaseQuantity}>
-            <RemoveCircleOutlineIcon sx={{ fontSize: "40px" }} />
+            <RemoveCircleOutlineIcon sx={{ fontSize: "36px" }} />
           </IconButton>
-          <Typography variant="h6" fontWeight={700}>
+          <Typography variant="subtitle1" fontWeight={700}>
             Qty: {props.cartItem.quantity}
           </Typography>
           <IconButton color="primary" onClick={onIncreaseQuantity}>
-            <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+            <AddCircleOutlineIcon sx={{ fontSize: "36px" }} />
           </IconButton>
         </Box>
+        <Typography variant="subtitle1" fontWeight={700}>
+          CHF {(props.cartItem.price * props.cartItem.quantity).toFixed(2)}
+        </Typography>
+        <Button
+          style={{ backgroundColor: "#fff6f2", color: "primary" }}
+          onClick={onDeleteCartItem}
+        >
+          <DeleteOutlineIcon sx={{ fontSize: "32px", ml: 1 }} />
+        </Button>
       </Card>
     </>
   );

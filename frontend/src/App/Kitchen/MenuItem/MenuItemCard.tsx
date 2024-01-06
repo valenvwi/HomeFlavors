@@ -51,8 +51,8 @@ export default function MenuItemCard(props: {
         src={`${BASEURL}/${props.menuItem.image}`}
         alt={props.menuItem.name}
         style={{
-          width: "200px",
-          height: "200px",
+          width: "180px",
+          height: "180px",
           objectFit: "cover",
           borderRadius: "10px",
           aspectRatio: "1",
@@ -62,7 +62,7 @@ export default function MenuItemCard(props: {
         <Box
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          <Typography variant="h5" sx={{ pr: 2, fontWeight: 700 }}>
+          <Typography variant="h6" sx={{ pr: 2, fontWeight: 700 }}>
             {props.menuItem.name}
           </Typography>
           {props.menuItem.isVeg && (
@@ -72,7 +72,7 @@ export default function MenuItemCard(props: {
             <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
           )}
         </Box>
-        <Typography variant="subtitle1" sx={{ color: "#8b8989" }}>
+        <Typography variant="body1" sx={{ color: "#8b8989" }}>
           {props.menuItem.description}
         </Typography>
         <Typography variant="h6" fontWeight={700}>
@@ -85,10 +85,10 @@ export default function MenuItemCard(props: {
             <ModeEditIcon sx={{ fontSize: "40px" }} />
           </Button>
           <Button
-            style={{ backgroundColor: "#fff6f2", color: "#d32f2f" }}
+            style={{ backgroundColor: "#fff6f2", color: "primary" }}
             onClick={onDeleteMenuItem}
           >
-            <DeleteIcon sx={{ fontSize: "40px" }} />
+            <DeleteIcon sx={{ fontSize: "40px", color: "primary" }} />
           </Button>
         </>
       ) : props.menuItem.isAvailable ? (

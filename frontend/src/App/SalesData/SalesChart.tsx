@@ -23,8 +23,8 @@ export default function SalesChart(props: { data: string; sales: salesProps }) {
           data: data,
         },
       ]}
-      width={350}
-      height={300}
+      width={250}
+      height={200}
       sx={{
         "& .MuiLineElement-root": {
           stroke: "#EA5C2B",

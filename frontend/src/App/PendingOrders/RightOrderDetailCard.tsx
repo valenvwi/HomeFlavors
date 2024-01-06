@@ -40,8 +40,8 @@ const orderItemBox = {
 const imgStyle = {
   objectFit: "cover",
   borderRadius: "10px",
-  width: "100px",
-  height: "100px",
+  width: "80px",
+  height: "80px",
 };
 
 const fontSummary = {
@@ -66,17 +66,17 @@ export default function RightOrderDetailCard(props: Props) {
   return (
     <Container sx={containerStyle}>
       <Paper elevation={6} sx={orderDetailBox}>
-        <Typography variant="h5" style={boldFontStyle}>
+        <Typography variant="h6" style={boldFontStyle}>
           Order details
         </Typography>
-        <Typography variant="subtitle1">
+        <Typography variant="subtitle2" sx={{ pt: 1 }}>
           Order for <b>{props.order.name}</b> created at{" "}
           {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
         </Typography>
         <br />
         <Box sx={orderDetailSmallBox}>
           <Paper sx={smallPaperStyle}>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle2">
               Pick up Date & Time
               <br />
               <b>
@@ -86,7 +86,7 @@ export default function RightOrderDetailCard(props: Props) {
             </Typography>
           </Paper>
           <Paper sx={smallPaperStyle}>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle2">
               Contact number
               <br />
               <b>{props.order.contactNumber}</b>
@@ -104,10 +104,10 @@ export default function RightOrderDetailCard(props: Props) {
             sx={imgStyle}
           />
 
-          <Typography key={orderItem.id}>
+          <Typography key={orderItem.id} variant="subtitle2">
             {orderItem.menuItem.name} x {orderItem.quantity}
           </Typography>
-          <Typography>
+          <Typography variant="subtitle2">
             CHF {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
           </Typography>
         </Box>

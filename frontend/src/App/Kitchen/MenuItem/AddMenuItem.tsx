@@ -69,7 +69,7 @@ export default function AddMenuItem(props: {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: "120px",
+          marginTop: "20px",
           marginBottom: "120px",
           display: "flex",
           flexDirection: "column",
@@ -201,19 +201,19 @@ export default function AddMenuItem(props: {
             }
             label="Spicy"
           />
-
-          <Button type="submit" fullWidth variant="contained" sx={{ my: 3 }}>
-            Add
-          </Button>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ my: 1 }}
-            onClick={cancelAddMenuItem}
-          >
-            Cancel
-          </Button>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button type="submit" variant="contained" sx={{ my: 3, mx: 2 }}>
+              Add
+            </Button>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={cancelAddMenuItem}
+              sx={{ my: 3, mx: 2}}
+            >
+              Cancel
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Container>

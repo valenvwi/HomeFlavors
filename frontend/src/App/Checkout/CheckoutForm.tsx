@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "../store/root";
 import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart";
 import { useUsersRetrieve } from "../../../api";
-import { CartItemType } from "../types/cartItem";
 import { modalActions } from "../store/modal";
 
 type OrderInputs = {

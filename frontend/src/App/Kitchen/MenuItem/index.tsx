@@ -58,12 +58,11 @@ export default function MenuItem() {
   return (
     <Container sx={{ display: "flex", flexDirection: "column" }}>
       {isOwner && !showEditMenuItem && (
-        <Button
-          sx={{ justifyContent: "flex-end", mx: 2 }}
-          onClick={toggleAddMenuItem}
-        >
+        <Button sx={{ justifyContent: "flex-end" }} onClick={toggleAddMenuItem}>
           <AddCircleOutlineIcon />{" "}
-          <Typography sx={{ mx: 2 }}>Add Menu Item</Typography>
+          <Typography variant="subtitle2" sx={{ mx: 2 }}>
+            Add Menu Item
+          </Typography>
         </Button>
       )}
       {showAddMenuItem && (

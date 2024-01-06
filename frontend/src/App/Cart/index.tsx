@@ -17,9 +17,9 @@ const smallScreenConfig = {
 } as const;
 
 const largeScreenConfig = {
-  fontVariant: "h5",
+  fontVariant: "h6",
   fontStyle: {
-    mt: 5,
+    mt: 2,
     mb: 2,
     mx: 1,
     textAlign: "right",
@@ -49,14 +49,13 @@ export default function Cart() {
 
   return cartItems.length > 0 ? (
     <Container sx={{ my: 5, py: 5, display: "flex", flexDirection: "column" }}>
-      {!isSmallScreen && (
-        <Typography
-          variant={"h5"}
-          sx={{ mt: 5, mx: 2, textAlign: "left", fontWeight: 600 }}
-        >
-          Your cart ({totalQuantity})
-        </Typography>
-      )}
+      <Typography
+        variant={style.fontVariant}
+        sx={{ mt: { xs: 0, md: 1 }, mx: 2, textAlign: "left", fontWeight: 600 }}
+      >
+        Your cart ({totalQuantity})
+      </Typography>
+
       {cartItems.map((cartItem: CartItemType) => (
         <CartItemCard key={cartItem.id} cartItem={cartItem} />
       ))}
@@ -88,7 +87,7 @@ export default function Cart() {
           </Typography>
           <Button
             variant="contained"
-            sx={{ m: 1, alignSelf: "end" }}
+            sx={{ mx: 1, alignSelf: "end" }}
             onClick={goToCheckoutPage}
           >
             Check out

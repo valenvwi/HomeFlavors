@@ -33,15 +33,19 @@ export default function LeftOrderCard(props: Props) {
       >
         <Paper sx={paperStyle}>
           <Box>
-            <Typography variant="h6" fontWeight={700}>
+            <Typography variant="subtitle2" fontWeight={700}>
               Order #{props.order.id}
             </Typography>
-            <Typography>
+            <Typography variant="subtitle2" sx={{ color: "#8b8989" }}>
               {props.order.pickUpDate}{" "}
               {dayjs(props.order.pickUpTime, "HH:mm:ss").format("HH:mm")}
             </Typography>
           </Box>
-          <Typography fontWeight={700} sx={{ color: "green" }}>
+          <Typography
+            variant="subtitle2"
+            fontWeight={700}
+            sx={{ color: "green" }}
+          >
             {" "}
             CHF {parseFloat(props.order.totalPrice).toFixed(2)}
           </Typography>

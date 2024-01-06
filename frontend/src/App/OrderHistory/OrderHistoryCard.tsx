@@ -29,15 +29,16 @@ const smallScreenConfig = {
 const largeScreenConfig = {
   cardStyle: {
     my: 2,
-    p: 4,
+    py: 4,
+    px: 5,
     borderRadius: "15px",
     backgroundColor: "#fff6f2",
   },
-  fontTitleVariant: "h5",
-  fontContentVariant: "h6",
+  fontTitleVariant: "h6",
+  fontContentVariant: "subtitle1",
   imageStyle: {
-    width: "120px",
-    height: "120px",
+    width: "100px",
+    height: "100px",
     borderRadius: "5px",
     margin: "10px 0px",
     objectFit: "cover",

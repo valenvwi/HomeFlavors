@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 const fontStyle = {
   fontWeight: 700,
-  my: 3,
+  my: 1,
 };
+
 export default function OrderHistory() {
   const { data: orderResponse } = useOrdersList();
   const orders = orderResponse?.data;
@@ -44,9 +45,6 @@ export default function OrderHistory() {
     navigate("/");
   };
 
-  console.log("Pending orders", pendingOrders);
-  console.log("Accepted orders", acceptedOrders);
-
   return (
     <Container
       sx={{
@@ -78,7 +76,7 @@ export default function OrderHistory() {
 
       {pendingOrders !== undefined && pendingOrders?.length > 0 && (
         <>
-          <Typography variant="h5" sx={fontStyle}>
+          <Typography variant="h6" sx={fontStyle}>
             {" "}
             Pending {pluralize(pendingOrders?.length || 0, "Order")} (
             {pendingOrders?.length})
@@ -91,7 +89,7 @@ export default function OrderHistory() {
 
       {acceptedOrders !== undefined && acceptedOrders?.length > 0 && (
         <>
-          <Typography variant="h5" sx={fontStyle}>
+          <Typography variant="h6" sx={fontStyle}>
             {" "}
             All {pluralize(acceptedOrders?.length || 0, "Order")} (
             {acceptedOrders?.length})

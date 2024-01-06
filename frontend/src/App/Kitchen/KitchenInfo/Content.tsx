@@ -17,9 +17,9 @@ const smallScreenConfig = {
 } as const;
 
 const largeScreenConfig = {
-  fontTitleVariant: "h4",
-  fontSubtitleVariant: "h6",
-  fontContentVariant: "subtitle1",
+  fontTitleVariant: "h5",
+  fontSubtitleVariant: "subtitle1",
+  fontContentVariant: "subtitle2",
 } as const;
 
 export default function Content(props: Props) {
@@ -71,9 +71,9 @@ export default function Content(props: Props) {
           <IconButton
             onClick={onShowEdit}
             color="primary"
-            sx={{ height: " 60px", width: "60px" }}
+            sx={{ height: " 40px", width: "40px" }}
           >
-            <ModeEditIcon sx={{ fontSize: "40px" }} />
+            <ModeEditIcon sx={{ fontSize: "36px" }} />
           </IconButton>
         )}
       </Box>

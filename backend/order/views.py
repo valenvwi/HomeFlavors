@@ -167,8 +167,8 @@ class SalesDataView(APIView):
             # Sales by hour in the period
             sales_by_hour_summary = []
 
-            # from 12:00-20:00
-            for i in range(12, 21):
+            # from 12:00-19:59
+            for i in range(12, 20):
                 sales_by_hour = Order.objects.filter(
                     pick_up_date__range=(start_date, end_date),
                     pick_up_time__hour=i,
@@ -187,11 +187,31 @@ class SalesDataView(APIView):
                     'orders_by_hour': sales_by_hour['total_orders'] or 0
                 })
 
+            # Cancelled order in the period
+            cancelled_orders = Order.objects.filter(
+                pick_up_date__range=(start_date, end_date),
+                is_cancelled=True
+            ).count()
+
+            accepted_orders = Order.objects.filter(
+                pick_up_date__range=(start_date, end_date),
+                is_accepted=True,
+                is_cancelled=False
+            ).count()
+
+            order_status = []
+            order_status = {
+                'cancelled_orders': cancelled_orders,
+                'accepted_orders': accepted_orders,
+                'cancel_percentage': round(cancelled_orders / (cancelled_orders + accepted_orders) * 100, 2)
+            }
+
             # Combine all sales data in a single response
             summary = OrderedDict([
                 ('sales_by_period', sales_by_period),
                 ('items_sales_summary', items_sales_summary),
-                ('sales_by_hour_summary', sales_by_hour_summary)
+                ('sales_by_hour_summary', sales_by_hour_summary),
+                ('order_status', order_status)
             ])
             serialized_sales_data = SalesDataSerializer(summary)
 

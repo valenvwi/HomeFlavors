@@ -5,28 +5,21 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   styled,
 } from "@mui/material";
-
-const rows = [
-  { name: "Wintermelon Soup", quantity: 10, price: 20 },
-  { name: "Chicken Rice", quantity: 20, price: 30 },
-  { name: "Mango Juice", quantity: 10, price: 5 },
-];
 
 const cardStyle = {
   borderRadius: "15px",
 };
 
 const tableCellTitleStyle = {
-  fontSize: "18px",
+  fontSize: "16px",
   fontWeight: 700,
   color: "white",
 };
 
 const tableCellContentStyle = {
-  fontSize: "16px",
+  fontSize: "14px",
 };
 
 const StyledTableRow = styled(TableRow)(() => ({

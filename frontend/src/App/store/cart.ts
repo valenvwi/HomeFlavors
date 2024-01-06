@@ -78,6 +78,17 @@ const cartSlice = createSlice({
       state.totalQuantity = totals.totalQuantity;
     },
 
+    deleteItem(state, action) {
+      const id = action.payload;
+      state.cartItems = state.cartItems.filter(item => item.id !== id);
+      console.log(state.cartItems);
+
+      const totals = updateTotals(state.cartItems);
+      state.totalPrice = totals.totalPrice;
+      state.totalQuantity = totals.totalQuantity;
+    }
+    ,
+
     resetCart(state) {
       state.cartItems = [];
       state.totalPrice = 0;
