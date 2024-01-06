@@ -7,10 +7,30 @@ import { useAppDispatch, useAppSelector } from "../store/root";
 import noOrder from "../../assets/no-order.png";
 import { useNavigate } from "react-router-dom";
 
+const fontStyle = {
+  fontWeight: 700,
+  my: 3,
+};
 export default function OrderHistory() {
   const { data: orderResponse } = useOrdersList();
   const orders = orderResponse?.data;
   const navigate = useNavigate();
+
+  const { data: pendingOrdersResponse } = useOrdersList({
+    user_pending_orders: true,
+  });
+
+  const pendingOrders = pendingOrdersResponse?.data;
+
+  const { data: acceptedOrdersResponse } = useOrdersList({
+    user_pending_orders: false,
+  });
+
+  const acceptedOrders = acceptedOrdersResponse?.data;
+
+  function pluralize(count: number, singularWord: string) {
+    return count === 1 ? singularWord : singularWord + "s";
+  }
 
   const isOpened = useAppSelector((state) => state.modal.isOpened);
 
@@ -52,9 +72,32 @@ export default function OrderHistory() {
           </Button>
         </Box>
       )}
-      {orders?.map((order) => (
-        <OrderHistoryCard order={order} key={order.id} />
-      ))}
+
+      {pendingOrders !== undefined && pendingOrders?.length > 0 && (
+        <>
+          <Typography variant="h5" sx={fontStyle}>
+            {" "}
+            Pending {pluralize(pendingOrders?.length || 0, "Order")} (
+            {pendingOrders?.length})
+          </Typography>
+          {pendingOrders?.map((order) => (
+            <OrderHistoryCard order={order} key={order.id} />
+          ))}
+        </>
+      )}
+
+      {acceptedOrders !== undefined && acceptedOrders?.length > 0 && (
+        <>
+          <Typography variant="h5" sx={fontStyle}>
+            {" "}
+            All {pluralize(acceptedOrders?.length || 0, "Order")} (
+            {acceptedOrders?.length})
+          </Typography>
+          {acceptedOrders?.map((order) => (
+            <OrderHistoryCard order={order} key={order.id} />
+          ))}
+        </>
+      )}
     </Container>
   );
 }

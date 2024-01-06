@@ -10,6 +10,7 @@ from django.db.models import Sum, F, ExpressionWrapper, DecimalField
 from rest_framework.views import APIView
 from collections import OrderedDict
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 
 class OrderItemView(viewsets.ModelViewSet):
@@ -18,6 +19,7 @@ class OrderItemView(viewsets.ModelViewSet):
 
 
 class OrderView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 

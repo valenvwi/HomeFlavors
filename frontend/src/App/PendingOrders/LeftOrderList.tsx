@@ -108,7 +108,9 @@ export default function LeftOrderList(props: Props) {
             <>
               {todayOrders.length > 0 && (
                 <>
-                  <Typography sx={dateStyle}>Today</Typography>
+                  <Typography sx={dateStyle}>
+                    Today ({todayOrders.length})
+                  </Typography>
                   {todayOrders.map((order) => (
                     <LeftOrderCard
                       key={order.id}
@@ -123,7 +125,9 @@ export default function LeftOrderList(props: Props) {
               )}
               {tomorrowOrders.length > 0 && (
                 <>
-                  <Typography sx={dateStyle}>Tomorrow</Typography>
+                  <Typography sx={dateStyle}>
+                    Tomorrow ({tomorrowOrders.length})
+                  </Typography>
                   {tomorrowOrders.map((order) => (
                     <LeftOrderCard
                       key={order.id}
@@ -136,7 +140,9 @@ export default function LeftOrderList(props: Props) {
               )}
               {upcomingOrders.length > 0 && (
                 <>
-                  <Typography sx={dateStyle}>Upcoming</Typography>
+                  <Typography sx={dateStyle}>
+                    Upcoming ({upcomingOrders.length})
+                  </Typography>
                   {upcomingOrders.map((order) => (
                     <LeftOrderCard
                       key={order.id}

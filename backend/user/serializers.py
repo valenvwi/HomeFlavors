@@ -2,9 +2,8 @@ from django.conf import settings
 from rest_framework import serializers
 from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
-
 from .models import User
-
+import jwt
 class UserSerializer(serializers.ModelSerializer):
     firstName = serializers.CharField(source='first_name')
     lastName = serializers.CharField(source='last_name')
@@ -47,11 +46,16 @@ class RegisterSerializer(serializers.ModelSerializer):
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
+        token['user_id'] = user.id
+        token['username'] = user.username
+        token['is_owner'] = user.role == 'owner'
         return token
 
     def validate(self, attrs):
         data = super().validate(attrs)
-        data["user_id"] = self.user.id
+        data["userId"] = self.user.id
+        data['username'] = self.user.username
+        data["isOwner"] = self.user.role == "owner"
         return data
 
 
@@ -62,6 +66,20 @@ class JWTCookieTokenRefreshSerializer(TokenRefreshSerializer):
         attrs["refresh"] = self.context["request"].COOKIES.get(settings.SIMPLE_JWT["REFRESH_TOKEN_NAME"])
 
         if attrs["refresh"]:
-            return super().validate(attrs)
+            data = super().validate(attrs)
+            try:
+                decoded_data = jwt.decode(attrs["refresh"], settings.SECRET_KEY, algorithms=["HS256"])
+                user_id = decoded_data.get('user_id')
+                username = decoded_data.get('username')
+                is_owner = decoded_data.get('is_owner')
+
+                data["userId"] = user_id
+                data['username'] = username
+                data["isOwner"] = is_owner
+                return data
+            except jwt.ExpiredSignatureError:
+                raise InvalidToken("Refresh token expired")
+            except jwt.InvalidTokenError:
+                raise InvalidToken("Invalid refresh token")
         else:
             raise InvalidToken("No valid refresh token found")

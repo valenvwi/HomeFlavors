@@ -696,8 +696,6 @@ paths:
           description: Get all pending orders from the user
       tags:
         - orders
-      security:
-        - {}
       responses:
         "200":
           content:
@@ -723,8 +721,6 @@ paths:
             schema:
               $ref: "#/components/schemas/Order"
         required: true
-      security:
-        - {}
       responses:
         "201":
           content:
@@ -744,8 +740,6 @@ paths:
           required: true
       tags:
         - orders
-      security:
-        - {}
       responses:
         "200":
           content:
@@ -776,8 +770,6 @@ paths:
             schema:
               $ref: "#/components/schemas/Order"
         required: true
-      security:
-        - {}
       responses:
         "200":
           content:
@@ -807,8 +799,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/PatchedOrder"
-      security:
-        - {}
       responses:
         "200":
           content:
@@ -827,8 +817,6 @@ paths:
           required: true
       tags:
         - orders
-      security:
-        - {}
       responses:
         "204":
           description: No response body

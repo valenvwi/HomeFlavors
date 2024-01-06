@@ -34,7 +34,8 @@ export default function Login() {
     try {
       const response = await apiTokenCreate(data);
       dispatch(authActions.setIsLoggedIn(true));
-      dispatch(authActions.setCurrentUserId(response.data.user_id));
+      dispatch(authActions.setCurrentUserId(response.data.userId));
+      dispatch(authActions.setIsOwner(response.data.isOwner));
       dispatch(authActions.setJustLoggedIn(true));
       dispatch(authActions.setUsername(data.username))
       navigate("/");

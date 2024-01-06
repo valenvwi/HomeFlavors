@@ -20,11 +20,7 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useAppSelector } from "../store/root";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  apiLogoutCreate,
-  useKitchensRetrieve,
-  useOrdersList,
-} from "../../../api";
+import { apiLogoutCreate, useOrdersList } from "../../../api";
 import { authActions } from "../store/auth";
 import { cartActions } from "../store/cart";
 import { useAppDispatch } from "../store/root";
@@ -34,17 +30,22 @@ export default function AppNavBar() {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const cartUpdated = useAppSelector((state) => state.cart.cartUpdated);
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
-  const currentUserId = useAppSelector((state) => state.auth.currentUserId);
+  const isOwner = useAppSelector((state) => state.auth.isOwner);
+  const [notificationCount, setNotificationCount] = useState<number>(0);
 
-  const { data: ordersResponse } = useOrdersList({
-    kitchen_pending_orders: true,
-  });
-  const orders = ordersResponse?.data;
-  const notificationCount = orders?.length;
+  const { data: ordersResponse } = useOrdersList(
+    {
+      kitchen_pending_orders: true,
+    },
+    { query: { enabled: isOwner } }
+  );
 
-  const { data: kitchenResponse } = useKitchensRetrieve(1);
-  const kitchen = kitchenResponse?.data;
-  const isKitchenOwner = kitchen?.owner === currentUserId;
+  useEffect(() => {
+    if (ordersResponse) {
+      const orders = ordersResponse?.data;
+      setNotificationCount(orders.length);
+    }
+  }, [ordersResponse]);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ export default function AppNavBar() {
             </Link>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {isLoggedIn && isKitchenOwner && (
+            {isLoggedIn && isOwner && (
               <>
                 <Button color="inherit" onClick={goToPendingOrderPage}>
                   <Badge badgeContent={notificationCount} color="primary">
@@ -152,7 +153,7 @@ export default function AppNavBar() {
                 </Button>
               </>
             )}
-            {isLoggedIn && !isKitchenOwner && (
+            {isLoggedIn && !isOwner && (
               <>
                 <Button color="inherit" onClick={goToCartPage}>
                   <animated.div style={cartAnimation}>

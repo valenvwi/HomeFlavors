@@ -1,4 +1,4 @@
-import { useKitchensRetrieve, useMenuItemsList } from "../../../../api";
+import { useMenuItemsList } from "../../../../api";
 import { useState } from "react";
 import {
   Button,
@@ -21,15 +21,11 @@ import { keepPreviousData } from "@tanstack/react-query";
 export default function MenuItem() {
   const [showAddMenuItem, setShowAddMenuItem] = useState<boolean>(false);
   const [showEditMenuItem, setShowEditMenuItem] = useState<boolean>(false);
-  const currentUserId = useAppSelector((state) => state.auth.currentUserId);
+  const isOwner = useAppSelector((state) => state.auth.isOwner);
   const [menuItem, setMenuItem] = useState<MenuItemType | null>(null);
   const [category, setCategory] = useState<string>("soup");
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const { data: kitchenResponse } = useKitchensRetrieve(1);
-  const kitchen = kitchenResponse?.data;
-  const isKitchenOwner = kitchen?.owner === currentUserId;
 
   const { data: menuItemsResponse } = useMenuItemsList(
     { category: category },
@@ -61,7 +57,7 @@ export default function MenuItem() {
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column" }}>
-      {isKitchenOwner && !showEditMenuItem && (
+      {isOwner && !showEditMenuItem && (
         <Button
           sx={{ justifyContent: "flex-end", mx: 2 }}
           onClick={toggleAddMenuItem}
@@ -93,7 +89,7 @@ export default function MenuItem() {
               <MenuItemCardMobile
                 menuItem={item}
                 key={item.name}
-                isOwner={isKitchenOwner}
+                isOwner={isOwner}
                 onSetMenuItem={onSetMenuItem}
                 open={open}
                 handleOpen={handleOpen}
@@ -103,7 +99,7 @@ export default function MenuItem() {
               <MenuItemCard
                 menuItem={item}
                 key={item.name}
-                isOwner={isKitchenOwner}
+                isOwner={isOwner}
                 onSetMenuItem={onSetMenuItem}
                 open={open}
                 handleOpen={handleOpen}

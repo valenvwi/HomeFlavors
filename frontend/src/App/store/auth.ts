@@ -6,6 +6,7 @@ const authSlice = createSlice({
     isLoggedIn: false,
     currentUserId: null,
     username: null,
+    isOwner: false,
     newUser: false,
     justLoggedIn: false,
   },
@@ -18,6 +19,9 @@ const authSlice = createSlice({
     },
     setUsername(state, action) {
       state.username = action.payload;
+    },
+    setIsOwner(state, action) {
+      state.isOwner = action.payload;
     },
     setNewUser(state, action) {
       state.newUser = action.payload;

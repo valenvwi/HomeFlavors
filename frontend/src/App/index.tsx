@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
 import Kitchen from "./Kitchen";
@@ -11,24 +11,32 @@ import OrderHistory from "./OrderHistory";
 import Checkout from "./Checkout";
 import PendingOrders from "./PendingOrders";
 import SalesData from "./SalesData";
+import useAuth from "./Utils/useAuth";
 
 axios.defaults.withCredentials = true;
 
 function App() {
+  const { isCheckingSession } = useAuth();
+
+
   return (
     <>
       <CssBaseline />
       <AppNavBar />
-      <Routes>
-        <Route path="/" element={<Kitchen />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/orderHistory" element={<OrderHistory />} />
-        <Route path="/pendingOrders" element={<PendingOrders />} />
-        <Route path="/salesData" element={<SalesData />} />
-      </Routes>
+      {isCheckingSession ? (
+        <div>Checking user...</div>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Kitchen />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orderHistory" element={<OrderHistory />} />
+          <Route path="/pendingOrders" element={<PendingOrders />} />
+          <Route path="/salesData" element={<SalesData />} />
+        </Routes>
+      )}
     </>
   );
 }

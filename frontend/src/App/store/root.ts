@@ -11,6 +11,7 @@ const persistedCartReducer = persistReducer(
   cartSlice.reducer
 );
 
+
 const rootReducer = combineReducers({
   cart: persistedCartReducer,
   auth: authSlice.reducer,
