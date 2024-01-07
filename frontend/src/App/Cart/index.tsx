@@ -48,7 +48,7 @@ export default function Cart() {
   };
 
   return cartItems.length > 0 ? (
-    <Container sx={{ my: 5, py: 5, display: "flex", flexDirection: "column" }}>
+    <Container sx={{ mt: 5, py: 5, display: "flex", flexDirection: "column" }}>
       <Typography
         variant={style.fontVariant}
         sx={{ mt: { xs: 0, md: 1 }, mx: 2, textAlign: "left", fontWeight: 600 }}
@@ -69,10 +69,10 @@ export default function Cart() {
           }}
         >
           <Box>
-            <Typography variant="subtitle2" sx={{}}>
+            <Typography variant="body2" sx={{}}>
               Total Price
             </Typography>
-            <Typography variant="subtitle1" sx={{ my: 1 }}>
+            <Typography variant="body1" sx={{ my: 1 }}>
               CHF <b>{totalPrice.toFixed(2)}</b>
             </Typography>
           </Box>

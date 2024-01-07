@@ -5,8 +5,8 @@ import { modalActions } from "../store/modal";
 import { useAppDispatch, useAppSelector } from "../store/root";
 import noOrder from "../../assets/no-order.png";
 import { useNavigate } from "react-router-dom";
-import SuccessCheckoutModal from "../UI/SuccessCheckoutMoal";
-import SuccessCancellationModal from "../UI/SuccessCancellationModal";
+import Modal from "../UI/Modal";
+import { useState } from "react";
 
 const fontStyle = {
   fontWeight: 700,
@@ -17,6 +17,7 @@ export default function OrderHistory() {
   const { data: orderResponse } = useOrdersList();
   const orders = orderResponse?.data;
   const navigate = useNavigate();
+  const [orderId, setOrderId] = useState<number>(0);
 
   const { data: pendingOrdersResponse, refetch: refetchPendingOrder } =
     useOrdersList({
@@ -38,22 +39,33 @@ export default function OrderHistory() {
 
   const isCheckedout = useAppSelector((state) => state.modal.isCheckedout);
   const isCancelled = useAppSelector((state) => state.modal.isCancelled);
+  const openCancelledDialog = useAppSelector(
+    (state) => state.modal.openCancelledDialog
+  );
 
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
     dispatch(modalActions.setIsCheckedout(false));
     dispatch(modalActions.setIsCancelled(false));
+    dispatch(modalActions.setOpenCancelledDialog(false));
   };
 
   const goToHomePage = () => {
     navigate("/");
   };
 
+  const openCancelOrderDialog = (orderId: number) => {
+    dispatch(modalActions.setOpenCancelledDialog(true));
+    setOrderId(orderId);
+  };
+
   const cancelOrder = async (orderId: number) => {
+    console.log("cancelOrder");
     await ordersPartialUpdate(orderId, {
       isCancelled: true,
     });
+    dispatch(modalActions.setOpenCancelledDialog(false));
     dispatch(modalActions.setIsCancelled(true));
     refetchPendingOrder();
     refetchAcceptedOrder();
@@ -61,15 +73,37 @@ export default function OrderHistory() {
   return (
     <Container
       sx={{
-        my: 5,
+        mt: 5,
         py: 5,
         minHeight: "90vh",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <SuccessCheckoutModal open={isCheckedout} handleClose={handleClose} />
-      <SuccessCancellationModal open={isCancelled} handleClose={handleClose} />
+      <Modal
+        open={isCheckedout}
+        handleClose={handleClose}
+        message="Your order has been placed successfully!"
+        cancelText="Close"
+        icon="success"
+      />
+
+      <Modal
+        open={isCancelled}
+        handleClose={handleClose}
+        message="Your order has been cancelled successfully!"
+        cancelText="Close"
+        icon="success"
+      />
+      <Modal
+        open={openCancelledDialog}
+        message="Are you sure you want to cancel this order?"
+        confirmText="Yes"
+        cancelText="No"
+        handleConfirm={() => cancelOrder(orderId)}
+        handleClose={handleClose}
+        icon="alert"
+      />
       {orders?.length === 0 && (
         <Box
           sx={{
@@ -101,7 +135,7 @@ export default function OrderHistory() {
             <OrderHistoryCard
               order={order}
               key={order.id}
-              cancelOrder={cancelOrder}
+              openCancelOrderDialog={openCancelOrderDialog}
             />
           ))}
         </>

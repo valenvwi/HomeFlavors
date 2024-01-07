@@ -10,9 +10,10 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import soldOut from "../../../assets/sold-out.png";
 import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
-import LoginModal from "../../UI/LoginModal";
 import { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
+import Modal from "../../UI/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -46,6 +47,19 @@ export default function MenuItemCard(props: {
     },
     config: { mass: 1, tension: 300, friction: 10 },
   });
+
+  const navigate = useNavigate();
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
+  const goToSignup = () => {
+    navigate("/signup");
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+  };
+
   return (
     <Card
       elevation={6}
@@ -138,7 +152,17 @@ export default function MenuItemCard(props: {
                   <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
                 </Button>
               </animated.div>
-              <LoginModal open={props.open} handleClose={props.handleClose} />
+              <Modal
+                open={props.open}
+                handleClose={props.handleClose}
+                icon="none"
+                message="Log in to add to cart"
+                confirmText="Log in"
+                handleConfirm={goToLogin}
+                subtext="Don't have an account?"
+                subtextButtonText="Sign up"
+                subtextAction={goToSignup}
+              />
             </>
           ) : (
             <Button color="primary" onClick={onAddToCart}>

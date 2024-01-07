@@ -48,7 +48,7 @@ const largeScreenConfig = {
 
 type Props = {
   order: OrderType;
-  cancelOrder: (orderId: number) => void;
+  openCancelOrderDialog: (orderId: number) => void;
 };
 
 export default function OrderHistoryCard(props: Props) {
@@ -65,8 +65,8 @@ export default function OrderHistoryCard(props: Props) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
 
-  const onCancelOrder = () => {
-    props.cancelOrder(props.order.id);
+  const openCancelOrderDialog = () => {
+    props.openCancelOrderDialog(props.order.id);
   };
   return (
     <Card elevation={6} sx={style.cardStyle}>
@@ -112,11 +112,11 @@ export default function OrderHistoryCard(props: Props) {
               </Typography>
             </Box>
           </Box>
-          {!props.order.isAccepted && (
+          {!props.order.isAccepted && !isSmallScreen && (
             <Button
               variant="contained"
               sx={{ m: " auto 10px", height: "100%" }}
-              onClick={onCancelOrder}
+              onClick={openCancelOrderDialog}
             >
               Cancel
               <CancelOutlinedIcon sx={{ ml: 1 }} />
@@ -162,7 +162,10 @@ export default function OrderHistoryCard(props: Props) {
                     >
                       {orderItem.menuItem.name}
                     </Typography>
-                    <Typography variant={style.fontContentVariant}>
+                    <Typography
+                      variant={style.fontContentVariant}
+                      sx={{ color: "#8b8989" }}
+                    >
                       x {orderItem.quantity}
                     </Typography>
                   </Box>
@@ -173,7 +176,7 @@ export default function OrderHistoryCard(props: Props) {
                 </Typography>
               )}
               <Typography variant={style.fontContentVariant}>
-                CHF {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
+                {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
               </Typography>
             </Box>
           ))}
@@ -193,6 +196,18 @@ export default function OrderHistoryCard(props: Props) {
               2
             )}{" "}
           </Typography>
+          {!props.order.isAccepted && isSmallScreen && (
+            <Box sx={{ display: "flex", justifyContent: "flex-end", my: 1 }}>
+              <Button
+                variant="contained"
+                sx={{ fontSize: "12px" }}
+                onClick={openCancelOrderDialog}
+              >
+                Cancel
+                <CancelOutlinedIcon sx={{ ml: 1, fontSize: "18px" }} />
+              </Button>
+            </Box>
+          )}
         </Box>
       )}
     </Card>

@@ -10,7 +10,8 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import soldOut from "../../../assets/sold-out.png";
 import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
-import LoginModal from "../../UI/LoginModal";
+import Modal from "../../UI/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -36,12 +37,25 @@ export default function MenuItemCard(props: {
     props.onSetMenuItem(props.menuItem);
   };
 
+  const navigate = useNavigate();
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
+  const goToSignup = () => {
+    navigate("/signup");
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+  };
+
   return (
     <Card
       elevation={6}
       sx={{
         display: "flex",
-        m: 2,
+        my: 2,
+        mx: 4,
         p: 2,
         backgroundColor: "#fff6f2",
         borderRadius: "15px",
@@ -51,8 +65,8 @@ export default function MenuItemCard(props: {
         src={`${BASEURL}/${props.menuItem.image}`}
         alt={props.menuItem.name}
         style={{
-          width: "180px",
-          height: "180px",
+          width: "150px",
+          height: "150px",
           objectFit: "cover",
           borderRadius: "10px",
           aspectRatio: "1",
@@ -107,7 +121,17 @@ export default function MenuItemCard(props: {
             >
               <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
             </IconButton>
-            <LoginModal open={props.open} handleClose={props.handleClose} />
+            <Modal
+              open={props.open}
+              handleClose={props.handleClose}
+              icon="none"
+              message="Log in to add to cart"
+              confirmText="Log in"
+              handleConfirm={goToLogin}
+              subtext="Don't have an account?"
+              subtextButtonText="Sign up"
+              subtextAction={goToSignup}
+            />
           </Box>
         ) : (
           <Box

@@ -5,7 +5,7 @@ import PaymentForm from "./PaymentForm";
 
 export default function Checkout() {
   return (
-    <Container sx={{ my: 5, py: 5 }}>
+    <Container sx={{ mt: 5, py: 5 }}>
       <Grid container spacing={5}>
         <Grid item xs={12} md={4}>
           <CartItem />
