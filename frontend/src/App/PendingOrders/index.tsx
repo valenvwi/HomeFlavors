@@ -95,20 +95,20 @@ export default function PendingOrders() {
               {pendingOrders?.length === 0 ? (
                 <>
                   <img src={noOrder} alt="Sold Out" width="250" />
-                  <Typography variant="h4" sx={fontTitleStyle}>
+                  <Typography variant="h5" sx={fontTitleStyle}>
                     You have no pending orders
                   </Typography>
-                  <Typography variant="h6" sx={fontContentStyle}>
+                  <Typography variant="subtitle1" sx={fontContentStyle}>
                     Check out the upcoming orders
                   </Typography>
                 </>
               ) : (
                 <>
                   <img src={selectImg} alt="Sold Out" width="250" />
-                  <Typography variant="h4" sx={fontTitleStyle}>
+                  <Typography variant="h5" sx={fontTitleStyle}>
                     You have <b>{pendingOrders?.length}</b> pending orders
                   </Typography>
-                  <Typography variant="h6" sx={fontContentStyle}>
+                  <Typography variant="subtitle1" sx={fontContentStyle}>
                     Click on an order to view details
                   </Typography>
                 </>

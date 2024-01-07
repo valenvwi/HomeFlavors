@@ -22,7 +22,7 @@ export default function KitchenInfo() {
   return (
     <>
       <Banner banner={kitchen?.banner} logo={kitchen?.logo} />
-      {!showEdit ? (
+      {/* {!showEdit ? (
         <Content
           kitchen={kitchen}
           showEdit={showEdit}
@@ -34,7 +34,7 @@ export default function KitchenInfo() {
           showEdit={showEdit}
           onHideEditClick={onHideEdit}
         />
-      )}
+      )} */}
     </>
   );
 }

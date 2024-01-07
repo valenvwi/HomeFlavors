@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const modalSlice = createSlice({
   name: "modal",
   initialState: {
-    isOpened: false,
+    isCheckedout: false,
+    isCancelled: false,
   },
   reducers: {
-    setIsOpened(state, action) {
-      state.isOpened = action.payload;
+    setIsCheckedout(state, action) {
+      state.isCheckedout = action.payload;
+    },
+    setIsCancelled(state, action) {
+      state.isCancelled = action.payload;
     },
   },
 });

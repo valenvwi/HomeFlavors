@@ -1,4 +1,4 @@
-import { Box, Card, IconButton, Typography } from "@mui/material";
+import { Box, Button, Card, IconButton, Typography } from "@mui/material";
 import { OrderType } from "../types/order";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -6,6 +6,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useState } from "react";
 import { BASEURL } from "../../config";
 import { useTheme, useMediaQuery } from "@mui/material";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 const smallScreenConfig = {
   cardStyle: {
@@ -45,7 +46,12 @@ const largeScreenConfig = {
   },
 } as const;
 
-export default function OrderHistoryCard(props: { order: OrderType }) {
+type Props = {
+  order: OrderType;
+  cancelOrder: (orderId: number) => void;
+};
+
+export default function OrderHistoryCard(props: Props) {
   const formattedCreatedAtDate = dayjs(props.order.createdAt).format(
     "YYYY-MM-DD HH:mm"
   );
@@ -59,6 +65,9 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const style = isSmallScreen ? smallScreenConfig : largeScreenConfig;
 
+  const onCancelOrder = () => {
+    props.cancelOrder(props.order.id);
+  };
   return (
     <Card elevation={6} sx={style.cardStyle}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -77,7 +86,7 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
         )}
       </Box>
       {!expanded && (
-        <Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex" }}>
             <img
               src={BASEURL + "/" + props.order.orderItems[0].menuItem.image}
@@ -103,7 +112,16 @@ export default function OrderHistoryCard(props: { order: OrderType }) {
               </Typography>
             </Box>
           </Box>
-          <Typography variant="h6"></Typography>
+          {!props.order.isAccepted && (
+            <Button
+              variant="contained"
+              sx={{ m: " auto 10px", height: "100%" }}
+              onClick={onCancelOrder}
+            >
+              Cancel
+              <CancelOutlinedIcon sx={{ ml: 1 }} />
+            </Button>
+          )}
         </Box>
       )}
       {expanded && (

@@ -79,20 +79,11 @@ export default function CheckoutForm() {
       }
       console.log("All order items created");
       dispatch(cartActions.resetCart());
-      dispatch(modalActions.setIsOpened(true));
+      dispatch(modalActions.setIsCheckedout(true));
       goToOrderHistory();
     } catch (error) {
       console.error("Error creating order items", error);
     }
-  };
-
-  const isDayValid = (date: dayjs.Dayjs) => {
-    const day = date.day();
-    if (day === 0 || day === 1) {
-      return true;
-    }
-
-    return false;
   };
 
   const isTimeValid = (time: dayjs.Dayjs) => {
@@ -170,7 +161,6 @@ export default function CheckoutForm() {
                   onChange={onChange}
                   sx={{ width: "90%", py: 1 }}
                   minDateTime={dayjs().add(15, "minute")}
-                  shouldDisableDate={isDayValid}
                   shouldDisableTime={isTimeValid}
                 />
               )}

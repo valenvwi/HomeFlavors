@@ -42,7 +42,7 @@ type Props = {
 
 export default function SalesCard(props: Props) {
   return (
-    <Grid md={3} spacing={2}>
+    <Grid md={3}>
       <Card sx={cardStyle}>
         <Typography variant="subtitle1" style={fontTitleStyle}>
           {props.title}
@@ -51,11 +51,7 @@ export default function SalesCard(props: Props) {
           {props.subtitle}
         </Typography>
         {props.sales && <SalesChart sales={props.sales} data={props.data} />}
-        {props.orderStatus && (
-
-            <SalesPie orderStatus={props.orderStatus} />
-      
-        )}
+        {props.orderStatus && <SalesPie orderStatus={props.orderStatus} />}
       </Card>
     </Grid>
   );

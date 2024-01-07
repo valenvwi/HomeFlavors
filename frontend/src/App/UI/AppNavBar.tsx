@@ -178,7 +178,7 @@ export default function AppNavBar() {
           </Box>
 
           <Box sx={{ display: { xs: "block", sm: "none" } }}>
-            {isLoggedIn ? (
+            {isLoggedIn && !isOwner && (
               <Button color="inherit" onClick={goToCartPage}>
                 <animated.div style={cartAnimation}>
                   <Badge badgeContent={totalQuantity} color="primary">
@@ -186,7 +186,15 @@ export default function AppNavBar() {
                   </Badge>
                 </animated.div>
               </Button>
-            ) : (
+            )}
+            {isLoggedIn && isOwner && (
+              <Button color="inherit" onClick={goToPendingOrderPage}>
+                <Badge badgeContent={notificationCount} color="primary">
+                  <NotificationsIcon />
+                </Badge>
+              </Button>
+            )}
+            {!isLoggedIn && (
               <Button color="inherit" onClick={goToLoginPage}>
                 <LoginIcon />
               </Button>

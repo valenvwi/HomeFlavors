@@ -56,7 +56,7 @@ export default function MenuItem() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Container sx={{ display: "flex", flexDirection: "column" }}>
+    <Container sx={{ display: "flex", flexDirection: "column", mt: 4 }}>
       {isOwner && !showEditMenuItem && (
         <Button sx={{ justifyContent: "flex-end" }} onClick={toggleAddMenuItem}>
           <AddCircleOutlineIcon />{" "}

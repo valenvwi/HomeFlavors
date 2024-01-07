@@ -1,11 +1,12 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useOrdersList } from "../../../api";
+import { ordersPartialUpdate, useOrdersList } from "../../../api";
 import OrderHistoryCard from "./OrderHistoryCard";
-import SuccessCheckoutModal from "../UI/SuccessCheckoutMoal";
 import { modalActions } from "../store/modal";
 import { useAppDispatch, useAppSelector } from "../store/root";
 import noOrder from "../../assets/no-order.png";
 import { useNavigate } from "react-router-dom";
+import SuccessCheckoutModal from "../UI/SuccessCheckoutMoal";
+import SuccessCancellationModal from "../UI/SuccessCancellationModal";
 
 const fontStyle = {
   fontWeight: 700,
@@ -17,15 +18,17 @@ export default function OrderHistory() {
   const orders = orderResponse?.data;
   const navigate = useNavigate();
 
-  const { data: pendingOrdersResponse } = useOrdersList({
-    user_pending_orders: true,
-  });
+  const { data: pendingOrdersResponse, refetch: refetchPendingOrder } =
+    useOrdersList({
+      user_pending_orders: true,
+    });
 
   const pendingOrders = pendingOrdersResponse?.data;
 
-  const { data: acceptedOrdersResponse } = useOrdersList({
-    user_pending_orders: false,
-  });
+  const { data: acceptedOrdersResponse, refetch: refetchAcceptedOrder } =
+    useOrdersList({
+      user_pending_orders: false,
+    });
 
   const acceptedOrders = acceptedOrdersResponse?.data;
 
@@ -33,18 +36,28 @@ export default function OrderHistory() {
     return count === 1 ? singularWord : singularWord + "s";
   }
 
-  const isOpened = useAppSelector((state) => state.modal.isOpened);
+  const isCheckedout = useAppSelector((state) => state.modal.isCheckedout);
+  const isCancelled = useAppSelector((state) => state.modal.isCancelled);
 
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    dispatch(modalActions.setIsOpened(false));
+    dispatch(modalActions.setIsCheckedout(false));
+    dispatch(modalActions.setIsCancelled(false));
   };
 
   const goToHomePage = () => {
     navigate("/");
   };
 
+  const cancelOrder = async (orderId: number) => {
+    await ordersPartialUpdate(orderId, {
+      isCancelled: true,
+    });
+    dispatch(modalActions.setIsCancelled(true));
+    refetchPendingOrder();
+    refetchAcceptedOrder();
+  };
   return (
     <Container
       sx={{
@@ -55,7 +68,8 @@ export default function OrderHistory() {
         flexDirection: "column",
       }}
     >
-      <SuccessCheckoutModal open={isOpened} handleClose={handleClose} />
+      <SuccessCheckoutModal open={isCheckedout} handleClose={handleClose} />
+      <SuccessCancellationModal open={isCancelled} handleClose={handleClose} />
       {orders?.length === 0 && (
         <Box
           sx={{
@@ -82,7 +96,11 @@ export default function OrderHistory() {
             {pendingOrders?.length})
           </Typography>
           {pendingOrders?.map((order) => (
-            <OrderHistoryCard order={order} key={order.id} />
+            <OrderHistoryCard
+              order={order}
+              key={order.id}
+              cancelOrder={cancelOrder}
+            />
           ))}
         </>
       )}
