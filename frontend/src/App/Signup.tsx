@@ -42,7 +42,7 @@ export default function Signup() {
       dispatch(authActions.setIsLoggedIn(true));
       dispatch(authActions.setCurrentUserId(response.data.user_id));
       dispatch(authActions.setNewUser(true));
-      dispatch(authActions.setUsername(data.username))
+      dispatch(authActions.setUsername(data.username));
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -69,12 +69,12 @@ export default function Signup() {
           color="orange"
         />
 
-        <Typography component="h1" variant="h4" fontWeight={700} sx={{ py: 2 }}>
+        <Typography component="h1" variant="h5" fontWeight={700} sx={{ py: 2 }}>
           Sign up
         </Typography>
         <Typography
           component="h1"
-          variant="body1"
+          variant="body2"
           sx={{ color: "#8b8989", textAlign: "center" }}
         >
           Please enter your detail below
@@ -83,26 +83,13 @@ export default function Signup() {
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          sx={{ mt: 1 }}
+          sx={{
+            mt: 1,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
         >
-          <TextField
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
-              },
-            })}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            autoComplete="email"
-            autoFocus
-            error={!!errors.email}
-            helperText={errors.email && errors.email.message}
-          />
           <TextField
             {...register("username", {
               required: "Username is required",
@@ -113,13 +100,15 @@ export default function Signup() {
             })}
             margin="normal"
             required
-            fullWidth
             id="username"
             label="Username"
             autoComplete="username"
             autoFocus
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("password", {
@@ -131,13 +120,15 @@ export default function Signup() {
             })}
             margin="normal"
             required
-            fullWidth
             name="password"
             label="Password"
             type="password"
             autoComplete="current-password"
             error={!!errors.password}
             helperText={errors.password && errors.password.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("firstName", {
@@ -149,13 +140,15 @@ export default function Signup() {
             })}
             margin="normal"
             required
-            fullWidth
             name="firstName"
             label="First name"
             type="firstName"
             autoComplete="firstName"
             error={!!errors.firstName}
             helperText={errors.firstName && errors.firstName.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("lastName", {
@@ -167,13 +160,36 @@ export default function Signup() {
             })}
             margin="normal"
             required
-            fullWidth
             name="lastName"
             label="Last name"
             type="lastName"
             autoComplete="lastName"
             error={!!errors.lastName}
             helperText={errors.lastName && errors.lastName.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
+          />
+
+          <TextField
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
+            margin="normal"
+            required
+            id="email"
+            label="Email"
+            autoComplete="email"
+            autoFocus
+            error={!!errors.email}
+            helperText={errors.email && errors.email.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("phoneNumber", {
@@ -182,19 +198,26 @@ export default function Signup() {
             })}
             margin="normal"
             required
-            fullWidth
             name="phoneNumber"
             label="Phone number"
             type="phoneNumber"
             autoComplete="phoneNumber"
             error={!!errors.phoneNumber}
             helperText={errors.phoneNumber && errors.phoneNumber.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ my: 3 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, width: "100%", fontSize: "12px" }}
+          >
             Sign up
           </Button>
           <Grid container>
-            <Grid item>
+            <Grid item sx={{ fontSize: "12px" }}>
               <Link to="/login">{"Already have an account? Log in"}</Link>
             </Grid>
           </Grid>

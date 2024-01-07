@@ -37,7 +37,7 @@ export default function Login() {
       dispatch(authActions.setCurrentUserId(response.data.userId));
       dispatch(authActions.setIsOwner(response.data.isOwner));
       dispatch(authActions.setJustLoggedIn(true));
-      dispatch(authActions.setUsername(data.username))
+      dispatch(authActions.setUsername(data.username));
       navigate("/");
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 401) {
@@ -66,12 +66,12 @@ export default function Login() {
           color="orange"
         />
 
-        <Typography component="h1" variant="h4" fontWeight={700} sx={{ py: 2 }}>
+        <Typography component="h1" variant="h5" fontWeight={700} sx={{ py: 2 }}>
           Welcome back
         </Typography>
         <Typography
           component="h1"
-          variant="body1"
+          variant="body2"
           sx={{ color: "#8b8989", textAlign: "center" }}
         >
           We are happy to see you again!
@@ -80,31 +80,40 @@ export default function Login() {
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          sx={{ mt: 1 }}
+          sx={{
+            mt: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <TextField
             {...register("username", { required: "Username is required" })}
             margin="normal"
             required
-            fullWidth
             id="username"
             label="Username"
             autoComplete="username"
             autoFocus
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("password", { required: "Password is required" })}
             margin="normal"
             required
-            fullWidth
             name="password"
             label="Password"
             type="password"
             autoComplete="current-password"
             error={!!errors.password}
             helperText={errors.password && errors.password.message}
+            size="small"
+            inputProps={{ style: { fontSize: "14px" } }}
+            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
 
           {invalidCredentials && (
@@ -119,14 +128,13 @@ export default function Login() {
           )}
           <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, width: "100%", fontSize: "12px" }}
           >
             Log In
           </Button>
           <Grid container>
-            <Grid item>
+            <Grid item sx={{ fontSize: "12px" }}>
               <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
