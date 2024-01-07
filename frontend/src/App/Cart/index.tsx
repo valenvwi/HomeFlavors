@@ -113,7 +113,9 @@ export default function Cart() {
         }}
       >
         <img src={emptyCart} alt="empty shopping cart" width="250" />
-        <Typography variant="h5">Your cart is empty</Typography>
+        <Typography variant="h5" fontWeight={700}>
+          Your cart is empty
+        </Typography>
         <Button variant="contained" sx={{ my: 3 }} onClick={goToHomePage}>
           Shop now
         </Button>

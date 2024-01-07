@@ -81,7 +81,9 @@ export default function OrderHistory() {
           }}
         >
           <img src={noOrder} alt="Sold Out" width="250" />
-          <Typography variant="h5">No orders yet</Typography>
+          <Typography variant="h5" fontWeight={700}>
+            No orders yet
+          </Typography>
           <Button variant="contained" sx={{ my: 3 }} onClick={goToHomePage}>
             Shop now
           </Button>

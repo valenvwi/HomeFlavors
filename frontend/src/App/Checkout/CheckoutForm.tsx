@@ -2,7 +2,7 @@ import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateTimePicker } from "@mui/x-date-pickers";
+import { DateTimePicker, MobileDateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { ordersCreate, orderItemsCreate } from "../../../api";
 import { useAppDispatch, useAppSelector } from "../store/root";
@@ -94,6 +94,8 @@ export default function CheckoutForm() {
     return false;
   };
 
+  const maxDate = dayjs().add(30, "day");
+
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -155,12 +157,13 @@ export default function CheckoutForm() {
               control={control}
               rules={{ required: "Pick up date and time are required" }}
               render={({ field: { onChange, value } }) => (
-                <DateTimePicker
+                <MobileDateTimePicker
                   label="Pick up date & time"
                   value={value}
                   onChange={onChange}
                   sx={{ width: "90%", py: 1 }}
-                  minDateTime={dayjs().add(15, "minute")}
+                  minDateTime={dayjs().add(20, "minute")}
+                  maxDate={maxDate}
                   shouldDisableTime={isTimeValid}
                 />
               )}
