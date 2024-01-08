@@ -89,7 +89,6 @@ export default function Login() {
         >
           <TextField
             {...register("username", { required: "Username is required" })}
-            required
             id="username"
             label="Username"
             autoComplete="username"
@@ -99,7 +98,6 @@ export default function Login() {
           />
           <TextField
             {...register("password", { required: "Password is required" })}
-            required
             name="password"
             label="Password"
             type="password"
@@ -110,7 +108,7 @@ export default function Login() {
 
           {invalidCredentials && (
             <Typography
-              variant="subtitle1"
+              variant="subtitle2"
               color="#d32f2f"
               fontFamily="Helvetica"
               fontWeight={500}

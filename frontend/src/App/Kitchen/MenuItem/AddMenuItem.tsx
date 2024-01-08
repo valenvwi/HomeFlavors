@@ -17,7 +17,7 @@ import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { menuItemsCreate, useMenuItemsList } from "../../../../api";
 import { useRef, useState } from "react";
-import { useAppDispatch} from "../../store/root";
+import { useAppDispatch } from "../../store/root";
 import { modalActions } from "../../store/modal";
 
 export default function AddMenuItem(props: {
@@ -140,13 +140,21 @@ export default function AddMenuItem(props: {
           <TextField
             {...register("name", {
               required: "Name is required",
+              minLength: {
+                value: 2,
+                message: "Name must be at least 4 characters long",
+              },
               maxLength: {
                 value: 50,
                 message: "Name must be under 50 characters long",
               },
+              validate: {
+                noLeadingTrailingWhitespace: (value) =>
+                  value.trim() === value ||
+                  "Name cannot include leading or trailing whitespace",
+              },
             })}
             margin="normal"
-            required
             fullWidth
             id="name"
             label="Name"
@@ -160,11 +168,19 @@ export default function AddMenuItem(props: {
               required: "Description is required",
               minLength: {
                 value: 4,
-                message: "description must be at least 4 characters long",
+                message: "Description must be at least 4 characters long",
+              },
+              maxLength: {
+                value: 1000,
+                message: "Description must be under 1000 characters long",
+              },
+              validate: {
+                noLeadingTrailingWhitespace: (value) =>
+                  value.trim() === value ||
+                  "Description cannot include leading or trailing whitespace",
               },
             })}
             margin="normal"
-            required
             fullWidth
             id="description"
             label="Description"
@@ -179,11 +195,16 @@ export default function AddMenuItem(props: {
             {...register("price", {
               required: "Price is required",
               validate: {
-                isNumber: (value) => !isNaN(value) || "Price must be a number",
+                isNumber: (value) => {
+                  const trimmedValue = value.trim();
+                  return (
+                    (!isNaN(trimmedValue) && trimmedValue === value) ||
+                    "Price must be a number without leading or trailing whitespace"
+                  );
+                },
               },
             })}
             margin="normal"
-            required
             fullWidth
             name="price"
             label="Price"
@@ -192,7 +213,7 @@ export default function AddMenuItem(props: {
             error={!!errors.price}
             helperText={errors.price && errors.price.message}
           />
-          <FormControl fullWidth margin="normal" required>
+          <FormControl fullWidth margin="normal">
             <InputLabel htmlFor="category">Category</InputLabel>
             <Select
               {...register("category", {

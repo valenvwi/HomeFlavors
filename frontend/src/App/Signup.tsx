@@ -95,14 +95,18 @@ export default function Signup() {
               required: "Username is required",
               minLength: {
                 value: 4,
-                message: "Username must be at least 4 characters long",
+                message: "Minimum 4 characters long",
+              },
+              validate: {
+                noWhitespace: (value) =>
+                  /^\S*$/.test(value) || "No whitespace is allowed",
               },
             })}
-            required
             id="username"
             label="Username"
             autoComplete="username"
             autoFocus
+            fullWidth
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
           />
@@ -111,10 +115,13 @@ export default function Signup() {
               required: "Password is required",
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters long",
+                message: "Mininum 6 characters long",
+              },
+              validate: {
+                noWhitespace: (value) =>
+                  /^\S*$/.test(value) || "No whitespace is allowed",
               },
             })}
-            required
             name="password"
             label="Password"
             type="password"
@@ -127,10 +134,13 @@ export default function Signup() {
               required: "First name is required",
               minLength: {
                 value: 2,
-                message: "First name must be at least 2 characters long",
+                message: "Minimum 2 characters long",
+              },
+              validate: {
+                noLeadingTrailingWhitespace: (value) =>
+                  value.trim() === value || "Invalid first name",
               },
             })}
-            required
             name="firstName"
             label="First name"
             type="firstName"
@@ -143,10 +153,13 @@ export default function Signup() {
               required: "Last name is required",
               minLength: {
                 value: 2,
-                message: "Last name must be at least 2 characters long",
+                message: "Minimum 2 characters long",
+              },
+              validate: {
+                noLeadingTrailingWhitespace: (value) =>
+                  value.trim() === value || "Invalid last name",
               },
             })}
-            required
             name="lastName"
             label="Last name"
             type="lastName"
@@ -162,8 +175,11 @@ export default function Signup() {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Invalid email address",
               },
+              validate: {
+                noLeadingTrailingWhitespace: (value) =>
+                  value.trim() === value || "Invalid emai accress",
+              },
             })}
-            required
             id="email"
             label="Email"
             autoComplete="email"
@@ -175,8 +191,11 @@ export default function Signup() {
             {...register("phoneNumber", {
               required: "Phone number is required",
               minLength: { value: 10, message: "Invalid phone number" },
+              pattern: {
+                value: /^[0-9+]{8,15}$/,
+                message: "invalid phone number",
+              },
             })}
-            required
             name="phoneNumber"
             label="Phone number"
             type="phoneNumber"

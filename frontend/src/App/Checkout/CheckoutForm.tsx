@@ -19,16 +19,15 @@ type OrderInputs = {
 };
 
 export default function CheckoutForm() {
-
   const getDefaultPickUpTime = () => {
-    const nowPlus20Min = dayjs().add(20, 'minute');
+    const nowPlus20Min = dayjs().add(20, "minute");
     const openingTime = dayjs().hour(12).minute(0);
     const closingTime = dayjs().hour(19).minute(59);
 
     if (nowPlus20Min.isBefore(openingTime)) {
       return openingTime;
     } else if (nowPlus20Min.isAfter(closingTime)) {
-      return dayjs().add(1, 'day').hour(12).minute(0);
+      return dayjs().add(1, "day").hour(12).minute(0);
     } else {
       return nowPlus20Min;
     }
@@ -138,7 +137,13 @@ export default function CheckoutForm() {
       >
         <Grid item xs={12} sm={6}>
           <TextField
-            {...register("name", { required: "Name is required" })}
+            {...register("name", {
+              required: "Name is required",
+              minLength: {
+                value: 2,
+                message: "Minimum 2 characters long",
+              },
+            })}
             label="Name"
             variant="standard"
             defaultValue={nameInForm}
@@ -174,7 +179,7 @@ export default function CheckoutForm() {
               render={({ field: { onChange, value } }) => (
                 <MobileDateTimePicker
                   label="Pick up date & time"
-                  value={value}
+                  value={value}git ad
                   onChange={onChange}
                   sx={{ width: "90%", py: 1 }}
                   minDateTime={dayjs().add(20, "minute")}
