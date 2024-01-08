@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import CartItemCard from "./CartItemCard";
 import { useAppSelector } from "../store/root";
 import { CartItemType } from "../types/cartItem";
@@ -48,38 +48,56 @@ export default function Cart() {
   };
 
   return cartItems.length > 0 ? (
-    <Container sx={{ mt: 5, py: 5, display: "flex", flexDirection: "column" }}>
+    <Container
+      sx={{
+        mt: 5,
+        py: 5,
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "98vh",
+      }}
+    >
       <Typography
         variant={style.fontVariant}
         sx={{ mt: { xs: 0, md: 1 }, mx: 2, textAlign: "left", fontWeight: 600 }}
       >
         Your cart ({totalQuantity})
       </Typography>
-
-      {cartItems.map((cartItem: CartItemType) => (
-        <CartItemCard key={cartItem.id} cartItem={cartItem} />
-      ))}
+      <Box sx={{ flexGrow: isSmallScreen ? 1 : 0 }}>
+        {cartItems.map((cartItem: CartItemType) => (
+          <CartItemCard key={cartItem.id} cartItem={cartItem} />
+        ))}
+      </Box>
       {isSmallScreen ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mt: 2,
-          }}
-        >
+        <>
           <Box>
-            <Typography variant="body2" sx={{}}>
-              Total Price
-            </Typography>
-            <Typography variant="body1" sx={{ my: 1 }}>
-              CHF <b>{totalPrice.toFixed(2)}</b>
-            </Typography>
+            <Divider sx={{ mt: 3 }} />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mt: 2,
+              }}
+            >
+              <Box>
+                <Typography variant="body2" sx={{}}>
+                  Total Price
+                </Typography>
+                <Typography variant="body1" sx={{ my: 1 }}>
+                  CHF <b>{totalPrice.toFixed(2)}</b>
+                </Typography>
+              </Box>
+              <Button
+                variant="contained"
+                sx={{ m: 1 }}
+                onClick={goToCheckoutPage}
+              >
+                Check out
+              </Button>
+            </Box>
           </Box>
-          <Button variant="contained" sx={{ m: 1 }} onClick={goToCheckoutPage}>
-            Check out
-          </Button>
-        </Box>
+        </>
       ) : (
         <>
           <Typography variant={style.fontVariant} sx={style.fontStyle}>

@@ -184,10 +184,8 @@ export default function CheckoutForm() {
                 <MobileDateTimePicker
                   label="Pick up date & time"
                   value={value}
-                  git
-                  ad
                   onChange={onChange}
-                  sx={{ width: "90%", py: 1 }}
+                  sx={{ input: { fontSize: "14px" }, width: "90%", py: 1 }}
                   minDateTime={dayjs().add(20, "minute")}
                   maxDate={maxDate}
                   shouldDisableTime={isTimeValid}
