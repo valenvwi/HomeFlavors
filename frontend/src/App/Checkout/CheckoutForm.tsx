@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -10,12 +10,27 @@ import { useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cart";
 import { useUsersRetrieve } from "../../../api";
 import { modalActions } from "../store/modal";
+import { CartItemType } from "../types/cartItem";
+import {
+  OrangePaper,
+  BoldTypography,
+  ResponsiveGrid,
+  StandardTextField,
+  ContainedButton,
+} from "../../components";
 
 type OrderInputs = {
   name: string;
   contactNumber: string;
   pickUpDateTime: dayjs.Dayjs;
   remark: string;
+};
+
+const boxStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "20px auto",
 };
 
 export default function CheckoutForm() {
@@ -47,6 +62,7 @@ export default function CheckoutForm() {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
   const currentUserId = useAppSelector((state) => state.auth.currentUserId);
+  const maxDate = dayjs().add(30, "day");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -59,12 +75,24 @@ export default function CheckoutForm() {
     navigate("/orderHistory");
   };
 
+  const backToShoppingCart = () => {
+    navigate("/cart");
+  };
+
+  const isTimeValid = (time: dayjs.Dayjs) => {
+    const hour = time.hour();
+    if (hour < 12 || hour > 19) {
+      return true;
+    }
+    return false;
+  };
+
   const onSubmit: SubmitHandler<OrderInputs> = async (data) => {
     const orderData = {
       kitchen: "1",
       totalPrice: totalPrice.toString(),
       totalQuantity: cartItems
-        .map((cartItem) => cartItem.quantity)
+        .map((cartItem: CartItemType) => cartItem.quantity)
         .reduce((a, b) => a + b, 0),
       name: data.name,
       contactNumber: data.contactNumber,
@@ -91,7 +119,6 @@ export default function CheckoutForm() {
         await orderItemsCreate(orderItemData);
         console.log("Order item created", orderItemData);
       }
-      console.log("All order items created");
       dispatch(cartActions.resetCart());
       dispatch(modalActions.setIsCheckedout(true));
       goToOrderHistory();
@@ -100,37 +127,19 @@ export default function CheckoutForm() {
     }
   };
 
-  const isTimeValid = (time: dayjs.Dayjs) => {
-    const hour = time.hour();
-    if (hour < 12 || hour > 19) {
-      return true;
-    }
-    return false;
-  };
-
-  const maxDate = dayjs().add(30, "day");
-
-  const backToShoppingCart = () => {
-    navigate("/cart");
-  };
-
   if (!user) {
     return <div>Loading...</div>;
   }
 
   return (
-    <Paper
-      elevation={6}
+    <OrangePaper
       sx={{
         mt: { xs: 1, md: 5 },
-        p: 2,
-        backgroundColor: "#fff6f2",
-        borderRadius: "10px",
       }}
     >
-      <Typography variant="h5" fontWeight={700} sx={{ m: 2 }}>
+      <BoldTypography variant="h5" sx={{ m: 2 }}>
         Order information
-      </Typography>
+      </BoldTypography>
       <Grid
         container
         spacing={3}
@@ -139,8 +148,8 @@ export default function CheckoutForm() {
         noValidate
         sx={{ mt: 1, textAlign: "center" }}
       >
-        <Grid item xs={12} sm={6}>
-          <TextField
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("name", {
               required: "Name is required",
               minLength: {
@@ -149,15 +158,13 @@ export default function CheckoutForm() {
               },
             })}
             label="Name"
-            variant="standard"
             defaultValue={nameInForm}
-            sx={{ width: "90%", py: 1 }}
             error={!!errors.name}
             helperText={errors.name && errors.name.message}
-          ></TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+          ></StandardTextField>
+        </ResponsiveGrid>
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("contactNumber", {
               required: "Contact number is required",
               pattern: {
@@ -167,14 +174,12 @@ export default function CheckoutForm() {
               },
             })}
             label="Contact Number"
-            variant="standard"
             defaultValue={contactNumberInForm}
             error={!!errors.contactNumber}
             helperText={errors.contactNumber && errors.contactNumber.message}
-            sx={{ width: "90%", py: 1 }}
-          ></TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+          ></StandardTextField>
+        </ResponsiveGrid>
+        <ResponsiveGrid>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Controller
               name="pickUpDateTime"
@@ -185,7 +190,7 @@ export default function CheckoutForm() {
                   label="Pick up date & time"
                   value={value}
                   onChange={onChange}
-                  sx={{ input: { fontSize: "14px" }, width: "90%", py: 1 }}
+                  sx={{ input: { fontSize: "14px" }, width: "95%", py: 1 }}
                   minDateTime={dayjs().add(20, "minute")}
                   maxDate={maxDate}
                   shouldDisableTime={isTimeValid}
@@ -193,37 +198,24 @@ export default function CheckoutForm() {
               )}
             />
           </LocalizationProvider>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+        </ResponsiveGrid>
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("remark")}
             label="Remark"
-            variant="standard"
-            sx={{ width: "90%", py: 2 }}
             multiline
             rows={3}
-          ></TextField>
-        </Grid>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "20px auto",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{ mx: 1 }}
-            onClick={backToShoppingCart}
-          >
+          ></StandardTextField>
+        </ResponsiveGrid>
+        <Box sx={boxStyle}>
+          <ContainedButton sx={{ mx: 1 }} onClick={backToShoppingCart}>
             Back to Cart
-          </Button>
-          <Button type="submit" variant="contained" sx={{ mx: 1 }}>
+          </ContainedButton>
+          <ContainedButton type="submit" sx={{ mx: 1 }}>
             Place Order
-          </Button>
+          </ContainedButton>
         </Box>
       </Grid>
-    </Paper>
+    </OrangePaper>
   );
 }

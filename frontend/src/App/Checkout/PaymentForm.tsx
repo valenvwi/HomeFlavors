@@ -1,5 +1,11 @@
 import { Grid, Paper, TextField, Typography } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  BoldTypography,
+  OrangePaper,
+  ResponsiveGrid,
+  StandardTextField,
+} from "../../components";
 
 type Inputs = {
   nameOnCard: string;
@@ -16,19 +22,15 @@ export default function PaymentForm() {
   };
 
   return (
-    <Paper
-      elevation={6}
+    <OrangePaper
       sx={{
         mt: { md: 5 },
-        mb: 5,
-        p: 2,
-        backgroundColor: "#fff6f2",
-        borderRadius: "10px",
+        mb: 4,
       }}
     >
-      <Typography variant="h5" fontWeight={700} sx={{ m: 2 }}>
+      <BoldTypography variant="h5" sx={{ m: 2 }}>
         Payment Method
-      </Typography>
+      </BoldTypography>
       <Typography variant="subtitle1" sx={{ m: 2 }}>
         This is a demo website, so you don't need to enter anything here.
       </Typography>
@@ -40,43 +42,35 @@ export default function PaymentForm() {
         noValidate
         sx={{ mt: 1, textAlign: "center" }}
       >
-        <Grid item xs={12} sm={6}>
-          <TextField
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("nameOnCard")}
             label="Name on Card"
-            variant="standard"
             defaultValue="Hello world"
-            sx={{ width: "90%", py: 1 }}
-          ></TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+          ></StandardTextField>
+        </ResponsiveGrid>
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("cardNumber")}
             label="Card Number"
-            variant="standard"
             defaultValue="1234 1234 1234 1234"
-            sx={{ width: "90%", py: 1 }}
-          ></TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+          ></StandardTextField>
+        </ResponsiveGrid>
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("expirationDate")}
             label="Expiration Date"
-            variant="standard"
             defaultValue="01/2021"
-            sx={{ width: "90%", py: 1 }}
-          ></TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+          ></StandardTextField>
+        </ResponsiveGrid>
+        <ResponsiveGrid>
+          <StandardTextField
             {...register("cvv")}
             label="CVV"
-            variant="standard"
             defaultValue="123"
-            sx={{ width: "90%", py: 1 }}
-          ></TextField>
-        </Grid>
+          ></StandardTextField>
+        </ResponsiveGrid>
       </Grid>
-    </Paper>
+    </OrangePaper>
   );
 }

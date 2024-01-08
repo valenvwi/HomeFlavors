@@ -9,6 +9,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { ComponentPropsWithoutRef, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
+import { BoldTypography } from "../../components";
 
 const smallScreenConfig = {
   cardStyle: {
@@ -79,10 +80,6 @@ const buttonStyle = {
   backgroundColor: "#fff6f2",
   color: "primary",
 };
-
-const BoldTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
-  <Typography fontWeight={700} {...props} />
-);
 
 const GreyTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
   <Typography color="#8b8989" {...props} />

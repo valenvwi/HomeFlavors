@@ -1,11 +1,11 @@
-import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import CartItemCard from "./CartItemCard";
 import { useAppSelector } from "../store/root";
 import { CartItemType } from "../types/cartItem";
 import { useTheme, useMediaQuery } from "@mui/material";
 import emptyCart from "../../assets/empty-cart.png";
 import { useNavigate } from "react-router-dom";
-import { ComponentPropsWithoutRef } from "react";
+import { BoldTypography, ContainedButton } from "../../components";
 
 const smallScreenConfig = {
   fontVariant: "subtitle1",
@@ -52,14 +52,6 @@ const flexBoxStyle = {
   alignItems: "center",
   mt: 2,
 };
-
-const BoldTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
-  <Typography fontWeight={700} {...props} />
-);
-
-const ContainedButton = (props: ComponentPropsWithoutRef<typeof Button>) => (
-  <Button variant="contained" {...props} />
-);
 
 export default function Cart() {
   const theme = useTheme();
