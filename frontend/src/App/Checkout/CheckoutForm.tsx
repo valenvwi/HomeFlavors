@@ -2,7 +2,7 @@ import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateTimePicker, MobileDateTimePicker } from "@mui/x-date-pickers";
+import { MobileDateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { ordersCreate, orderItemsCreate } from "../../../api";
 import { useAppDispatch, useAppSelector } from "../store/root";
@@ -19,6 +19,21 @@ type OrderInputs = {
 };
 
 export default function CheckoutForm() {
+
+  const getDefaultPickUpTime = () => {
+    const nowPlus20Min = dayjs().add(20, 'minute');
+    const openingTime = dayjs().hour(12).minute(0);
+    const closingTime = dayjs().hour(19).minute(59);
+
+    if (nowPlus20Min.isBefore(openingTime)) {
+      return openingTime;
+    } else if (nowPlus20Min.isAfter(closingTime)) {
+      return dayjs().add(1, 'day').hour(12).minute(0);
+    } else {
+      return nowPlus20Min;
+    }
+  };
+
   const {
     register,
     control,
@@ -26,7 +41,7 @@ export default function CheckoutForm() {
     handleSubmit,
   } = useForm<OrderInputs>({
     defaultValues: {
-      pickUpDateTime: dayjs().add(15, "minute"),
+      pickUpDateTime: getDefaultPickUpTime(),
     },
   });
 
