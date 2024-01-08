@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -110,6 +110,10 @@ export default function CheckoutForm() {
 
   const maxDate = dayjs().add(30, "day");
 
+  const backToShoppingCart = () => {
+    navigate("/cart");
+  };
+
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -179,7 +183,9 @@ export default function CheckoutForm() {
               render={({ field: { onChange, value } }) => (
                 <MobileDateTimePicker
                   label="Pick up date & time"
-                  value={value}git ad
+                  value={value}
+                  git
+                  ad
                   onChange={onChange}
                   sx={{ width: "90%", py: 1 }}
                   minDateTime={dayjs().add(20, "minute")}
@@ -200,9 +206,25 @@ export default function CheckoutForm() {
             rows={3}
           ></TextField>
         </Grid>
-        <Button type="submit" variant="contained" sx={{ margin: "20px auto" }}>
-          Place Order
-        </Button>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "20px auto",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{ mx: 1 }}
+            onClick={backToShoppingCart}
+          >
+            Back to Cart
+          </Button>
+          <Button type="submit" variant="contained" sx={{ mx: 1 }}>
+            Place Order
+          </Button>
+        </Box>
       </Grid>
     </Paper>
   );
