@@ -2,6 +2,7 @@ import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BASEURL } from "../../config";
+import { BoldTypography, ContainedButton } from "../../components";
 
 const containerStyle = {
   m: 2,
@@ -26,10 +27,6 @@ const smallPaperStyle = {
   py: 2,
 };
 
-const boldFontStyle = {
-  fontWeight: 700,
-};
-
 const orderItemBox = {
   display: "flex",
   justifyContent: "space-between",
@@ -42,11 +39,6 @@ const imgStyle = {
   borderRadius: "10px",
   width: "80px",
   height: "80px",
-};
-
-const fontSummary = {
-  textAlign: "right",
-  fontWeight: 700,
 };
 
 type Props = {
@@ -66,9 +58,7 @@ export default function RightOrderDetailCard(props: Props) {
   return (
     <Container sx={containerStyle}>
       <Paper elevation={6} sx={orderDetailBox}>
-        <Typography variant="h6" style={boldFontStyle}>
-          Order details
-        </Typography>
+        <BoldTypography variant="h6">Order details</BoldTypography>
         <Typography variant="subtitle2" sx={{ pt: 1 }}>
           Order for <b>{props.order.name}</b> created at{" "}
           {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
@@ -118,30 +108,24 @@ export default function RightOrderDetailCard(props: Props) {
         </Typography>
       )}
       <br />
-      <Typography sx={fontSummary}>
+      <BoldTypography sx={{ textAlign: "right" }}>
         Total quantity: {props.order.totalQuantity}
-      </Typography>
-      <Typography sx={fontSummary}>
+      </BoldTypography>
+      <BoldTypography sx={{ textAlign: "right" }}>
         Total price: CHF {parseFloat(props.order.totalPrice).toFixed(2)}
-      </Typography>
+      </BoldTypography>
       {!props.order.isAccepted && (
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            variant="contained"
+          <ContainedButton
             color="success"
             sx={{ m: 2 }}
             onClick={onAcceptOrder}
           >
             Accept
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ my: 2 }}
-            onClick={onCancelOrder}
-          >
+          </ContainedButton>
+          <ContainedButton color="error" sx={{ my: 2 }} onClick={onCancelOrder}>
             Cancel
-          </Button>
+          </ContainedButton>
         </Box>
       )}
     </Container>

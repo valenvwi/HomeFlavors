@@ -3,10 +3,10 @@ import {
   ListItem,
   ListItemButton,
   Paper,
-  Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
+import { BoldTypography, GreyTypography } from "../../components";
 
 const paperStyle = {
   p: 3,
@@ -33,22 +33,18 @@ export default function LeftOrderCard(props: Props) {
       >
         <Paper sx={paperStyle}>
           <Box>
-            <Typography variant="subtitle2" fontWeight={700}>
+            <BoldTypography variant="subtitle2">
               Order #{props.order.id}
-            </Typography>
-            <Typography variant="subtitle2" sx={{ color: "#8b8989" }}>
+            </BoldTypography>
+            <GreyTypography variant="subtitle2">
               {props.order.pickUpDate}{" "}
               {dayjs(props.order.pickUpTime, "HH:mm:ss").format("HH:mm")}
-            </Typography>
+            </GreyTypography>
           </Box>
-          <Typography
-            variant="subtitle2"
-            fontWeight={700}
-            sx={{ color: "green" }}
-          >
+          <BoldTypography variant="subtitle2" sx={{ color: "green" }}>
             {" "}
             CHF {parseFloat(props.order.totalPrice).toFixed(2)}
-          </Typography>
+          </BoldTypography>
         </Paper>
       </ListItemButton>
     </ListItem>

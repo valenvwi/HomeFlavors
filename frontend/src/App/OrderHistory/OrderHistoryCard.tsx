@@ -67,6 +67,12 @@ const smallScreenDescriptionStyle = {
   maxWidth: "90%",
 };
 
+const flexendStyle = {
+  display: "flex",
+  justifyContent: "flex-end",
+  my: 1,
+};
+
 type Props = {
   order: OrderType;
   openCancelOrderDialog: (orderId: number) => void;
@@ -183,7 +189,7 @@ export default function OrderHistoryCard(props: Props) {
             )}{" "}
           </BoldTypography>
           {!props.order.isAccepted && isSmallScreen && (
-            <Box sx={{ display: "flex", justifyContent: "flex-end", my: 1 }}>
+            <Box sx={flexendStyle}>
               <ContainedButton
                 sx={{ fontSize: "12px" }}
                 onClick={openCancelOrderDialog}
