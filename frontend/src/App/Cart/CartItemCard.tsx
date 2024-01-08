@@ -9,7 +9,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { ComponentPropsWithoutRef, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import { BoldTypography } from "../../components";
+import { BoldTypography, CenterFlexBox } from "../../components";
 
 const smallScreenConfig = {
   cardStyle: {
@@ -25,9 +25,6 @@ const smallScreenConfig = {
     my: 1,
   },
   innerSecondBoxStyle: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     my: 1,
   },
   imageStyle: {
@@ -54,9 +51,6 @@ const largeScreenConfig = {
   },
   innerFirstBoxStyle: { flexGrow: 1, my: 2, mx: 4 },
   innerSecondBoxStyle: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     mx: 4,
   },
   imageStyle: {
@@ -145,7 +139,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               CHF {props.cartItem.price.toFixed(2)}
             </BoldTypography>
 
-            <Box sx={style.innerSecondBoxStyle}>
+            <CenterFlexBox sx={style.innerSecondBoxStyle}>
               <IconButton color="primary" onClick={onDecreaseQuantity}>
                 <RemoveCircleOutlineIcon sx={style.iconStyle} />
               </IconButton>
@@ -155,7 +149,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               <IconButton color="primary" onClick={onIncreaseQuantity}>
                 <AddCircleOutlineIcon sx={style.iconStyle} />
               </IconButton>
-            </Box>
+            </CenterFlexBox>
 
             <Button style={buttonStyle} onClick={onDeleteCartItem}>
               <DeleteOutlineIcon sx={{ fontSize: "28px", ml: 1 }} />
@@ -180,7 +174,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               {props.cartItem.description}
             </GreyTypography>
           </Box>
-          <Box sx={style.innerSecondBoxStyle}>
+          <CenterFlexBox sx={style.innerSecondBoxStyle}>
             <IconButton color="primary" onClick={onDecreaseQuantity}>
               <RemoveCircleOutlineIcon sx={style.iconStyle} />
             </IconButton>
@@ -190,7 +184,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
             <IconButton color="primary" onClick={onIncreaseQuantity}>
               <AddCircleOutlineIcon sx={style.iconStyle} />
             </IconButton>
-          </Box>
+          </CenterFlexBox>
           <BoldTypography variant="subtitle1">
             CHF {(props.cartItem.price * props.cartItem.quantity).toFixed(2)}
           </BoldTypography>

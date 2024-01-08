@@ -1,10 +1,7 @@
 import { Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { SyntheticEvent } from "react";
-
-const labels = ["Soup", "Meat", "Seafood", "Vegetables", "Pasta"];
-
-const categories = ["soup", "meat", "seafood", "vegetables", "pasta"];
+import { categories, labels } from "../../../Utils/constants";
 
 export default function Tabbar(props: {
   handleCategoryChange: (category: string) => void;

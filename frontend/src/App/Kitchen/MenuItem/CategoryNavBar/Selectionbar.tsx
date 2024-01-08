@@ -5,11 +5,23 @@ import pasta from "../../../../assets/categoryIcons/pasta.png";
 import seafood from "../../../../assets/categoryIcons/seafood.png";
 import soup from "../../../../assets/categoryIcons/soup.png";
 import vegetables from "../../../../assets/categoryIcons/vegetables.png";
+import { labels, categories } from "../../../Utils/constants";
 
-const labels = ["Soup", "Meat", "Seafood", "Vegetables", "Pasta"];
-const categories = ["soup", "meat", "seafood", "vegetables", "pasta"];
 const icons = [soup, meat, seafood, vegetables, pasta];
 
+const boxStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  width: "100%",
+  padding: "4px",
+};
+
+const toggleButtonStyle = {
+  fontSize: "8px",
+  fontWeight: "700",
+  width: "20%",
+};
 export default function Selectionbar(props: {
   handleCategoryChange: (category: string) => void;
 }) {
@@ -32,18 +44,10 @@ export default function Selectionbar(props: {
           <ToggleButton
             value={categories[index]}
             key={label}
-            sx={{ fontSize: "8px", fontWeight: "700", width: "20%" }}
+            sx={toggleButtonStyle}
             onClick={() => handleChange(categories[index])}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "100%",
-                padding: "4px",
-              }}
-            >
+            <Box sx={boxStyle}>
               <img src={icons[index]} alt={label} width="30px" height="30px" />
 
               {label}

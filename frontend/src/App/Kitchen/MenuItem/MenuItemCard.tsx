@@ -1,4 +1,4 @@
-import { Box, Button, Card, IconButton, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
 import spicyIcon from "../../../assets/spicy.png";
@@ -11,6 +11,14 @@ import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
 import Modal from "../../UI/Modal";
 import { useNavigate } from "react-router-dom";
+import {
+  BoldTypography,
+  CenterFlexBox,
+  GreyTypography,
+  OrangePaper,
+  PrimaryIconButton,
+  lgImgStyle,
+} from "../../../components";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -21,7 +29,6 @@ export default function MenuItemCard(props: {
   handleOpen: () => void;
   onSetMenuItemId: (id: number) => void;
   openDeleteDialog: () => void;
-
 }) {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
@@ -53,35 +60,23 @@ export default function MenuItemCard(props: {
   };
 
   return (
-    <Card
-      elevation={6}
+    <OrangePaper
       sx={{
         display: "flex",
         my: 2,
         mx: 4,
-        p: 2,
-        backgroundColor: "#fff6f2",
-        borderRadius: "15px",
       }}
     >
       <img
         src={`${BASEURL}/${props.menuItem.image}`}
         alt={props.menuItem.name}
-        style={{
-          width: "150px",
-          height: "150px",
-          objectFit: "cover",
-          borderRadius: "10px",
-          aspectRatio: "1",
-        }}
+        style={lgImgStyle}
       />
       <Box sx={{ flexGrow: 1, mx: 3, my: 2 }}>
-        <Box
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-        >
-          <Typography variant="h6" sx={{ pr: 2, fontWeight: 700 }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <BoldTypography variant="h6" sx={{ pr: 2 }}>
             {props.menuItem.name}
-          </Typography>
+          </BoldTypography>
           {props.menuItem.isVeg && (
             <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
           )}
@@ -89,12 +84,10 @@ export default function MenuItemCard(props: {
             <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
           )}
         </Box>
-        <Typography variant="body1" sx={{ color: "#8b8989" }}>
+        <GreyTypography variant="body1">
           {props.menuItem.description}
-        </Typography>
-        <Typography variant="h6" fontWeight={700}>
-          CHF {props.menuItem.price}
-        </Typography>
+        </GreyTypography>
+        <BoldTypography variant="h6">CHF {props.menuItem.price}</BoldTypography>
       </Box>
       {props.isOwner ? (
         <>
@@ -110,20 +103,10 @@ export default function MenuItemCard(props: {
         </>
       ) : props.menuItem.isAvailable ? (
         !isLoggedIn ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <IconButton
-              color="primary"
-              onClick={props.handleOpen}
-              sx={{ height: " 60px", width: "60px" }}
-            >
+          <CenterFlexBox>
+            <PrimaryIconButton onClick={props.handleOpen}>
               <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-            </IconButton>
+            </PrimaryIconButton>
             <Modal
               open={props.open}
               handleClose={props.handleClose}
@@ -135,23 +118,13 @@ export default function MenuItemCard(props: {
               subtextButtonText="Sign up"
               subtextAction={goToSignup}
             />
-          </Box>
+          </CenterFlexBox>
         ) : (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <IconButton
-              color="primary"
-              onClick={onAddToCart}
-              sx={{ height: " 60px", width: "60px" }}
-            >
+          <CenterFlexBox>
+            <PrimaryIconButton onClick={onAddToCart}>
               <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-            </IconButton>
-          </Box>
+            </PrimaryIconButton>
+          </CenterFlexBox>
         )
       ) : (
         <img
@@ -162,6 +135,6 @@ export default function MenuItemCard(props: {
           style={{ margin: "auto" }}
         />
       )}
-    </Card>
+    </OrangePaper>
   );
 }

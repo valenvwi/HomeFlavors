@@ -13,6 +13,21 @@ import { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Modal from "../../UI/Modal";
 import { useNavigate } from "react-router-dom";
+import {
+  BoldTypography,
+  CenterFlexBox,
+  GreyTypography,
+  OrangePaper,
+  SpaceBetweenFlexBox,
+  lgImgStyle,
+} from "../../../components";
+
+const boxStyle = {
+  display: "flex",
+  alignItems: "center",
+  my: 2,
+  mx: 1,
+};
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -63,41 +78,22 @@ export default function MenuItemCard(props: {
   };
 
   return (
-    <Card
-      elevation={6}
+    <OrangePaper
       sx={{
         display: "flex",
         flexDirection: "column",
         my: 2,
-        p: 2,
-        backgroundColor: "#fff6f2",
-        borderRadius: "15px",
       }}
     >
       <img
         src={`${BASEURL}/${props.menuItem.image}`}
         alt={props.menuItem.name}
-        style={{
-          width: "150px",
-          height: "150px",
-          objectFit: "cover",
-          borderRadius: "10px",
-          aspectRatio: "1",
-          margin: "0 auto",
-        }}
+        style={lgImgStyle}
       />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          my: 2,
-          mx: 1,
-        }}
-      >
-        <Typography variant="subtitle1" sx={{ pr: 2, fontWeight: 600 }}>
+      <Box sx={boxStyle}>
+        <BoldTypography variant="subtitle1" sx={{ pr: 2 }}>
           {props.menuItem.name}
-        </Typography>
+        </BoldTypography>
         {props.menuItem.isVeg && (
           <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
         )}
@@ -105,29 +101,20 @@ export default function MenuItemCard(props: {
           <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
         )}
       </Box>
-      <Typography variant="subtitle2" sx={{ mx: 1, color: "#8b8989" }}>
+      <GreyTypography variant="subtitle2" sx={{ mx: 1 }}>
         {props.menuItem.description}
-      </Typography>
-      <Box
+      </GreyTypography>
+      <SpaceBetweenFlexBox
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
           m: 1,
         }}
       >
-        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+        <BoldTypography variant="subtitle1">
           CHF {props.menuItem.price}
-        </Typography>
+        </BoldTypography>
         {props.isOwner ? (
           <>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <CenterFlexBox>
               <Button
                 style={{ backgroundColor: "#fff6f2" }}
                 onClick={setMenuItem}
@@ -140,7 +127,7 @@ export default function MenuItemCard(props: {
               >
                 <DeleteIcon sx={{ fontSize: "32px" }} />
               </Button>
-            </Box>
+            </CenterFlexBox>
           </>
         ) : props.menuItem.isAvailable ? (
           !isLoggedIn ? (
@@ -174,7 +161,7 @@ export default function MenuItemCard(props: {
         ) : (
           <img src={soldOut} alt="Sold Out" width="75" height="75" />
         )}
-      </Box>
-    </Card>
+      </SpaceBetweenFlexBox>
+    </OrangePaper>
   );
 }

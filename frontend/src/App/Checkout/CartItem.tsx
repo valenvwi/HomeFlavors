@@ -1,8 +1,7 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useAppSelector } from "../store/root";
 import { BASEURL } from "../../config";
-import { ComponentPropsWithoutRef } from "react";
-import { BoldTypography } from "../../components";
+import { BoldTypography, SpaceBetweenFlexBox } from "../../components";
 import { CartItemType } from "../types/cartItem";
 
 const outerBoxStyle = {
@@ -23,21 +22,6 @@ const imgStyle = {
   height: "50px",
   borderRadius: "10px",
 };
-
-const SpaceBetweenFlexBox = ({
-  sx,
-  ...rest
-}: ComponentPropsWithoutRef<typeof Box>) => (
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      ...sx,
-    }}
-    {...rest}
-  />
-);
 
 export default function CartItem() {
   const cartItems = useAppSelector((state) => state.cart.cartItems);

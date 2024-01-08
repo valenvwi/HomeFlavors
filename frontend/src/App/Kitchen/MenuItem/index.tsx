@@ -30,6 +30,11 @@ export default function MenuItem() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [menuItemId, setMenuItemId] = useState<number>(0);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showSuccessDeleteModal, setShowSuccessDeleteModal] = useState(false);
   const isCreatedMenuItem = useAppSelector(
     (state) => state.modal.isCreatedMenuItem
   );
@@ -38,6 +43,7 @@ export default function MenuItem() {
   );
 
   const dispatch = useAppDispatch();
+
   const { data: menuItemsResponse, refetch: refetchMenuItems } =
     useMenuItemsList(
       { category: category },
@@ -85,12 +91,6 @@ export default function MenuItem() {
     dispatch(modalActions.setIsCreatedMenuItem(false));
     dispatch(modalActions.setIsEditedMenuItem(false));
   };
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showSuccessDeleteModal, setShowSuccessDeleteModal] = useState(false);
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column", mt: 4 }}>

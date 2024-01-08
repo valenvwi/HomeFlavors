@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardMedia,
   Checkbox,
@@ -10,15 +9,21 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { menuItemsCreate, useMenuItemsList } from "../../../../api";
 import { useRef, useState } from "react";
+import { labels, categories } from "../../Utils/constants";
 import { useAppDispatch } from "../../store/root";
 import { modalActions } from "../../store/modal";
+import {
+  CenterFlexBox,
+  ContainedButton,
+  FullWidthTextField,
+  lgImgStyle,
+} from "../../../components";
 
 export default function AddMenuItem(props: {
   ontoggleAddMenuItem: () => void;
@@ -61,6 +66,7 @@ export default function AddMenuItem(props: {
   };
 
   const onSubmit: SubmitHandler<MenuItemType> = async (data) => {
+    console.log("submitting...");
     const formData = new FormData();
     if (!selectedImage) {
       setShowImageError(true);
@@ -106,27 +112,18 @@ export default function AddMenuItem(props: {
             style={{ marginBottom: "10px", display: "none" }}
             ref={imageInputRef}
           />
-          <Button
-            variant="contained"
-            color="primary"
+          <ContainedButton
             onClick={handleButtonClick}
             style={{ marginBottom: "15px" }}
           >
             Upload Image
-          </Button>
+          </ContainedButton>
           {selectedImage && (
             <Card sx={{ p: 1 }}>
               <CardMedia
                 component="img"
                 alt="Selected Image"
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  aspectRatio: "1",
-                  margin: "0 auto",
-                }}
+                style={lgImgStyle}
                 image={selectedImage}
               />
             </Card>
@@ -137,7 +134,7 @@ export default function AddMenuItem(props: {
               Please select an image
             </Typography>
           )}
-          <TextField
+          <FullWidthTextField
             {...register("name", {
               required: "Name is required",
               minLength: {
@@ -154,16 +151,14 @@ export default function AddMenuItem(props: {
                   "Name cannot include leading or trailing whitespace",
               },
             })}
-            margin="normal"
-            fullWidth
             id="name"
             label="Name"
             autoComplete="name"
-            autoFocus
             error={!!errors.name}
             helperText={errors.name && errors.name.message}
+            autoFocus
           />
-          <TextField
+          <FullWidthTextField
             {...register("description", {
               required: "Description is required",
               minLength: {
@@ -180,18 +175,15 @@ export default function AddMenuItem(props: {
                   "Description cannot include leading or trailing whitespace",
               },
             })}
-            margin="normal"
-            fullWidth
             id="description"
             label="Description"
             autoComplete="description"
-            autoFocus
             multiline
             rows={5}
             error={!!errors.description}
             helperText={errors.description && errors.description.message}
           />
-          <TextField
+          <FullWidthTextField
             {...register("price", {
               required: "Price is required",
               validate: {
@@ -204,8 +196,6 @@ export default function AddMenuItem(props: {
                 },
               },
             })}
-            margin="normal"
-            fullWidth
             name="price"
             label="Price"
             type="price"
@@ -223,11 +213,11 @@ export default function AddMenuItem(props: {
               defaultValue={"soup"}
               error={!!errors.category}
             >
-              <MenuItem value="soup">Soup</MenuItem>
-              <MenuItem value="meat">Meat</MenuItem>
-              <MenuItem value="seafood">Seafood</MenuItem>
-              <MenuItem value="vegetables">Vegetables</MenuItem>
-              <MenuItem value="pasta">Pasta</MenuItem>
+              {labels.map((label, index) => (
+                <MenuItem value={categories[index]} key={label}>
+                  {label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <FormControlLabel
@@ -258,19 +248,18 @@ export default function AddMenuItem(props: {
             }
             label="Spicy"
           />
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button type="submit" variant="contained" sx={{ my: 3, mx: 2 }}>
+          <CenterFlexBox>
+            <ContainedButton type="submit" sx={{ my: 3, mx: 2 }}>
               Add
-            </Button>
-            <Button
+            </ContainedButton>
+            <ContainedButton
               type="button"
-              variant="contained"
               onClick={cancelAddMenuItem}
               sx={{ my: 3, mx: 2 }}
             >
               Cancel
-            </Button>
-          </Box>
+            </ContainedButton>
+          </CenterFlexBox>
         </Box>
       </Box>
     </Container>
