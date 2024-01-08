@@ -5,14 +5,12 @@ import { CartItemType } from "../types/cartItem";
 import { useTheme, useMediaQuery } from "@mui/material";
 import emptyCart from "../../assets/empty-cart.png";
 import { useNavigate } from "react-router-dom";
+import { ComponentPropsWithoutRef } from "react";
 
 const smallScreenConfig = {
   fontVariant: "subtitle1",
   fontStyle: {
-    mt: 2,
-    mx: 1,
-    textAlign: "right",
-    fontWeight: 600,
+    my: 1,
   },
 } as const;
 
@@ -23,9 +21,45 @@ const largeScreenConfig = {
     mb: 2,
     mx: 1,
     textAlign: "right",
-    fontWeight: 600,
   },
 } as const;
+
+const containerStyle = {
+  mt: 5,
+  py: 5,
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "98vh",
+};
+
+const containerWithEmptyCartStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  flexGrow: 1,
+};
+
+const emptyCartBoxStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const flexBoxStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  mt: 2,
+};
+
+const BoldTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
+  <Typography fontWeight={700} {...props} />
+);
+
+const ContainedButton = (props: ComponentPropsWithoutRef<typeof Button>) => (
+  <Button variant="contained" {...props} />
+);
 
 export default function Cart() {
   const theme = useTheme();
@@ -48,21 +82,13 @@ export default function Cart() {
   };
 
   return cartItems.length > 0 ? (
-    <Container
-      sx={{
-        mt: 5,
-        py: 5,
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "98vh",
-      }}
-    >
-      <Typography
+    <Container sx={containerStyle}>
+      <BoldTypography
         variant={style.fontVariant}
-        sx={{ mt: { xs: 0, md: 1 }, mx: 2, textAlign: "left", fontWeight: 600 }}
+        sx={{ mt: { xs: 0, md: 1 }, mx: 2, textAlign: "left" }}
       >
         Your cart ({totalQuantity})
-      </Typography>
+      </BoldTypography>
       <Box sx={{ flexGrow: isSmallScreen ? 1 : 0 }}>
         {cartItems.map((cartItem: CartItemType) => (
           <CartItemCard key={cartItem.id} cartItem={cartItem} />
@@ -72,71 +98,41 @@ export default function Cart() {
         <>
           <Box>
             <Divider sx={{ mt: 3 }} />
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mt: 2,
-              }}
-            >
+            <Box sx={flexBoxStyle}>
               <Box>
-                <Typography variant="body2" sx={{}}>
-                  Total Price
-                </Typography>
-                <Typography variant="body1" sx={{ my: 1 }}>
+                <Typography variant="body2">Total Price</Typography>
+                <Typography variant="body1" sx={style.fontStyle}>
                   CHF <b>{totalPrice.toFixed(2)}</b>
                 </Typography>
               </Box>
-              <Button
-                variant="contained"
-                sx={{ m: 1 }}
-                onClick={goToCheckoutPage}
-              >
+              <ContainedButton sx={{ m: 1 }} onClick={goToCheckoutPage}>
                 Check out
-              </Button>
+              </ContainedButton>
             </Box>
           </Box>
         </>
       ) : (
         <>
-          <Typography variant={style.fontVariant} sx={style.fontStyle}>
+          <BoldTypography variant={style.fontVariant} sx={style.fontStyle}>
             Total Price: CHF {totalPrice.toFixed(2)}
-          </Typography>
-          <Button
-            variant="contained"
+          </BoldTypography>
+          <ContainedButton
             sx={{ mx: 1, alignSelf: "end" }}
             onClick={goToCheckoutPage}
           >
             Check out
-          </Button>
+          </ContainedButton>
         </>
       )}
     </Container>
   ) : (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        flexGrow: 1,
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+    <Container sx={containerWithEmptyCartStyle}>
+      <Box sx={emptyCartBoxStyle}>
         <img src={emptyCart} alt="empty shopping cart" width="250" />
-        <Typography variant="h5" fontWeight={700}>
-          Your cart is empty
-        </Typography>
-        <Button variant="contained" sx={{ my: 3 }} onClick={goToHomePage}>
+        <BoldTypography variant="h5">Your cart is empty</BoldTypography>
+        <ContainedButton sx={{ my: 3 }} onClick={goToHomePage}>
           Shop now
-        </Button>
+        </ContainedButton>
       </Box>
     </Container>
   );

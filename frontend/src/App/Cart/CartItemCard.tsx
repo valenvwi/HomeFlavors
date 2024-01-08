@@ -7,10 +7,28 @@ import { useAppDispatch } from "../store/root";
 import { cartActions } from "../store/cart";
 import { useTheme, useMediaQuery } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { useState } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 
 const smallScreenConfig = {
+  cardStyle: {
+    my: 2,
+    p: 2,
+    backgroundColor: "#fff6f2",
+    borderRadius: "15px",
+  },
+  innerFirstBoxStyle: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    my: 1,
+  },
+  innerSecondBoxStyle: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    my: 1,
+  },
   imageStyle: {
     width: "50px",
     height: "50px",
@@ -18,9 +36,28 @@ const smallScreenConfig = {
     borderRadius: "10px",
     aspectRatio: "1",
   },
+  iconStyle: {
+    fontSize: "28px",
+  },
 } as const;
 
 const largeScreenConfig = {
+  cardStyle: {
+    display: "flex",
+    m: 2,
+    px: 3,
+    py: 2,
+    backgroundColor: "#fff6f2",
+    borderRadius: "15px",
+    alignItems: "center",
+  },
+  innerFirstBoxStyle: { flexGrow: 1, my: 2, mx: 4 },
+  innerSecondBoxStyle: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    mx: 4,
+  },
   imageStyle: {
     width: "100px",
     height: "100px",
@@ -28,7 +65,28 @@ const largeScreenConfig = {
     borderRadius: "10px",
     aspectRatio: "1",
   },
+  iconStyle: {
+    fontSize: "36px",
+  },
 } as const;
+
+const outerBoxStyle = {
+  display: "flex",
+  alignItems: "center",
+};
+
+const buttonStyle = {
+  backgroundColor: "#fff6f2",
+  color: "primary",
+};
+
+const BoldTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
+  <Typography fontWeight={700} {...props} />
+);
+
+const GreyTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
+  <Typography color="#8b8989" {...props} />
+);
 
 export default function CartItemCard(props: { cartItem: CartItemType }) {
   const theme = useTheme();
@@ -69,59 +127,40 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
   return isSmallScreen ? (
     <>
       <animated.div style={fadeOutAnimation}>
-        <Card
-          elevation={6}
-          sx={{ my: 2, p: 2, backgroundColor: "#fff6f2", borderRadius: "15px" }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Card elevation={6} sx={style.cardStyle}>
+          <Box sx={outerBoxStyle}>
             <img
               src={`${BASEURL}/${props.cartItem.image}`}
               alt={props.cartItem.name}
               style={style.imageStyle}
             />
             <Box>
-              <Typography variant="subtitle1" fontWeight={700} sx={{ px: 2 }}>
+              <BoldTypography variant="subtitle1" sx={{ px: 2 }}>
                 {props.cartItem.name}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "#8b8989", px: 2 }}>
+              </BoldTypography>
+              <GreyTypography variant="body2" sx={{ px: 2 }}>
                 {props.cartItem.description}
-              </Typography>
+              </GreyTypography>
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              my: 1,
-            }}
-          >
-            <Typography variant="subtitle2" fontWeight={700}>
+          <Box sx={style.innerFirstBoxStyle}>
+            <BoldTypography variant="subtitle2">
               CHF {props.cartItem.price.toFixed(2)}
-            </Typography>
+            </BoldTypography>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <Box sx={style.innerSecondBoxStyle}>
               <IconButton color="primary" onClick={onDecreaseQuantity}>
-                <RemoveCircleOutlineIcon sx={{ fontSize: "28px" }} />
+                <RemoveCircleOutlineIcon sx={style.iconStyle} />
               </IconButton>
-              <Typography variant="body2" fontWeight={700}>
+              <BoldTypography variant="body2">
                 Qty: {props.cartItem.quantity}
-              </Typography>
+              </BoldTypography>
               <IconButton color="primary" onClick={onIncreaseQuantity}>
-                <AddCircleOutlineIcon sx={{ fontSize: "28px" }} />
+                <AddCircleOutlineIcon sx={style.iconStyle} />
               </IconButton>
             </Box>
 
-            <Button
-              style={{ backgroundColor: "#fff6f2", color: "primary" }}
-              onClick={onDeleteCartItem}
-            >
+            <Button style={buttonStyle} onClick={onDeleteCartItem}>
               <DeleteOutlineIcon sx={{ fontSize: "28px", ml: 1 }} />
             </Button>
           </Box>
@@ -131,57 +170,34 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
   ) : (
     <>
       <animated.div style={fadeOutAnimation}>
-        <Card
-          elevation={6}
-          sx={{
-            display: "flex",
-            m: 2,
-            px: 3,
-            py: 2,
-            backgroundColor: "#fff6f2",
-            borderRadius: "15px",
-            alignItems: "center",
-          }}
-        >
+        <Card elevation={6} sx={style.cardStyle}>
           <img
             src={`${BASEURL}/${props.cartItem.image}`}
             alt={props.cartItem.name}
             style={style.imageStyle}
           />
 
-          <Box sx={{ flexGrow: 1, my: 2, mx: 4 }}>
-            <Typography variant="h6" fontWeight={700}>
-              {props.cartItem.name}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "#8b8989" }}>
+          <Box sx={style.innerFirstBoxStyle}>
+            <BoldTypography variant="h6">{props.cartItem.name}</BoldTypography>
+            <GreyTypography variant="body2">
               {props.cartItem.description}
-            </Typography>
+            </GreyTypography>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mx: 4,
-            }}
-          >
+          <Box sx={style.innerSecondBoxStyle}>
             <IconButton color="primary" onClick={onDecreaseQuantity}>
-              <RemoveCircleOutlineIcon sx={{ fontSize: "36px" }} />
+              <RemoveCircleOutlineIcon sx={style.iconStyle} />
             </IconButton>
-            <Typography variant="subtitle1" fontWeight={700}>
+            <BoldTypography variant="subtitle1">
               Qty: {props.cartItem.quantity}
-            </Typography>
+            </BoldTypography>
             <IconButton color="primary" onClick={onIncreaseQuantity}>
-              <AddCircleOutlineIcon sx={{ fontSize: "36px" }} />
+              <AddCircleOutlineIcon sx={style.iconStyle} />
             </IconButton>
           </Box>
-          <Typography variant="subtitle1" fontWeight={700}>
+          <BoldTypography variant="subtitle1">
             CHF {(props.cartItem.price * props.cartItem.quantity).toFixed(2)}
-          </Typography>
-          <Button
-            style={{ backgroundColor: "#fff6f2", color: "primary" }}
-            onClick={onDeleteCartItem}
-          >
+          </BoldTypography>
+          <Button style={buttonStyle} onClick={onDeleteCartItem}>
             <DeleteOutlineIcon sx={{ fontSize: "32px", ml: 1 }} />
           </Button>
         </Card>
