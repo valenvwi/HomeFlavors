@@ -6,6 +6,8 @@ const modalSlice = createSlice({
     isCheckedout: false,
     openCancelledDialog: false,
     isCancelled: false,
+    isCreatedMenuItem: false,
+    isEditedMenuItem: false,
   },
   reducers: {
     setIsCheckedout(state, action) {
@@ -16,6 +18,12 @@ const modalSlice = createSlice({
     },
     setIsCancelled(state, action) {
       state.isCancelled = action.payload;
+    },
+    setIsCreatedMenuItem(state, action) {
+      state.isCreatedMenuItem = action.payload;
+    },
+    setIsEditedMenuItem(state, action) {
+      state.isEditedMenuItem = action.payload;
     },
   },
 });

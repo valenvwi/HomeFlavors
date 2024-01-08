@@ -1,9 +1,8 @@
-import { useMenuItemsList } from "../../../../api";
+import { menuItemsDestroy, useMenuItemsList } from "../../../../api";
 import { useState } from "react";
 import {
   Button,
   Container,
-  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -11,13 +10,15 @@ import {
 import MenuItemCard from "./MenuItemCard";
 import MenuItemCardMobile from "./MenuItemCardMobile";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { useAppSelector } from "../../store/root";
+import { useAppDispatch, useAppSelector } from "../../store/root";
 import AddMenuItem from "./AddMenuItem";
 import EditMenuItem from "./EditMenuItem";
 import { MenuItemType } from "../../types/menuItem";
 import Tabbar from "./CategoryNavBar/Tabbar";
 import Selectionbar from "./CategoryNavBar/Selectionbar";
 import { keepPreviousData } from "@tanstack/react-query";
+import Modal from "../../UI/Modal";
+import { modalActions } from "../../store/modal";
 
 export default function MenuItem() {
   const [showAddMenuItem, setShowAddMenuItem] = useState<boolean>(false);
@@ -27,15 +28,28 @@ export default function MenuItem() {
   const [category, setCategory] = useState<string>("soup");
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const { data: menuItemsResponse } = useMenuItemsList(
-    { category: category },
-    { query: { placeholderData: keepPreviousData } }
+  const [menuItemId, setMenuItemId] = useState<number>(0);
+  const isCreatedMenuItem = useAppSelector(
+    (state) => state.modal.isCreatedMenuItem
   );
+  const isEditedMenuItem = useAppSelector(
+    (state) => state.modal.isEditedMenuItem
+  );
+
+  const dispatch = useAppDispatch();
+  const { data: menuItemsResponse, refetch: refetchMenuItems } =
+    useMenuItemsList(
+      { category: category },
+      { query: { placeholderData: keepPreviousData } }
+    );
   const menuItems = menuItemsResponse?.data;
 
   const toggleAddMenuItem = () => {
     setShowAddMenuItem(!showAddMenuItem);
+  };
+
+  const onSetMenuItemId = (id: number) => {
+    setMenuItemId(id);
   };
 
   const onSetMenuItem = (menuItem: MenuItemType) => {
@@ -52,12 +66,75 @@ export default function MenuItem() {
     setCategory(category);
   };
 
+  const openDeleteDialog = () => {
+    setShowDeleteModal(true);
+  };
+
+  const deleteMenuItem = async (id: number) => {
+    await menuItemsDestroy(id);
+    setShowDeleteModal(false);
+    setShowSuccessDeleteModal(true);
+    setMenuItemId(0);
+    refetchMenuItems();
+  };
+
+  const closeDialog = () => {
+    setShowDeleteModal(false);
+    setShowSuccessDeleteModal(false);
+    dispatch(modalActions.setIsCreatedMenuItem(false));
+    dispatch(modalActions.setIsEditedMenuItem(false));
+  };
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showSuccessDeleteModal, setShowSuccessDeleteModal] = useState(false);
 
   return (
     <Container sx={{ display: "flex", flexDirection: "column", mt: 4 }}>
+      {showDeleteModal && (
+        <Modal
+          open={showDeleteModal}
+          message="Are you sure you want to delete this item?"
+          confirmText="Yes"
+          cancelText="No"
+          handleConfirm={() => deleteMenuItem(menuItemId)}
+          handleClose={closeDialog}
+          icon="alert"
+        />
+      )}
+
+      {showSuccessDeleteModal && (
+        <Modal
+          open={showSuccessDeleteModal}
+          message="You have successfully deleted this item"
+          cancelText="Close"
+          handleClose={closeDialog}
+          icon="success"
+        />
+      )}
+
+      {isCreatedMenuItem && (
+        <Modal
+          open={isCreatedMenuItem}
+          message="You have successfully created this item"
+          cancelText="Close"
+          handleClose={closeDialog}
+          icon="success"
+        />
+      )}
+
+      {isEditedMenuItem && (
+        <Modal
+          open={isEditedMenuItem}
+          message="You have successfully edited this item"
+          cancelText="Close"
+          handleClose={closeDialog}
+          icon="success"
+        />
+      )}
+
       {isOwner && !showEditMenuItem && (
         <Button sx={{ justifyContent: "flex-end" }} onClick={toggleAddMenuItem}>
           <AddCircleOutlineIcon />{" "}
@@ -88,22 +165,26 @@ export default function MenuItem() {
             isSmallScreen ? (
               <MenuItemCardMobile
                 menuItem={item}
-                key={item.name}
+                key={item.id}
                 isOwner={isOwner}
                 onSetMenuItem={onSetMenuItem}
                 open={open}
                 handleOpen={handleOpen}
                 handleClose={handleClose}
+                onSetMenuItemId={onSetMenuItemId}
+                openDeleteDialog={openDeleteDialog}
               />
             ) : (
               <MenuItemCard
                 menuItem={item}
-                key={item.name}
+                key={item.id}
                 isOwner={isOwner}
                 onSetMenuItem={onSetMenuItem}
                 open={open}
                 handleOpen={handleOpen}
                 handleClose={handleClose}
+                onSetMenuItemId={onSetMenuItemId}
+                openDeleteDialog={openDeleteDialog}
               />
             )
           )}

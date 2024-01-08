@@ -11,11 +11,14 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { menuItemsCreate, useMenuItemsList } from "../../../../api";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useAppDispatch} from "../../store/root";
+import { modalActions } from "../../store/modal";
 
 export default function AddMenuItem(props: {
   ontoggleAddMenuItem: () => void;
@@ -29,6 +32,14 @@ export default function AddMenuItem(props: {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const { refetch } = useMenuItemsList();
+  const [showImageError, setShowImageError] = useState<boolean>(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const dispatch = useAppDispatch();
+
+  const handleButtonClick = () => {
+    imageInputRef.current?.click();
+  };
 
   const cancelAddMenuItem = () => {
     props.ontoggleAddMenuItem();
@@ -45,32 +56,37 @@ export default function AddMenuItem(props: {
       };
       reader.readAsDataURL(files[0]);
       setImage(files[0]);
+      setShowImageError(false);
     }
   };
 
   const onSubmit: SubmitHandler<MenuItemType> = async (data) => {
     const formData = new FormData();
     if (!selectedImage) {
+      setShowImageError(true);
       return;
     }
 
     formData.append("image", image);
     formData.append("kitchen", "1");
-
     Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key !== "image") {
+        formData.append(key, value);
+      }
     });
+
+    console.log(formData);
 
     await menuItemsCreate(formData);
     refetch();
     props.ontoggleAddMenuItem();
+    dispatch(modalActions.setIsCreatedMenuItem(true));
   };
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: "20px",
-          marginBottom: "120px",
+          my: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -83,19 +99,29 @@ export default function AddMenuItem(props: {
           sx={{ mt: 1 }}
         >
           <input
-            {...register("image", { required: "Image is required" })}
+            {...register("image")}
             type="file"
             accept="image/*"
             onChange={handleImageChange}
+            style={{ marginBottom: "10px", display: "none" }}
+            ref={imageInputRef}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleButtonClick}
+            style={{ marginBottom: "15px" }}
+          >
+            Upload Image
+          </Button>
           {selectedImage && (
-            <Card>
+            <Card sx={{ p: 1 }}>
               <CardMedia
                 component="img"
                 alt="Selected Image"
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: "150px",
+                  height: "150px",
                   objectFit: "cover",
                   borderRadius: "10px",
                   aspectRatio: "1",
@@ -105,9 +131,15 @@ export default function AddMenuItem(props: {
               />
             </Card>
           )}
+
+          {showImageError && (
+            <Typography sx={{ color: "#d32f2f", fontSize: "0.75rem", mx: 1 }}>
+              Please select an image
+            </Typography>
+          )}
           <TextField
             {...register("name", {
-              required: "name is required",
+              required: "Name is required",
               maxLength: {
                 value: 50,
                 message: "Name must be under 50 characters long",
@@ -125,7 +157,7 @@ export default function AddMenuItem(props: {
           />
           <TextField
             {...register("description", {
-              required: "description is required",
+              required: "Description is required",
               minLength: {
                 value: 4,
                 message: "description must be at least 4 characters long",
@@ -145,7 +177,10 @@ export default function AddMenuItem(props: {
           />
           <TextField
             {...register("price", {
-              required: "price is required",
+              required: "Price is required",
+              validate: {
+                isNumber: (value) => !isNaN(value) || "Price must be a number",
+              },
             })}
             margin="normal"
             required
@@ -164,6 +199,7 @@ export default function AddMenuItem(props: {
                 required: "Category is required",
               })}
               label="Category"
+              defaultValue={"soup"}
               error={!!errors.category}
             >
               <MenuItem value="soup">Soup</MenuItem>
@@ -209,7 +245,7 @@ export default function AddMenuItem(props: {
               type="button"
               variant="contained"
               onClick={cancelAddMenuItem}
-              sx={{ my: 3, mx: 2}}
+              sx={{ my: 3, mx: 2 }}
             >
               Cancel
             </Button>

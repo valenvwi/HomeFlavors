@@ -5,7 +5,6 @@ import spicyIcon from "../../../assets/spicy.png";
 import vegIcon from "../../../assets/veg.png";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { menuItemsDestroy } from "../../../../api";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import soldOut from "../../../assets/sold-out.png";
 import { useAppDispatch, useAppSelector } from "../../store/root";
@@ -20,6 +19,9 @@ export default function MenuItemCard(props: {
   open: boolean;
   handleClose: () => void;
   handleOpen: () => void;
+  onSetMenuItemId: (id: number) => void;
+  openDeleteDialog: () => void;
+
 }) {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
@@ -30,7 +32,8 @@ export default function MenuItemCard(props: {
   };
 
   const onDeleteMenuItem = () => {
-    menuItemsDestroy(props.menuItem.id);
+    props.onSetMenuItemId(props.menuItem.id);
+    props.openDeleteDialog();
   };
 
   const setMenuItem = () => {

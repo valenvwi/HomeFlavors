@@ -15,8 +15,10 @@ import {
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { menuItemsPartialUpdate, useMenuItemsList } from "../../../../api";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BASEURL } from "../../../config";
+import { useAppDispatch } from "../../store/root";
+import { modalActions } from "../../store/modal";
 
 export default function EditMenuItem(props: {
   menuItem: MenuItemType;
@@ -32,6 +34,13 @@ export default function EditMenuItem(props: {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
   const { refetch } = useMenuItemsList({ category: props.category });
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const dispatch = useAppDispatch();
+
+  const handleButtonClick = () => {
+    imageInputRef.current?.click();
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -70,6 +79,7 @@ export default function EditMenuItem(props: {
       await menuItemsPartialUpdate(props.menuItem.id, formData);
       refetch();
       props.onCancelEdit();
+      dispatch(modalActions.setIsEditedMenuItem(true));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -79,8 +89,7 @@ export default function EditMenuItem(props: {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: "120px",
-          marginBottom: "120px",
+          my: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -97,15 +106,25 @@ export default function EditMenuItem(props: {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
+            style={{ marginBottom: "10px", display: "none" }}
+            ref={imageInputRef}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleButtonClick}
+            style={{ marginBottom: "15px" }}
+          >
+            Upload Image
+          </Button>
           {selectedImage ? (
-            <Card>
+            <Card sx={{ p: 1 }}>
               <CardMedia
                 component="img"
                 alt="Selected Image"
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: "150px",
+                  height: "150px",
                   objectFit: "cover",
                   borderRadius: "10px",
                   aspectRatio: "1",
@@ -115,13 +134,13 @@ export default function EditMenuItem(props: {
               />
             </Card>
           ) : props.menuItem.image ? (
-            <Card>
+            <Card sx={{ p: 1 }}>
               <CardMedia
                 component="img"
                 alt="Menu Item Image"
                 style={{
-                  width: "200px",
-                  height: "200px",
+                  width: "150px",
+                  height: "150px",
                   objectFit: "cover",
                   borderRadius: "10px",
                   aspectRatio: "1",
@@ -167,7 +186,7 @@ export default function EditMenuItem(props: {
             defaultValue={props.menuItem.description}
             autoFocus
             multiline
-            rows={5}
+            rows={3}
             error={!!errors.description}
             helperText={errors.description && errors.description.message}
           />
@@ -234,18 +253,19 @@ export default function EditMenuItem(props: {
             label="Spicy"
           />
 
-          <Button type="submit" fullWidth variant="contained" sx={{ my: 3 }}>
-            Update
-          </Button>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ my: 3 }}
-            onClick={cancelEdit}
-          >
-            Cancel
-          </Button>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button type="submit" variant="contained" sx={{ my: 3, mx: 2 }}>
+              Update
+            </Button>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={cancelEdit}
+              sx={{ my: 3, mx: 2 }}
+            >
+              Cancel
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Container>

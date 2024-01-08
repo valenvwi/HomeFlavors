@@ -98,7 +98,6 @@ export default function Signup() {
                 message: "Username must be at least 4 characters long",
               },
             })}
-            margin="normal"
             required
             id="username"
             label="Username"
@@ -106,9 +105,6 @@ export default function Signup() {
             autoFocus
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("password", {
@@ -118,7 +114,6 @@ export default function Signup() {
                 message: "Password must be at least 6 characters long",
               },
             })}
-            margin="normal"
             required
             name="password"
             label="Password"
@@ -126,9 +121,6 @@ export default function Signup() {
             autoComplete="current-password"
             error={!!errors.password}
             helperText={errors.password && errors.password.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("firstName", {
@@ -138,7 +130,6 @@ export default function Signup() {
                 message: "First name must be at least 2 characters long",
               },
             })}
-            margin="normal"
             required
             name="firstName"
             label="First name"
@@ -146,9 +137,6 @@ export default function Signup() {
             autoComplete="firstName"
             error={!!errors.firstName}
             helperText={errors.firstName && errors.firstName.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("lastName", {
@@ -158,7 +146,6 @@ export default function Signup() {
                 message: "Last name must be at least 2 characters long",
               },
             })}
-            margin="normal"
             required
             name="lastName"
             label="Last name"
@@ -166,9 +153,6 @@ export default function Signup() {
             autoComplete="lastName"
             error={!!errors.lastName}
             helperText={errors.lastName && errors.lastName.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
 
           <TextField
@@ -179,7 +163,6 @@ export default function Signup() {
                 message: "Invalid email address",
               },
             })}
-            margin="normal"
             required
             id="email"
             label="Email"
@@ -187,16 +170,12 @@ export default function Signup() {
             autoFocus
             error={!!errors.email}
             helperText={errors.email && errors.email.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("phoneNumber", {
               required: "Phone number is required",
               minLength: { value: 10, message: "Invalid phone number" },
             })}
-            margin="normal"
             required
             name="phoneNumber"
             label="Phone number"
@@ -204,9 +183,6 @@ export default function Signup() {
             autoComplete="phoneNumber"
             error={!!errors.phoneNumber}
             helperText={errors.phoneNumber && errors.phoneNumber.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <Button
             type="submit"

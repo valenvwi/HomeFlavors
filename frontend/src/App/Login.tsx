@@ -89,7 +89,6 @@ export default function Login() {
         >
           <TextField
             {...register("username", { required: "Username is required" })}
-            margin="normal"
             required
             id="username"
             label="Username"
@@ -97,13 +96,9 @@ export default function Login() {
             autoFocus
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
           <TextField
             {...register("password", { required: "Password is required" })}
-            margin="normal"
             required
             name="password"
             label="Password"
@@ -111,9 +106,6 @@ export default function Login() {
             autoComplete="current-password"
             error={!!errors.password}
             helperText={errors.password && errors.password.message}
-            size="small"
-            inputProps={{ style: { fontSize: "14px" } }}
-            InputLabelProps={{ style: { fontSize: "14px" } }}
           />
 
           {invalidCredentials && (
