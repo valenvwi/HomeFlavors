@@ -25,6 +25,13 @@ import { authActions } from "../store/auth";
 import { cartActions } from "../store/cart";
 import { useAppDispatch } from "../store/root";
 import { useSpring, animated } from "@react-spring/web";
+import { InheritButton } from "../../components";
+
+const logoLinkStyle = {
+  textDecoration: "none",
+  color: "white",
+  marginLeft: "5px",
+};
 
 export default function AppNavBar() {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
@@ -119,14 +126,7 @@ export default function AppNavBar() {
                 <MenuIcon />
               </IconButton>
             )}
-            <Link
-              to="/"
-              style={{
-                textDecoration: "none",
-                color: "white",
-                marginLeft: "5px",
-              }}
-            >
+            <Link to="/" style={logoLinkStyle}>
               <Typography
                 variant="h6"
                 noWrap
@@ -140,64 +140,64 @@ export default function AppNavBar() {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {isLoggedIn && isOwner && (
               <>
-                <Button color="inherit" onClick={goToPendingOrderPage}>
+                <InheritButton onClick={goToPendingOrderPage}>
                   <Badge badgeContent={notificationCount} color="primary">
                     <NotificationsIcon />
                   </Badge>
-                </Button>
-                <Button color="inherit" onClick={goToSalesDataPage}>
+                </InheritButton>
+                <InheritButton onClick={goToSalesDataPage}>
                   <LeaderboardIcon />
-                </Button>
-                <Button color="inherit" onClick={logout}>
+                </InheritButton>
+                <InheritButton onClick={logout}>
                   <LogoutIcon />
-                </Button>
+                </InheritButton>
               </>
             )}
             {isLoggedIn && !isOwner && (
               <>
-                <Button color="inherit" onClick={goToCartPage}>
+                <InheritButton onClick={goToCartPage}>
                   <animated.div style={cartAnimation}>
                     <Badge badgeContent={totalQuantity} color="primary">
                       <ShoppingCartIcon />
                     </Badge>
                   </animated.div>
-                </Button>
-                <Button color="inherit" onClick={goToOrderHistoryPage}>
+                </InheritButton>
+                <InheritButton onClick={goToOrderHistoryPage}>
                   <HistoryIcon />
-                </Button>
-                <Button color="inherit" onClick={logout}>
+                </InheritButton>
+                <InheritButton onClick={logout}>
                   <LogoutIcon />
-                </Button>
+                </InheritButton>
               </>
             )}
             {!isLoggedIn && (
-              <Button color="inherit" onClick={goToLoginPage}>
+              <InheritButton onClick={goToLoginPage}>
                 <LoginIcon />
-              </Button>
+              </InheritButton>
             )}
           </Box>
 
           <Box sx={{ display: { xs: "block", sm: "none" } }}>
             {isLoggedIn && !isOwner && (
-              <Button color="inherit" onClick={goToCartPage}>
+              <InheritButton onClick={goToCartPage}>
                 <animated.div style={cartAnimation}>
-                  <Badge badgeContent={totalQuantity} color="primary">
+                  <Badge badgeContent={totalQuantity}>
                     <ShoppingCartIcon />
                   </Badge>
                 </animated.div>
-              </Button>
+              </InheritButton>
             )}
             {isLoggedIn && isOwner && (
-              <Button color="inherit" onClick={goToPendingOrderPage}>
-                <Badge badgeContent={notificationCount} color="primary">
+              <InheritButton onClick={goToPendingOrderPage}>
+                <Badge badgeContent={notificationCount}>
                   <NotificationsIcon />
                 </Badge>
-              </Button>
+              </InheritButton>
             )}
             {!isLoggedIn && (
-              <Button color="inherit" onClick={goToLoginPage}>
+              <InheritButton onClick={goToLoginPage}>
                 <LoginIcon />
-              </Button>
+              </InheritButton>
             )}
           </Box>
         </Toolbar>

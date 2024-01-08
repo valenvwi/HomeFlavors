@@ -53,18 +53,10 @@ export default function SalesDateSelect(props: {
         onChange={handleChange}
         sx={{ fontSize: "14px" }}
       >
-        <MenuItem value={0} sx={{ fontSize: "14px" }}>
-          Today
-        </MenuItem>
-        <MenuItem value={1} sx={{ fontSize: "14px" }}>
-          Yesterday
-        </MenuItem>
-        <MenuItem value={2} sx={{ fontSize: "14px" }}>
-          Last 7 Days
-        </MenuItem>
-        <MenuItem value={3} sx={{ fontSize: "14px" }}>
-          Last 30 Days
-        </MenuItem>
+        <MenuItem value={0}>Today</MenuItem>
+        <MenuItem value={1}>Yesterday</MenuItem>
+        <MenuItem value={2}>Last 7 Days</MenuItem>
+        <MenuItem value={3}>Last 30 Days</MenuItem>
       </Select>
     </FormControl>
   );

@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Card, Grid, Typography } from "@mui/material";
 import SalesChart from "./SalesChart";
 import SalesPie from "./SalesPie";
 

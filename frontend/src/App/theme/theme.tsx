@@ -48,5 +48,10 @@ export const theme = createTheme({
         size: "small",
       },
     },
+    MuiBadge: {
+      defaultProps: {
+        color: "primary",
+      },
+    },
   },
 });

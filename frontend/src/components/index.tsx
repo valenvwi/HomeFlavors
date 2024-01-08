@@ -22,6 +22,10 @@ export const ContainedButton = (
   props: ComponentPropsWithoutRef<typeof Button>
 ) => <Button variant="contained" {...props} />;
 
+export const InheritButton = (
+  props: ComponentPropsWithoutRef<typeof Button>
+) => <Button color="inherit" {...props} />;
+
 export const OrangePaper = ({
   sx,
   ...rest

@@ -2,6 +2,7 @@ import { Box, Button, Modal as MuiModal, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useTheme, useMediaQuery } from "@mui/material";
+import { ContainedButton } from "../../components";
 
 const shareStyle = {
   position: "absolute" as const,
@@ -71,22 +72,20 @@ export default function Modal(props: {
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           {props.confirmText && (
-            <Button
-              variant="contained"
+            <ContainedButton
               sx={{ mt: 3, mb: 2, mx: 2 }}
               onClick={props.handleConfirm}
             >
               {props.confirmText}
-            </Button>
+            </ContainedButton>
           )}
           {props.cancelText && (
-            <Button
-              variant="contained"
+            <ContainedButton
               sx={{ mt: 3, mb: 2, mx: 2 }}
               onClick={props.handleClose}
             >
               {props.cancelText}
-            </Button>
+            </ContainedButton>
           )}
         </Box>
         {props.subtext && (

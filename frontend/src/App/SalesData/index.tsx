@@ -2,13 +2,26 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
 import { useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
-import { useState } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 import SalesDateSelect from "./SalesDateSelect";
 import TopSalesCard from "./TopSalesCard";
 import gold from "../../assets/medals/gold.png";
 import silver from "../../assets/medals/silver.png";
 import bronze from "../../assets/medals/bronze.png";
 import noSalesDataPic from "../../assets/no_sales_data.png";
+import { BoldTypography, SpaceBetweenFlexBox } from "../../components";
+
+const flexColumnGrowStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  flexGrow: 1,
+};
+
+const TitleTypography = (
+  props: ComponentPropsWithoutRef<typeof Typography>
+) => <Typography fontWeight={700} variant="h6" {...props} />;
 
 export default function SalesData() {
   const today = new Date();
@@ -33,46 +46,24 @@ export default function SalesData() {
 
   if (!salesDataResponse) {
     return (
-      <Container
-        sx={{
-          mt: 4,
-          py: 5,
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "90vh",
-        }}
-        maxWidth="xl"
-      >
-        <Box
+      <Container sx={flexColumnGrowStyle} maxWidth="xl">
+        <SpaceBetweenFlexBox
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
             mt: 2,
           }}
         >
-          <Typography variant="h6" fontWeight={700}>
-            Overview
-          </Typography>
-          <Typography variant="h5" fontWeight={700}>
+          <BoldTypography variant="h6">Overview</BoldTypography>
+          <BoldTypography variant="h5">
             {startDate === endDate ? startDate : startDate + " - " + endDate}
-          </Typography>
+          </BoldTypography>
           <SalesDateSelect onSetDate={onSetDate} />
-        </Box>
+        </SpaceBetweenFlexBox>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            flexGrow: 1,
-          }}
-        >
+        <Box sx={flexColumnGrowStyle}>
           <img src={noSalesDataPic} alt="No sales data" width="250" />
-          <Typography variant="h5" fontWeight={700}>
+          <BoldTypography variant="h5">
             No sales data available yet
-          </Typography>
+          </BoldTypography>
         </Box>
       </Container>
     );
@@ -80,22 +71,17 @@ export default function SalesData() {
 
   return (
     <Container sx={{ mt: 4, py: 5 }} maxWidth="xl">
-      <Box
+      <SpaceBetweenFlexBox
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
           mt: 2,
         }}
       >
-        <Typography variant="h6" fontWeight={700}>
-          Overview
-        </Typography>
-        <Typography variant="h5" fontWeight={700}>
+        <TitleTypography>Overview</TitleTypography>
+        <BoldTypography variant="h5">
           {startDate === endDate ? startDate : startDate + " - " + endDate}
-        </Typography>
+        </BoldTypography>
         <SalesDateSelect onSetDate={onSetDate} />
-      </Box>
+      </SpaceBetweenFlexBox>
 
       <Grid container sx={{ my: 3 }}>
         {salesByHour && (
@@ -131,9 +117,7 @@ export default function SalesData() {
         )}
       </Grid>
 
-      <Typography variant="h6" fontWeight={700}>
-        Top 3 Sales
-      </Typography>
+      <TitleTypography>Top 3 Sales</TitleTypography>
 
       {salesByItem && (
         <Grid container sx={{ my: 3 }}>
@@ -158,9 +142,7 @@ export default function SalesData() {
         </Grid>
       )}
 
-      <Typography variant="h6" fontWeight={700}>
-        Sales by Item
-      </Typography>
+      <TitleTypography>Sales by Item</TitleTypography>
 
       {salesByItem && <SalesItemTable sales={salesByItem} />}
     </Container>
