@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { BASEURL } from "../../../config";
 import spicyIcon from "../../../assets/spicy.png";
@@ -19,8 +19,8 @@ import {
   GreyTypography,
   OrangePaper,
   SpaceBetweenFlexBox,
-  lgImgStyle,
 } from "../../../components";
+import { lgImgStyle } from "../../../components/imgStyle";
 
 const boxStyle = {
   display: "flex",

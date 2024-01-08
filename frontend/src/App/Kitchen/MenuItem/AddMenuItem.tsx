@@ -22,8 +22,8 @@ import {
   CenterFlexBox,
   ContainedButton,
   FullWidthTextField,
-  lgImgStyle,
 } from "../../../components";
+import { lgImgStyle } from "../../../components/imgStyle";
 
 export default function AddMenuItem(props: {
   ontoggleAddMenuItem: () => void;

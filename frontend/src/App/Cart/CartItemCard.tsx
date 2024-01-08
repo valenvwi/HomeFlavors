@@ -10,6 +10,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { ComponentPropsWithoutRef, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import { BoldTypography, CenterFlexBox } from "../../components";
+import { smImgStyle, mdImgStyle } from "../../components/imgStyle";
 
 const smallScreenConfig = {
   cardStyle: {
@@ -27,13 +28,7 @@ const smallScreenConfig = {
   innerSecondBoxStyle: {
     my: 1,
   },
-  imageStyle: {
-    width: "50px",
-    height: "50px",
-    objectFit: "cover",
-    borderRadius: "10px",
-    aspectRatio: "1",
-  },
+  imageStyle: smImgStyle,
   iconStyle: {
     fontSize: "28px",
   },
@@ -53,13 +48,7 @@ const largeScreenConfig = {
   innerSecondBoxStyle: {
     mx: 4,
   },
-  imageStyle: {
-    width: "100px",
-    height: "100px",
-    objectFit: "cover",
-    borderRadius: "10px",
-    aspectRatio: "1",
-  },
+  imageStyle: mdImgStyle,
   iconStyle: {
     fontSize: "36px",
   },

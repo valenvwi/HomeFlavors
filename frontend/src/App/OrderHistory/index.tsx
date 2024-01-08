@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import { ordersPartialUpdate, useOrdersList } from "../../../api";
 import OrderHistoryCard from "./OrderHistoryCard";
 import { modalActions } from "../store/modal";
@@ -7,10 +7,18 @@ import noOrder from "../../assets/no-order.png";
 import { useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import { useState } from "react";
+import {
+  BoldTypography,
+  CenterFlexBox,
+  ContainedButton,
+} from "../../components";
 
-const fontStyle = {
-  fontWeight: 700,
-  my: 1,
+const containerStyle = {
+  mt: 5,
+  py: 5,
+  minHeight: "90vh",
+  display: "flex",
+  flexDirection: "column",
 };
 
 export default function OrderHistory() {
@@ -71,15 +79,7 @@ export default function OrderHistory() {
     refetchAcceptedOrder();
   };
   return (
-    <Container
-      sx={{
-        mt: 5,
-        py: 5,
-        minHeight: "90vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <Container sx={containerStyle}>
       <Modal
         open={isCheckedout}
         handleClose={handleClose}
@@ -105,32 +105,27 @@ export default function OrderHistory() {
         icon="alert"
       />
       {orders?.length === 0 && (
-        <Box
+        <CenterFlexBox
           sx={{
-            display: "flex",
             flexDirection: "column",
             flexGrow: "1",
-            justifyContent: "center",
-            alignItems: "center",
           }}
         >
           <img src={noOrder} alt="Sold Out" width="250" />
-          <Typography variant="h5" fontWeight={700}>
-            No orders yet
-          </Typography>
-          <Button variant="contained" sx={{ my: 3 }} onClick={goToHomePage}>
+          <BoldTypography variant="h5">No orders yet</BoldTypography>
+          <ContainedButton sx={{ my: 3 }} onClick={goToHomePage}>
             Shop now
-          </Button>
-        </Box>
+          </ContainedButton>
+        </CenterFlexBox>
       )}
 
       {pendingOrders !== undefined && pendingOrders?.length > 0 && (
         <>
-          <Typography variant="h6" sx={fontStyle}>
+          <BoldTypography variant="h6" sx={{ my: 1 }}>
             {" "}
             Pending {pluralize(pendingOrders?.length || 0, "Order")} (
             {pendingOrders?.length})
-          </Typography>
+          </BoldTypography>
           {pendingOrders?.map((order) => (
             <OrderHistoryCard
               order={order}
@@ -143,11 +138,11 @@ export default function OrderHistory() {
 
       {acceptedOrders !== undefined && acceptedOrders?.length > 0 && (
         <>
-          <Typography variant="h6" sx={fontStyle}>
+          <BoldTypography variant="h6" sx={{ my: 1 }}>
             {" "}
             All {pluralize(acceptedOrders?.length || 0, "Order")} (
             {acceptedOrders?.length})
-          </Typography>
+          </BoldTypography>
           {acceptedOrders?.map((order) => (
             <OrderHistoryCard order={order} key={order.id} />
           ))}

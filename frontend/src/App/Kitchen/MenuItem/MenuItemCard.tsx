@@ -17,8 +17,8 @@ import {
   GreyTypography,
   OrangePaper,
   PrimaryIconButton,
-  lgImgStyle,
 } from "../../../components";
+import { lgImgStyle } from "../../../components/imgStyle";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;

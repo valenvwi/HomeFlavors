@@ -1,4 +1,4 @@
-import { Box, Button, Card, IconButton, Typography } from "@mui/material";
+import { Box, Card, IconButton, Typography } from "@mui/material";
 import { OrderType } from "../types/order";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -7,6 +7,13 @@ import { useState } from "react";
 import { BASEURL } from "../../config";
 import { useTheme, useMediaQuery } from "@mui/material";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import {
+  BoldTypography,
+  ContainedButton,
+  GreyTypography,
+  SpaceBetweenFlexBox,
+} from "../../components";
+import { smImgStyle, mdImgStyle } from "../../components/imgStyle";
 
 const smallScreenConfig = {
   cardStyle: {
@@ -17,14 +24,7 @@ const smallScreenConfig = {
   },
   fontTitleVariant: "subtitle1",
   fontContentVariant: "body2",
-  imageStyle: {
-    width: "50px",
-    height: "50px",
-    borderRadius: "5px",
-    margin: "10px 0px",
-    objectFit: "cover",
-    flexShrink: 0,
-  },
+  imageStyle: smImgStyle,
 } as const;
 
 const largeScreenConfig = {
@@ -37,14 +37,35 @@ const largeScreenConfig = {
   },
   fontTitleVariant: "h6",
   fontContentVariant: "subtitle1",
-  imageStyle: {
-    width: "100px",
-    height: "100px",
-    borderRadius: "5px",
-    margin: "10px 0px",
-    objectFit: "cover",
-  },
+  imageStyle: mdImgStyle,
 } as const;
+
+const spaceBetweenFlex = {
+  display: "flex",
+  justifyContent: "space-between",
+};
+
+const flexBoxColumnStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  mx: 2,
+};
+
+const flexGrowColumnStyle = {
+  display: "flex",
+  flexDirection: "column",
+  flexGrow: "1",
+  ml: 1,
+  minWidth: "0",
+};
+
+const smallScreenDescriptionStyle = {
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  maxWidth: "90%",
+};
 
 type Props = {
   order: OrderType;
@@ -70,10 +91,10 @@ export default function OrderHistoryCard(props: Props) {
   };
   return (
     <Card elevation={6} sx={style.cardStyle}>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant={style.fontTitleVariant} fontWeight={700}>
+      <Box sx={spaceBetweenFlex}>
+        <BoldTypography variant={style.fontTitleVariant}>
           {!isSmallScreen && "Order created at"} {formattedCreatedAtDate}
-        </Typography>
+        </BoldTypography>
 
         {expanded ? (
           <IconButton onClick={() => setExpanded(false)}>
@@ -86,21 +107,14 @@ export default function OrderHistoryCard(props: Props) {
         )}
       </Box>
       {!expanded && (
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={spaceBetweenFlex}>
           <Box sx={{ display: "flex" }}>
             <img
               src={BASEURL + "/" + props.order.orderItems[0].menuItem.image}
               alt={props.order.orderItems[0].menuItem.name}
               style={style.imageStyle}
             />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                mx: 2,
-              }}
-            >
+            <Box sx={flexBoxColumnStyle}>
               <Typography variant={style.fontContentVariant}>
                 Pick up time: {formattedPickUpDateTime}
               </Typography>
@@ -113,28 +127,20 @@ export default function OrderHistoryCard(props: Props) {
             </Box>
           </Box>
           {!props.order.isAccepted && !isSmallScreen && (
-            <Button
-              variant="contained"
+            <ContainedButton
               sx={{ m: " auto 10px", height: "100%" }}
               onClick={openCancelOrderDialog}
             >
               Cancel
               <CancelOutlinedIcon sx={{ ml: 1 }} />
-            </Button>
+            </ContainedButton>
           )}
         </Box>
       )}
       {expanded && (
         <Box>
           {props.order.orderItems?.map((orderItem) => (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-              key={orderItem.id}
-            >
+            <SpaceBetweenFlexBox key={orderItem.id}>
               <img
                 src={BASEURL + "/" + orderItem.menuItem.image}
                 alt={orderItem.menuItem.name}
@@ -142,32 +148,16 @@ export default function OrderHistoryCard(props: Props) {
               />
               {isSmallScreen ? (
                 <>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      flexGrow: "1",
-                      ml: 1,
-                      minWidth: "0",
-                    }}
-                  >
+                  <Box sx={flexGrowColumnStyle}>
                     <Typography
                       variant={style.fontContentVariant}
-                      sx={{
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        maxWidth: "90%",
-                      }}
+                      sx={smallScreenDescriptionStyle}
                     >
                       {orderItem.menuItem.name}
                     </Typography>
-                    <Typography
-                      variant={style.fontContentVariant}
-                      sx={{ color: "#8b8989" }}
-                    >
+                    <GreyTypography variant={style.fontContentVariant}>
                       x {orderItem.quantity}
-                    </Typography>
+                    </GreyTypography>
                   </Box>
                 </>
               ) : (
@@ -178,34 +168,29 @@ export default function OrderHistoryCard(props: Props) {
               <Typography variant={style.fontContentVariant}>
                 {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
               </Typography>
-            </Box>
+            </SpaceBetweenFlexBox>
           ))}
           {props.order.remark && (
             <Typography variant={style.fontContentVariant} sx={{ pt: 1 }}>
               Remarks: {props.order.remark}
             </Typography>
           )}
-          <Typography
-            variant={style.fontContentVariant}
-            fontWeight={700}
-            textAlign="right"
-          >
+          <BoldTypography variant={style.fontContentVariant} textAlign="right">
             Total Quantity: {props.order.totalQuantity}
             <br />
             Total price: CHF {parseFloat(props.order.totalPrice).toFixed(
               2
             )}{" "}
-          </Typography>
+          </BoldTypography>
           {!props.order.isAccepted && isSmallScreen && (
             <Box sx={{ display: "flex", justifyContent: "flex-end", my: 1 }}>
-              <Button
-                variant="contained"
+              <ContainedButton
                 sx={{ fontSize: "12px" }}
                 onClick={openCancelOrderDialog}
               >
                 Cancel
                 <CancelOutlinedIcon sx={{ ml: 1, fontSize: "18px" }} />
-              </Button>
+              </ContainedButton>
             </Box>
           )}
         </Box>

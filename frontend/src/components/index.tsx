@@ -102,24 +102,3 @@ export const PrimaryIconButton = ({
     {...rest}
   />
 );
-
-export const smImgStyle = {
-  width: "50px",
-  height: "50px",
-  borderRadius: "10px",
-} as const;
-
-export const mdImgStyle = {
-  width: "100px",
-  height: "100px",
-  borderRadius: "10px",
-} as const;
-
-export const lgImgStyle = {
-  width: "150px",
-  height: "150px",
-  objectFit: "cover",
-  borderRadius: "10px",
-  aspectRatio: "1",
-  margin: "0 auto",
-} as const;
