@@ -14,15 +14,15 @@ import dayjs from "dayjs";
 import Divider from "@mui/material/Divider";
 
 const drawerStyler = {
-  width: "25%",
+  width: "30%",
   flexShrink: 0,
   zIndex: 0,
-  [`& .MuiDrawer-paper`]: { width: "25%", boxSizing: "border-box" },
+  [`& .MuiDrawer-paper`]: { width: "30%", boxSizing: "border-box" },
 };
 
 const boxStyle = {
   overflow: "auto",
-  px: 2,
+  px: 1,
   my: 1,
 };
 

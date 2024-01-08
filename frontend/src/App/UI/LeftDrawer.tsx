@@ -11,6 +11,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HistoryIcon from "@mui/icons-material/History";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useAppSelector } from "../store/root";
 import { useNavigate } from "react-router-dom";
 import { apiLogoutCreate } from "../../../api";
@@ -19,6 +21,7 @@ import { useAppDispatch } from "../store/root";
 
 export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const isOwner = useAppSelector((state) => state.auth.isOwner);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -37,6 +40,16 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
     props.handleDrawerToggle();
   };
 
+  const goToPendingOrderPage = () => {
+    navigate("/pendingOrders");
+    props.handleDrawerToggle();
+  };
+
+  const goToSalesDataPage = () => {
+    navigate("/salesData");
+    props.handleDrawerToggle();
+  };
+
   const logout = () => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
@@ -50,32 +63,61 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
       <Divider />
       <List>
         {isLoggedIn ? (
-          <>
-            <ListItem disablePadding>
-              <ListItemButton onClick={goToCartPage}>
-                <ListItemIcon>
-                  <ShoppingCartIcon />
-                </ListItemIcon>
-                <ListItemText>Shopping cart</ListItemText>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={goToOrderHistoryPage}>
-                <ListItemIcon>
-                  <HistoryIcon />
-                </ListItemIcon>
-                <ListItemText>Order history</ListItemText>
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={logout}>
-                <ListItemIcon>
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText>Log out</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </>
+          isOwner ? (
+            <>
+              <ListItem disablePadding>
+                <ListItemButton onClick={goToPendingOrderPage}>
+                  <ListItemIcon>
+                    <NotificationsIcon />
+                  </ListItemIcon>
+                  <ListItemText>Pending orders</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={goToSalesDataPage}>
+                  <ListItemIcon>
+                    <LeaderboardIcon />
+                  </ListItemIcon>
+                  <ListItemText>Sales Report</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={logout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText>Log out</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </>
+          ) : (
+            <>
+              <ListItem disablePadding>
+                <ListItemButton onClick={goToCartPage}>
+                  <ListItemIcon>
+                    <ShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText>Shopping cart</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={goToOrderHistoryPage}>
+                  <ListItemIcon>
+                    <HistoryIcon />
+                  </ListItemIcon>
+                  <ListItemText>Order history</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={logout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText>Log out</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </>
+          )
         ) : (
           <ListItem disablePadding>
             <ListItemButton onClick={goToLoginPage}>
