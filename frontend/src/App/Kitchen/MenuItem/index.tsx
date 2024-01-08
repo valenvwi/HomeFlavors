@@ -1,6 +1,7 @@
 import { menuItemsDestroy, useMenuItemsList } from "../../../../api";
 import { useState } from "react";
 import {
+  Box,
   Button,
   Container,
   Typography,
@@ -136,12 +137,14 @@ export default function MenuItem() {
       )}
 
       {isOwner && !showEditMenuItem && (
-        <Button sx={{ justifyContent: "flex-end" }} onClick={toggleAddMenuItem}>
-          <AddCircleOutlineIcon />{" "}
-          <Typography variant="subtitle2" sx={{ mx: 2 }}>
-            Add Menu Item
-          </Typography>
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button onClick={toggleAddMenuItem}>
+            <AddCircleOutlineIcon />{" "}
+            <Typography variant="subtitle2" sx={{ mx: 2 }}>
+              Add Menu Item
+            </Typography>
+          </Button>
+        </Box>
       )}
       {showAddMenuItem && (
         <AddMenuItem ontoggleAddMenuItem={toggleAddMenuItem} />
