@@ -144,6 +144,9 @@ export default function AppNavBar() {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {isLoggedIn && isOwner && (
               <>
+                <InheritButton onClick={goToMenuPage}>
+                  <MenuBookIcon />
+                </InheritButton>
                 <InheritButton onClick={goToPendingOrderPage}>
                   <Badge badgeContent={notificationCount} color="primary">
                     <NotificationsIcon />

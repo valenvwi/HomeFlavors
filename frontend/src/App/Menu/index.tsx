@@ -13,7 +13,7 @@ const alertStyle = {
   zIndex: 6,
 };
 
-export default function Kitchen() {
+export default function Menu() {
   const newUser = useAppSelector((state) => state.auth.newUser);
   const justLoggedIn = useAppSelector((state) => state.auth.justLoggedIn);
   const username = useAppSelector((state) => state.auth.username);

@@ -1,7 +1,7 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
-import Kitchen from "./Kitchen";
+import Menu from "./Menu";
 import { CssBaseline } from "@mui/material";
 import axios from "axios";
 import AppNavBar from "./UI/AppNavBar";
@@ -19,7 +19,6 @@ axios.defaults.withCredentials = true;
 function App() {
   const { isCheckingSession } = useAuth();
 
-
   return (
     <>
       <CssBaseline />
@@ -29,7 +28,7 @@ function App() {
       ) : (
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/menu" element={<Kitchen />} />
+          <Route path="/menu" element={<Menu />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />

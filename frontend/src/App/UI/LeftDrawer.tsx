@@ -72,6 +72,14 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
           isOwner ? (
             <>
               <ListItem disablePadding>
+                <ListItemButton onClick={goToMenuPage}>
+                  <ListItemIcon>
+                    <MenuBookIcon />
+                  </ListItemIcon>
+                  <ListItemText>Menu</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
                 <ListItemButton onClick={goToPendingOrderPage}>
                   <ListItemIcon>
                     <NotificationsIcon />

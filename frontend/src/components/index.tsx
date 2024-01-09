@@ -18,9 +18,19 @@ export const GreyTypography = (
   props: ComponentPropsWithoutRef<typeof Typography>
 ) => <Typography color="#8b8989" {...props} />;
 
-export const ContainedButton = (
-  props: ComponentPropsWithoutRef<typeof Button>
-) => <Button variant="contained" {...props} />;
+export const ContainedButton = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Button>) => (
+  <Button
+    variant="contained"
+    sx={{
+      textTransform: "none",
+      ...sx,
+    }}
+    {...rest}
+  />
+);
 
 export const InheritButton = (
   props: ComponentPropsWithoutRef<typeof Button>
