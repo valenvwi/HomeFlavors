@@ -37,7 +37,6 @@ type Props = {
     cancelOrders: number;
   };
   data?: string;
-  type: string;
 };
 
 export default function SalesCard(props: Props) {

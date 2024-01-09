@@ -199,11 +199,16 @@ class SalesDataView(APIView):
                 is_cancelled=False
             ).count()
 
+            if cancelled_orders != 0 or accepted_orders != 0:
+                cancel_percentage = round(cancelled_orders / (cancelled_orders + accepted_orders) * 100, 2)
+            else:
+                cancel_percentage = 0.0
+
             order_status = []
             order_status = {
                 'cancelled_orders': cancelled_orders,
                 'accepted_orders': accepted_orders,
-                'cancel_percentage': round(cancelled_orders / (cancelled_orders + accepted_orders) * 100, 2)
+                'cancel_percentage': cancel_percentage
             }
 
             # Combine all sales data in a single response
@@ -217,4 +222,14 @@ class SalesDataView(APIView):
 
             return Response(serialized_sales_data.data)
 
-        return Response([])
+        empty_summary = OrderedDict([
+            ('sales_by_period', {}),
+            ('items_sales_summary', []),
+            ('sales_by_hour_summary', []),
+            ('order_status', {})
+        ])
+
+        print("empty_summary", empty_summary)
+        serialized_empty_summary = SalesDataSerializer(empty_summary)
+
+        return Response(serialized_empty_summary)

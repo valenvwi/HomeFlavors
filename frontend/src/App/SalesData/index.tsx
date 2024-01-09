@@ -1,6 +1,6 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
-import { useSalesDataList } from "../../../api";
+import { salesDataList, useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
 import { ComponentPropsWithoutRef, useState } from "react";
 import SalesDateSelect from "./SalesDateSelect";
@@ -30,11 +30,25 @@ export default function SalesData() {
   const [startDate, setStartDate] = useState(todayString);
   const [endDate, setEndDate] = useState(todayString);
 
+  // Below lines are for testing purposes
+  // const tomorrow= new Date(today.setDate(today.getDate() + 1))
+  // const tomorrowString = tomorrow.toISOString().split("T")[0];
+  // const [startDate, setStartDate] = useState(tomorrowString);
+  // const [endDate, setEndDate] = useState(tomorrowString);
+
+  // const  salesDataResponse  = salesDataList({
+  //   start_date: startDate,
+  //   end_date: endDate,
+  // });
+
+  // console.log("salesDataResponse", salesDataResponse.result)
+
   const { data: salesDataResponse } = useSalesDataList({
     start_date: startDate,
     end_date: endDate,
   });
-  const salesByItem = salesDataResponse?.data?.itemsSalesSummary;
+
+  const salesByItem = salesDataResponse?.data.
   const salesByPeriod = salesDataResponse?.data?.salesByPeriod;
   const salesByHour = salesDataResponse?.data?.salesByHour;
   const orderStatus = salesDataResponse?.data?.orderStatus;
@@ -109,7 +123,7 @@ export default function SalesData() {
               subtitle={
                 orderStatus.cancelledOrders
                   ? orderStatus?.cancelPercentage + "%"
-                  : 0
+                  : "0"
               }
               orderStatus={orderStatus}
             />
