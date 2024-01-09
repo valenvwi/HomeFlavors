@@ -1,6 +1,6 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
-import { salesDataList, useSalesDataList } from "../../../api";
+import { useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
 import { ComponentPropsWithoutRef, useState } from "react";
 import SalesDateSelect from "./SalesDateSelect";
@@ -36,19 +36,12 @@ export default function SalesData() {
   // const [startDate, setStartDate] = useState(tomorrowString);
   // const [endDate, setEndDate] = useState(tomorrowString);
 
-  // const  salesDataResponse  = salesDataList({
-  //   start_date: startDate,
-  //   end_date: endDate,
-  // });
-
-  // console.log("salesDataResponse", salesDataResponse.result)
-
   const { data: salesDataResponse } = useSalesDataList({
     start_date: startDate,
     end_date: endDate,
   });
 
-  const salesByItem = salesDataResponse?.data.
+  const salesByItem = salesDataResponse?.data?.itemsSalesSummary;
   const salesByPeriod = salesDataResponse?.data?.salesByPeriod;
   const salesByHour = salesDataResponse?.data?.salesByHour;
   const orderStatus = salesDataResponse?.data?.orderStatus;

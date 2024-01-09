@@ -46,7 +46,7 @@ type Props = {
 
 export default function TopSalesCard(props: Props) {
   return (
-    <Grid md={3}>
+    <Grid item md={3}>
       <Card sx={cardStyle}>
         <Box
           component="img"

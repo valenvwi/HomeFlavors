@@ -29,6 +29,8 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 type Props = {
+  id: number;
+  image: string;
   name: string;
   quantity: number;
   revenue: string;
@@ -53,6 +55,7 @@ export default function SalesItemTable(props: { sales: Props }) {
           {props.sales.map((row) => (
             <StyledTableRow
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              key={row.id}
             >
               <TableCell
                 component="th"

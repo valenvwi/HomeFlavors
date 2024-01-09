@@ -36,12 +36,12 @@ type Props = {
     cancelledOrders: number;
     cancelOrders: number;
   };
-  data?: string;
+  data?: string | undefined;
 };
 
 export default function SalesCard(props: Props) {
   return (
-    <Grid md={3}>
+    <Grid item md={3}>
       <Card sx={cardStyle}>
         <Typography variant="subtitle1" style={fontTitleStyle}>
           {props.title}

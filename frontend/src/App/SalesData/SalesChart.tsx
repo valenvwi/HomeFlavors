@@ -9,9 +9,22 @@ type salesProps = {
   }[];
 };
 
-export default function SalesChart(props: { data: string; sales: salesProps }) {
+export default function SalesChart(props: {
+  data: string | undefined;
+  sales: salesProps;
+}) {
+  if (!props.sales) {
+    return null;
+  }
+
+  if (!props.data) {
+    return null;
+  }
+
   const dataType = props.data;
+
   const time = props.sales.map((r) => r.time);
+
   const data = props.sales.map((d) => parseFloat(d[dataType]));
 
   return (

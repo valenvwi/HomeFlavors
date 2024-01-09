@@ -1,4 +1,4 @@
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BASEURL } from "../../config";
@@ -86,7 +86,7 @@ export default function RightOrderDetailCard(props: Props) {
       </Paper>
 
       {props.order.orderItems?.map((orderItem) => (
-        <Box sx={orderItemBox}>
+        <Box sx={orderItemBox} key={orderItem.id}>
           <Box
             component="img"
             src={`${BASEURL}/${orderItem.menuItem.image}`}
