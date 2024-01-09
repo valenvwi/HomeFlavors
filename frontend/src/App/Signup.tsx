@@ -56,7 +56,7 @@ export default function Signup() {
         username: data.username,
       });
       dispatch(authActions.setIsLoggedIn(true));
-      dispatch(authActions.setCurrentUserId(response.data.user_id));
+      dispatch(authActions.setCurrentUserId(response.data.userId));
       dispatch(authActions.setNewUser(true));
       dispatch(authActions.setUsername(data.username));
       navigate("/");

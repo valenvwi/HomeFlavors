@@ -38,8 +38,10 @@ export default function MenuItemCard(props: {
   handleOpen: () => void;
   onSetMenuItemId: (id: number) => void;
   openDeleteDialog: () => void;
+  isEntering: boolean;
 }) {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -56,16 +58,6 @@ export default function MenuItemCard(props: {
     props.onSetMenuItem(props.menuItem);
   };
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const hoverAnimation = useSpring({
-    to: {
-      transform: isHovered ? "scale(1.1)" : "scale(1)",
-    },
-    config: { mass: 1, tension: 300, friction: 10 },
-  });
-
-  const navigate = useNavigate();
   const goToLogin = () => {
     navigate("/login");
   };
@@ -77,91 +69,95 @@ export default function MenuItemCard(props: {
     }, 0);
   };
 
+  const enterAnimation = useSpring({
+    opacity: props.isEntering ? 0 : 1,
+    transform: props.isEntering
+      ? "translate3d(0,20%,0)"
+      : "translate3d(0,0%,0)",
+    config: { duration: 100 },
+  });
+
   return (
-    <OrangePaper
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        my: 2,
-      }}
-    >
-      <img
-        src={`${BASEURL}/${props.menuItem.image}`}
-        alt={props.menuItem.name}
-        style={lgImgStyle}
-      />
-      <Box sx={boxStyle}>
-        <BoldTypography variant="subtitle1" sx={{ pr: 2 }}>
-          {props.menuItem.name}
-        </BoldTypography>
-        {props.menuItem.isVeg && (
-          <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
-        )}
-        {props.menuItem.isSpicy && (
-          <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
-        )}
-      </Box>
-      <GreyTypography variant="subtitle2" sx={{ mx: 1 }}>
-        {props.menuItem.description}
-      </GreyTypography>
-      <SpaceBetweenFlexBox
+    <animated.div style={enterAnimation}>
+      <OrangePaper
         sx={{
-          m: 1,
+          display: "flex",
+          flexDirection: "column",
+          my: 2,
         }}
       >
-        <BoldTypography variant="subtitle1">
-          CHF {props.menuItem.price}
-        </BoldTypography>
-        {props.isOwner ? (
-          <>
-            <CenterFlexBox>
-              <Button
-                style={{ backgroundColor: "#fff6f2" }}
-                onClick={setMenuItem}
-              >
-                <ModeEditIcon sx={{ fontSize: "32px" }} />
-              </Button>
-              <Button
-                style={{ backgroundColor: "#fff6f2", color: "#EA5C2B" }}
-                onClick={onDeleteMenuItem}
-              >
-                <DeleteIcon sx={{ fontSize: "32px" }} />
-              </Button>
-            </CenterFlexBox>
-          </>
-        ) : props.menuItem.isAvailable ? (
-          !isLoggedIn ? (
+        <img
+          src={`${BASEURL}/${props.menuItem.image}`}
+          alt={props.menuItem.name}
+          style={lgImgStyle}
+        />
+        <Box sx={boxStyle}>
+          <BoldTypography variant="subtitle1" sx={{ pr: 2 }}>
+            {props.menuItem.name}
+          </BoldTypography>
+          {props.menuItem.isVeg && (
+            <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
+          )}
+          {props.menuItem.isSpicy && (
+            <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
+          )}
+        </Box>
+        <GreyTypography variant="subtitle2" sx={{ mx: 1 }}>
+          {props.menuItem.description}
+        </GreyTypography>
+        <SpaceBetweenFlexBox
+          sx={{
+            m: 1,
+          }}
+        >
+          <BoldTypography variant="subtitle1">
+            CHF {props.menuItem.price}
+          </BoldTypography>
+          {props.isOwner ? (
             <>
-              <animated.div
-                style={{ ...hoverAnimation }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
+              <CenterFlexBox>
+                <Button
+                  style={{ backgroundColor: "#fff6f2" }}
+                  onClick={setMenuItem}
+                >
+                  <ModeEditIcon sx={{ fontSize: "32px" }} />
+                </Button>
+                <Button
+                  style={{ backgroundColor: "#fff6f2", color: "#EA5C2B" }}
+                  onClick={onDeleteMenuItem}
+                >
+                  <DeleteIcon sx={{ fontSize: "32px" }} />
+                </Button>
+              </CenterFlexBox>
+            </>
+          ) : props.menuItem.isAvailable ? (
+            !isLoggedIn ? (
+              <>
                 <Button color="primary" onClick={props.handleOpen}>
                   <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
                 </Button>
-              </animated.div>
-              <Modal
-                open={props.open}
-                handleClose={props.handleClose}
-                icon="none"
-                message="Log in to add to cart"
-                confirmText="Log in"
-                handleConfirm={goToLogin}
-                subtext="Don't have an account?"
-                subtextButtonText="Sign up"
-                subtextAction={goToSignup}
-              />
-            </>
+                <Modal
+                  open={props.open}
+                  handleClose={props.handleClose}
+                  icon="none"
+                  message="Log in to add to cart"
+                  confirmText="Log in"
+                  handleConfirm={goToLogin}
+                  subtext="Don't have an account?"
+                  subtextButtonText="Sign up"
+                  subtextAction={goToSignup}
+                />
+              </>
+            ) : (
+              <Button color="primary" onClick={onAddToCart}>
+                <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+              </Button>
+            )
           ) : (
-            <Button color="primary" onClick={onAddToCart}>
-              <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-            </Button>
-          )
-        ) : (
-          <img src={soldOut} alt="Sold Out" width="75" height="75" />
-        )}
-      </SpaceBetweenFlexBox>
-    </OrangePaper>
+            <img src={soldOut} alt="Sold Out" width="75" height="75" />
+          )}
+        </SpaceBetweenFlexBox>
+      </OrangePaper>
+    </animated.div>
   );
 }

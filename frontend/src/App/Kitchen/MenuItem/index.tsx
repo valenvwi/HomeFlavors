@@ -35,6 +35,7 @@ export default function MenuItem() {
   const handleClose = () => setOpen(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessDeleteModal, setShowSuccessDeleteModal] = useState(false);
+  const [isEntering, setIsEntering] = useState(false);
   const isCreatedMenuItem = useAppSelector(
     (state) => state.modal.isCreatedMenuItem
   );
@@ -71,6 +72,10 @@ export default function MenuItem() {
 
   const handleCategoryChange = (category: string) => {
     setCategory(category);
+    setIsEntering(true);
+    setTimeout(() => {
+      setIsEntering(false);
+    }, 200);
   };
 
   const openDeleteDialog = () => {
@@ -176,6 +181,7 @@ export default function MenuItem() {
                 handleClose={handleClose}
                 onSetMenuItemId={onSetMenuItemId}
                 openDeleteDialog={openDeleteDialog}
+                isEntering={isEntering}
               />
             ) : (
               <MenuItemCard
@@ -188,6 +194,7 @@ export default function MenuItem() {
                 handleClose={handleClose}
                 onSetMenuItemId={onSetMenuItemId}
                 openDeleteDialog={openDeleteDialog}
+                isEntering={isEntering}
               />
             )
           )}
