@@ -1,17 +1,33 @@
 import { Link, useNavigate } from "react-router-dom";
 import { apiRegisterCreate, apiTokenCreate } from "../../api";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, TextField } from "@mui/material";
 import flyingPan from "../assets/frying-pan.png";
 import { useAppDispatch } from "./store/root";
 import { authActions } from "./store/auth";
+import { authLogoStyle } from "../components/imgStyle";
+import { BoldTypography, ContainedButton, GreyTypography } from "../components";
+
+const outerBoxStyle = {
+  margin: "100px auto 50px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+};
+
+const formBoxStyle = {
+  mt: 1,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+};
+
+const buttonStyle = {
+  mt: 3,
+  mb: 2,
+  width: "100%",
+  fontSize: "12px",
+};
 
 type SignupInputs = {
   username: string;
@@ -52,43 +68,20 @@ export default function Signup() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: "120px",
-          marginBottom: "120px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <img
-          src={flyingPan}
-          alt="flying pan"
-          width="100px"
-          height="100px"
-          color="orange"
-        />
+      <Box sx={outerBoxStyle}>
+        <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 
-        <Typography component="h1" variant="h5" fontWeight={700} sx={{ py: 2 }}>
+        <BoldTypography variant="h5" sx={{ py: 2 }}>
           Sign up
-        </Typography>
-        <Typography
-          component="h1"
-          variant="body2"
-          sx={{ color: "#8b8989", textAlign: "center" }}
-        >
+        </BoldTypography>
+        <GreyTypography variant="body2" sx={{ textAlign: "center" }}>
           Please enter your detail below
-        </Typography>
+        </GreyTypography>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          sx={{
-            mt: 1,
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
+          sx={formBoxStyle}
         >
           <TextField
             {...register("username", {
@@ -106,7 +99,6 @@ export default function Signup() {
             label="Username"
             autoComplete="username"
             autoFocus
-            fullWidth
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
           />
@@ -183,7 +175,6 @@ export default function Signup() {
             id="email"
             label="Email"
             autoComplete="email"
-            autoFocus
             error={!!errors.email}
             helperText={errors.email && errors.email.message}
           />
@@ -203,14 +194,9 @@ export default function Signup() {
             error={!!errors.phoneNumber}
             helperText={errors.phoneNumber && errors.phoneNumber.message}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, width: "100%", fontSize: "12px" }}
-          >
+          <ContainedButton type="submit" sx={buttonStyle}>
             Sign up
-          </Button>
+          </ContainedButton>
           <Grid container>
             <Grid item sx={{ fontSize: "12px" }}>
               <Link to="/login">{"Already have an account? Log in"}</Link>

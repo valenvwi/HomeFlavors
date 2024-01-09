@@ -5,7 +5,6 @@ import { useAppDispatch } from "./store/root";
 import { authActions } from "./store/auth";
 import {
   Box,
-  Button,
   Container,
   Grid,
   TextField,
@@ -14,6 +13,36 @@ import {
 import { useState } from "react";
 import { isAxiosError } from "axios";
 import flyingPan from "../assets/frying-pan.png";
+import { BoldTypography, ContainedButton, GreyTypography } from "../components";
+import { authLogoStyle } from "../components/imgStyle";
+
+
+const outerBoxStyle = {
+  marginTop: "130px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+};
+
+const formBoxStyle = {
+  mt: 1,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+};
+
+const buttonStyle = {
+  mt: 3,
+  mb: 2,
+  width: "100%",
+  fontSize: "12px",
+};
+
+const errorMsgStyle = {
+  color: "#d32f2f",
+  fontFamily: "Helvetica",
+  fontWeight: 500,
+};
 
 type LoginInputs = {
   username: string;
@@ -50,42 +79,20 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: "130px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <img
-          src={flyingPan}
-          alt="flying pan"
-          width="100px"
-          height="100px"
-          color="orange"
-        />
+      <Box sx={outerBoxStyle}>
+        <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 
-        <Typography component="h1" variant="h5" fontWeight={700} sx={{ py: 2 }}>
+        <BoldTypography variant="h5" sx={{ py: 2 }}>
           Welcome back
-        </Typography>
-        <Typography
-          component="h1"
-          variant="body2"
-          sx={{ color: "#8b8989", textAlign: "center" }}
-        >
+        </BoldTypography>
+        <GreyTypography variant="body2" sx={{ textAlign: "center" }}>
           We are happy to see you again!
-        </Typography>
+        </GreyTypography>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          sx={{
-            mt: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+          sx={formBoxStyle}
         >
           <TextField
             {...register("username", { required: "Username is required" })}
@@ -107,22 +114,13 @@ export default function Login() {
           />
 
           {invalidCredentials && (
-            <Typography
-              variant="subtitle2"
-              color="#d32f2f"
-              fontFamily="Helvetica"
-              fontWeight={500}
-            >
+            <Typography variant="subtitle2" sx={errorMsgStyle}>
               Incorrect username/ password
             </Typography>
           )}
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ mt: 3, mb: 2, width: "100%", fontSize: "12px" }}
-          >
+          <ContainedButton type="submit" sx={buttonStyle}>
             Log In
-          </Button>
+          </ContainedButton>
           <Grid container>
             <Grid item sx={{ fontSize: "12px" }}>
               <Link to="/signup">{"Don't have an account? Sign Up"}</Link>

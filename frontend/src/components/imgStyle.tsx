@@ -23,3 +23,9 @@ export const lgImgStyle = {
   aspectRatio: "1",
   margin: "0 auto",
 } as const;
+
+export const authLogoStyle = {
+  width: "100px",
+  height: "100px",
+  color: "orange",
+} as const;
