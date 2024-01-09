@@ -82,6 +82,21 @@ export const SpaceBetweenFlexBox = ({
   />
 );
 
+export const SpaceAroundFlexBox = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Box>) => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      ...sx,
+    }}
+    {...rest}
+  />
+);
+
 export const ResponsiveGrid = (
   props: ComponentPropsWithoutRef<typeof Grid>
 ) => <Grid item xs={12} sm={6} {...props} />;

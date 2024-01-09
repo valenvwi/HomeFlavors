@@ -97,9 +97,12 @@ export default function Cart() {
                   CHF <b>{totalPrice.toFixed(2)}</b>
                 </Typography>
               </Box>
-              <ContainedButton sx={{ m: 1 }} onClick={goToCheckoutPage}>
-                Check out
-              </ContainedButton>
+              <Box>
+                <ContainedButton onClick={goToMenuPage}>Back</ContainedButton>
+                <ContainedButton sx={{ m: 1 }} onClick={goToCheckoutPage}>
+                  Check out
+                </ContainedButton>
+              </Box>
             </Box>
           </Box>
         </>
@@ -108,12 +111,12 @@ export default function Cart() {
           <BoldTypography variant={style.fontVariant} sx={style.fontStyle}>
             Total Price: CHF {totalPrice.toFixed(2)}
           </BoldTypography>
-          <ContainedButton
-            sx={{ mx: 1, alignSelf: "end" }}
-            onClick={goToCheckoutPage}
-          >
-            Check out
-          </ContainedButton>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <ContainedButton onClick={goToMenuPage}>Back</ContainedButton>
+            <ContainedButton sx={{ mx: 1 }} onClick={goToCheckoutPage}>
+              Check out
+            </ContainedButton>
+          </Box>
         </>
       )}
     </Container>

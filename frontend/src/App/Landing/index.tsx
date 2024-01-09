@@ -13,6 +13,9 @@ import BannerSection from "./BannerSection";
 import { useKitchensRetrieve } from "../../../api";
 import ReviewCard from "./ReviewCard";
 import { reviews } from "../Utils/constants";
+import Carousel from "react-material-ui-carousel";
+import { CenterFlexBox } from "../../components";
+import OurValue from "./OurValue";
 
 const fontTitle = {
   fontStyle: "normal",
@@ -32,6 +35,14 @@ const fontSmallTitle = {
   my: 2,
 };
 
+const splitArrayTwoByTwo = <T,>(array: T[]) => {
+  const result = [];
+  for (let i = 0; i < array.length; i += 2) {
+    result.push(array.slice(i, i + 2));
+  }
+  return result;
+};
+
 export default function Landing() {
   const { data: kitchenResponse } = useKitchensRetrieve(1);
   const kitchen = kitchenResponse?.data;
@@ -43,7 +54,7 @@ export default function Landing() {
     <Container sx={{ mt: 5 }}>
       {kitchen && <BannerSection kitchen={kitchen} />}
 
-      {isSmallScreen && <Divider />}
+      <Divider />
 
       <Box sx={{ my: 5 }}>
         <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
@@ -58,18 +69,44 @@ export default function Landing() {
         </Grid>
       </Box>
 
-      {isSmallScreen && <Divider />}
+      <Divider />
+
+      <Box sx={{ my: 5 }}>
+        <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
+          Our Values
+        </Typography>
+        <OurValue />
+      </Box>
+
+      <Divider />
 
       <Box sx={{ py: 2 }}>
         <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
           Customer Reviews
         </Typography>
-        <Grid container spacing={2}>
-          {reviews.map((review) => (
-            <Grid item xs={12} sm={6} md={3} key={review.reviewer}>
-              <ReviewCard review={review} />
-            </Grid>
-          ))}
+        <Grid container spacing={1}>
+          {isSmallScreen ? (
+            <Carousel sx={{ margin: "20px auto", width: "100%" }}>
+              {reviews.map((review) => (
+                <Grid item xs={12} key={review.reviewer}>
+                  <ReviewCard review={review} />
+                </Grid>
+              ))}
+            </Carousel>
+          ) : (
+            <Carousel swipe sx={{ margin: "20px auto", width: "100%" }}>
+              {splitArrayTwoByTwo(reviews).map(([review1, review2]) => (
+                <CenterFlexBox key={review1.reviewer}>
+                  <Grid item xs={12} sm={5}>
+                    <ReviewCard review={review1} />
+                  </Grid>
+                  <Grid item xs={12} sm={5}>
+                    <ReviewCard review={review2} />
+                  </Grid>
+                </CenterFlexBox>
+              ))}
+            </Carousel>
+          )}
         </Grid>
       </Box>
     </Container>
