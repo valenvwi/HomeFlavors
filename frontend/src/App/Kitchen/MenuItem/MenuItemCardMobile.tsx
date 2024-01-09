@@ -92,7 +92,7 @@ export default function MenuItemCard(props: {
           style={lgImgStyle}
         />
         <Box sx={boxStyle}>
-          <BoldTypography variant="subtitle1" sx={{ pr: 2 }}>
+          <BoldTypography variant="subtitle1" sx={{ pr: 1 }}>
             {props.menuItem.name}
           </BoldTypography>
           {props.menuItem.isVeg && (
@@ -102,7 +102,7 @@ export default function MenuItemCard(props: {
             <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
           )}
         </Box>
-        <GreyTypography variant="subtitle2" sx={{ mx: 1 }}>
+        <GreyTypography variant="body2" sx={{ mx: 1 }}>
           {props.menuItem.description}
         </GreyTypography>
         <SpaceBetweenFlexBox

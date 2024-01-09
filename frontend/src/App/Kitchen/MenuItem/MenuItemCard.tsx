@@ -18,9 +18,9 @@ import {
   OrangePaper,
   PrimaryIconButton,
 } from "../../../components";
-import { lgImgStyle } from "../../../components/imgStyle";
+import { mdImgStyle } from "../../../components/imgStyle";
 import { useSpring, animated } from "@react-spring/web";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -74,31 +74,30 @@ export default function MenuItemCard(props: {
       <OrangePaper
         sx={{
           display: "flex",
-          my: 2,
-          mx: 4,
+          m: 2,
         }}
       >
         <img
           src={`${BASEURL}/${props.menuItem.image}`}
           alt={props.menuItem.name}
-          style={lgImgStyle}
+          style={mdImgStyle}
         />
-        <Box sx={{ flexGrow: 1, mx: 3, my: 2 }}>
+        <Box sx={{ flexGrow: 1, ml: 2, my: 2 }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <BoldTypography variant="h6" sx={{ pr: 2 }}>
+            <BoldTypography variant="body1" sx={{ pr: 1 }}>
               {props.menuItem.name}
             </BoldTypography>
             {props.menuItem.isVeg && (
-              <img src={vegIcon} alt="Vegetarian icon" width="25" height="25" />
+              <img src={vegIcon} alt="Vegetarian icon" width="20" height="20" />
             )}
             {props.menuItem.isSpicy && (
-              <img src={spicyIcon} alt="Spicy icon" width="35" height="35" />
+              <img src={spicyIcon} alt="Spicy icon" width="25" height="25" />
             )}
           </Box>
-          <GreyTypography variant="body1">
+          <GreyTypography variant="body2">
             {props.menuItem.description}
           </GreyTypography>
-          <BoldTypography variant="h6">
+          <BoldTypography variant="subtitle2">
             CHF {props.menuItem.price}
           </BoldTypography>
         </Box>
@@ -108,13 +107,13 @@ export default function MenuItemCard(props: {
               style={{ backgroundColor: "#fff6f2" }}
               onClick={setMenuItem}
             >
-              <ModeEditIcon sx={{ fontSize: "40px" }} />
+              <ModeEditIcon sx={{ fontSize: "36px" }} />
             </Button>
             <Button
               style={{ backgroundColor: "#fff6f2", color: "primary" }}
               onClick={onDeleteMenuItem}
             >
-              <DeleteIcon sx={{ fontSize: "40px", color: "primary" }} />
+              <DeleteIcon sx={{ fontSize: "36px", color: "primary" }} />
             </Button>
           </>
         ) : props.menuItem.isAvailable ? (
@@ -138,7 +137,7 @@ export default function MenuItemCard(props: {
           ) : (
             <CenterFlexBox>
               <PrimaryIconButton onClick={onAddToCart}>
-                <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
+                <AddCircleOutlineIcon sx={{ fontSize: "36px" }} />
               </PrimaryIconButton>
             </CenterFlexBox>
           )
@@ -146,9 +145,9 @@ export default function MenuItemCard(props: {
           <img
             src={soldOut}
             alt="Sold Out"
-            width="100"
-            height="100"
-            style={{ margin: "auto" }}
+            width="80"
+            height="80"
+            style={{ margin: "auto"}}
           />
         )}
       </OrangePaper>

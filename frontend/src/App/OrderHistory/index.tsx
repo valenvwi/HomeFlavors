@@ -59,8 +59,8 @@ export default function OrderHistory() {
     dispatch(modalActions.setOpenCancelledDialog(false));
   };
 
-  const goToHomePage = () => {
-    navigate("/");
+  const goToMenuPage = () => {
+    navigate("/menu");
   };
 
   const openCancelOrderDialog = (orderId: number) => {
@@ -113,7 +113,7 @@ export default function OrderHistory() {
         >
           <img src={noOrder} alt="Sold Out" width="250" />
           <BoldTypography variant="h5">No orders yet</BoldTypography>
-          <ContainedButton sx={{ my: 3 }} onClick={goToHomePage}>
+          <ContainedButton sx={{ my: 3 }} onClick={goToMenuPage}>
             Shop now
           </ContainedButton>
         </CenterFlexBox>

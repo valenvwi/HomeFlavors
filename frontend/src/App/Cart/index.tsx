@@ -65,8 +65,8 @@ export default function Cart() {
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
 
-  const goToHomePage = () => {
-    navigate("/");
+  const goToMenuPage = () => {
+    navigate("/menu");
   };
 
   const goToCheckoutPage = () => {
@@ -122,7 +122,7 @@ export default function Cart() {
       <Box sx={emptyCartBoxStyle}>
         <img src={emptyCart} alt="empty shopping cart" width="250" />
         <BoldTypography variant="h5">Your cart is empty</BoldTypography>
-        <ContainedButton sx={{ my: 3 }} onClick={goToHomePage}>
+        <ContainedButton sx={{ my: 3 }} onClick={goToMenuPage}>
           Shop now
         </ContainedButton>
       </Box>

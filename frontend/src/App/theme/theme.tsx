@@ -25,17 +25,24 @@ export const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      defaultProps: {
+        sx: {
+          textTransform: "none",
+        },
+      },
+    },
     MuiSelect: {
       defaultProps: {
         size: "small",
-        defaultValue:{
+        defaultValue: {
           style: { fontSize: "14px" },
         },
-        sx:{
+        sx: {
           fontSize: "14px",
         },
-        },
       },
+    },
     MuiMenuItem: {
       styleOverrides: {
         root: {

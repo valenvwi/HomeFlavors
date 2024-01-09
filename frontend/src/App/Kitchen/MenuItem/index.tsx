@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Container,
+  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -169,35 +170,39 @@ export default function MenuItem() {
           ) : (
             <Tabbar handleCategoryChange={handleCategoryChange} />
           )}
-          {menuItems?.map((item) =>
-            isSmallScreen ? (
-              <MenuItemCardMobile
-                menuItem={item}
-                key={item.id}
-                isOwner={isOwner}
-                onSetMenuItem={onSetMenuItem}
-                open={open}
-                handleOpen={handleOpen}
-                handleClose={handleClose}
-                onSetMenuItemId={onSetMenuItemId}
-                openDeleteDialog={openDeleteDialog}
-                isEntering={isEntering}
-              />
-            ) : (
-              <MenuItemCard
-                menuItem={item}
-                key={item.id}
-                isOwner={isOwner}
-                onSetMenuItem={onSetMenuItem}
-                open={open}
-                handleOpen={handleOpen}
-                handleClose={handleClose}
-                onSetMenuItemId={onSetMenuItemId}
-                openDeleteDialog={openDeleteDialog}
-                isEntering={isEntering}
-              />
-            )
-          )}
+          <Grid container>
+            {menuItems?.map((item) =>
+              isSmallScreen ? (
+                <MenuItemCardMobile
+                  menuItem={item}
+                  key={item.id}
+                  isOwner={isOwner}
+                  onSetMenuItem={onSetMenuItem}
+                  open={open}
+                  handleOpen={handleOpen}
+                  handleClose={handleClose}
+                  onSetMenuItemId={onSetMenuItemId}
+                  openDeleteDialog={openDeleteDialog}
+                  isEntering={isEntering}
+                />
+              ) : (
+                <Grid item sm={12} md={6}>
+                  <MenuItemCard
+                    menuItem={item}
+                    key={item.id}
+                    isOwner={isOwner}
+                    onSetMenuItem={onSetMenuItem}
+                    open={open}
+                    handleOpen={handleOpen}
+                    handleClose={handleClose}
+                    onSetMenuItemId={onSetMenuItemId}
+                    openDeleteDialog={openDeleteDialog}
+                    isEntering={isEntering}
+                  />
+                </Grid>
+              )
+            )}
+          </Grid>
         </>
       )}
     </Container>

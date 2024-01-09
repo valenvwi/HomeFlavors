@@ -11,6 +11,7 @@ export const mdImgStyle = {
   width: "100px",
   height: "100px",
   borderRadius: "10px",
+  aspectRatio: "1",
   margin: "10px 0px",
   objectFit: "cover",
 } as const;

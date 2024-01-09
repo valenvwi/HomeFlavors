@@ -13,6 +13,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { useAppSelector } from "../store/root";
 import { useNavigate } from "react-router-dom";
 import { apiLogoutCreate } from "../../../api";
@@ -27,6 +28,11 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
 
   const goToLoginPage = () => {
     navigate("/login");
+    props.handleDrawerToggle();
+  };
+
+  const goToMenuPage = () => {
+    navigate("/menu");
     props.handleDrawerToggle();
   };
 
@@ -92,6 +98,14 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
             </>
           ) : (
             <>
+              <ListItem disablePadding>
+                <ListItemButton onClick={goToMenuPage}>
+                  <ListItemIcon>
+                    <MenuBookIcon />
+                  </ListItemIcon>
+                  <ListItemText>Menu</ListItemText>
+                </ListItemButton>
+              </ListItem>
               <ListItem disablePadding>
                 <ListItemButton onClick={goToCartPage}>
                   <ListItemIcon>

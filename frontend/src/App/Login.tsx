@@ -3,19 +3,12 @@ import { apiTokenCreate } from "../../api/index";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "./store/root";
 import { authActions } from "./store/auth";
-import {
-  Box,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { isAxiosError } from "axios";
 import flyingPan from "../assets/frying-pan.png";
 import { BoldTypography, ContainedButton, GreyTypography } from "../components";
 import { authLogoStyle } from "../components/imgStyle";
-
 
 const outerBoxStyle = {
   marginTop: "130px",
@@ -67,7 +60,7 @@ export default function Login() {
       dispatch(authActions.setIsOwner(response.data.isOwner));
       dispatch(authActions.setJustLoggedIn(true));
       dispatch(authActions.setUsername(data.username));
-      navigate("/");
+      navigate("/menu");
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 401) {
         setInvalidCredentials(true);

@@ -2,7 +2,6 @@ import {
   AppBar,
   Badge,
   Box,
-  Button,
   CssBaseline,
   Drawer,
   IconButton,
@@ -18,6 +17,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { useAppSelector } from "../store/root";
 import { Link, useNavigate } from "react-router-dom";
 import { apiLogoutCreate, useOrdersList } from "../../../api";
@@ -64,6 +64,10 @@ export default function AppNavBar() {
 
   const goToLoginPage = () => {
     navigate("/login");
+  };
+
+  const goToMenuPage = () => {
+    navigate("/menu");
   };
 
   const goToCartPage = () => {
@@ -155,6 +159,9 @@ export default function AppNavBar() {
             )}
             {isLoggedIn && !isOwner && (
               <>
+                <InheritButton onClick={goToMenuPage}>
+                  <MenuBookIcon />
+                </InheritButton>
                 <InheritButton onClick={goToCartPage}>
                   <animated.div style={cartAnimation}>
                     <Badge badgeContent={totalQuantity} color="primary">

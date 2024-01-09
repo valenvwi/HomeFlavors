@@ -59,7 +59,7 @@ export default function Signup() {
       dispatch(authActions.setCurrentUserId(response.data.userId));
       dispatch(authActions.setNewUser(true));
       dispatch(authActions.setUsername(data.username));
-      navigate("/");
+      navigate("/menu");
     } catch (error) {
       console.log(error);
       throw error;

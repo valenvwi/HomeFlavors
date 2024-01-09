@@ -12,6 +12,7 @@ import Checkout from "./Checkout";
 import PendingOrders from "./PendingOrders";
 import SalesData from "./SalesData";
 import useAuth from "./Utils/useAuth";
+import Landing from "./Landing";
 
 axios.defaults.withCredentials = true;
 
@@ -27,7 +28,8 @@ function App() {
         <div>Checking user...</div>
       ) : (
         <Routes>
-          <Route path="/" element={<Kitchen />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/menu" element={<Kitchen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
