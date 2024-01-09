@@ -5,6 +5,7 @@ import Menu from "./Menu";
 import { CssBaseline } from "@mui/material";
 import axios from "axios";
 import AppNavBar from "./UI/AppNavBar";
+import Footer from "./UI/Footer";
 import Cart from "./Cart";
 import "./App.css";
 import OrderHistory from "./OrderHistory";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/salesData" element={<SalesData />} />
         </Routes>
       )}
+      <Footer />
     </>
   );
 }
