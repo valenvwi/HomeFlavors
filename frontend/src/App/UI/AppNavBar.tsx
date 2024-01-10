@@ -103,6 +103,7 @@ export default function AppNavBar() {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
     navigate("/login");
+    window.scrollTo(0, 0);
   };
 
   const cartAnimation = useSpring({

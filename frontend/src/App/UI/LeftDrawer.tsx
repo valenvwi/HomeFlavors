@@ -60,6 +60,7 @@ export const LeftDrawer = (props: { handleDrawerToggle: () => void }) => {
     apiLogoutCreate();
     dispatch(authActions.setIsLoggedIn(false));
     navigate("/login");
+    window.scrollTo(0, 0);
     props.handleDrawerToggle();
   };
 

@@ -81,11 +81,10 @@ export default function AddMenuItem(props: {
       }
     });
 
-    console.log(formData);
-
     await menuItemsCreate(formData);
     refetch();
     props.ontoggleAddMenuItem();
+    window.scrollTo(0, 0);
     dispatch(modalActions.setIsCreatedMenuItem(true));
   };
   return (

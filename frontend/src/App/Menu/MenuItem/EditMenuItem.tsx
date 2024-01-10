@@ -84,6 +84,7 @@ export default function EditMenuItem(props: {
       await menuItemsPartialUpdate(props.menuItem.id, formData);
       refetch();
       props.onCancelEdit();
+      window.scrollTo(0, 0);
       dispatch(modalActions.setIsEditedMenuItem(true));
     } catch (error) {
       console.error("Error:", error);
