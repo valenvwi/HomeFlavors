@@ -45,7 +45,7 @@ Docker, Vite
 
 <img src="https://github.com/valenvwi/HomeFlavors/assets/119674688/2eb6f1a6-cefe-4bac-84bb-e054f9bc0e18" height=450> 
 
-<br /> 
+
 ## Demo viedo (As a business owner)
 
 
