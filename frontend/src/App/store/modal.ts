@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const modalSlice = createSlice({
   name: "modal",
   initialState: {
+    isCheckingout: false,
     isCheckedout: false,
     openCancelledDialog: false,
     isCancelled: false,
@@ -10,6 +11,9 @@ const modalSlice = createSlice({
     isEditedMenuItem: false,
   },
   reducers: {
+    setIsCheckingout(state, action) {
+      state.isCheckingout = action.payload;
+    },
     setIsCheckedout(state, action) {
       state.isCheckedout = action.payload;
     },

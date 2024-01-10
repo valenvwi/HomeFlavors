@@ -1,8 +1,15 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { BoldTypography, GreyTypography, OrangePaper } from "../../components";
-import { mdImgStyle, smImgStyle } from "../../components/imgStyle";
-import vegIcon from "../../assets/veg.png";
-import spicyIcon from "../../assets/spicy.png";
+import { mdImgStyle } from "../../components/imgStyle";
+
+const smImgStyle = {
+  width: "80px",
+  height: "80px",
+  borderRadius: "10px",
+  margin: "10px 0px",
+  objectFit: "cover",
+  flexShrink: 0,
+} as const;
 
 type Props = {
   menuItem: {
@@ -22,7 +29,9 @@ export default function FeatureMenuItem(props: Props) {
     <OrangePaper
       sx={{
         display: "flex",
-        m: 2,
+        alignItems: "center",
+        my: 1,
+        px: 1,
       }}
     >
       <img
@@ -30,7 +39,7 @@ export default function FeatureMenuItem(props: Props) {
         alt={props.menuItem.name}
         style={isSmallScreen ? smImgStyle : mdImgStyle}
       />
-      <Box sx={{ flexGrow: 1, ml: 2, my: 2 }}>
+      <Box sx={{ flexGrow: 1, ml: 2, my: 1 }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <BoldTypography
             variant={isSmallScreen ? "subtitle2" : "body1"}
@@ -38,12 +47,6 @@ export default function FeatureMenuItem(props: Props) {
           >
             {props.menuItem.name}
           </BoldTypography>
-          {props.menuItem.isVeg && (
-            <img src={vegIcon} alt="Vegetarian icon" width="20" height="20" />
-          )}
-          {props.menuItem.isSpicy && (
-            <img src={spicyIcon} alt="Spicy icon" width="25" height="25" />
-          )}
         </Box>
         <GreyTypography variant="body2">
           {props.menuItem.description}

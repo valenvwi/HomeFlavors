@@ -26,6 +26,7 @@ const imgStyle = {
 export default function CartItem() {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
+  
   return (
     <Paper
       elevation={0}

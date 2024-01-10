@@ -2,10 +2,12 @@ import {
   AppBar,
   Badge,
   Box,
+  Button,
   CssBaseline,
   Drawer,
   IconButton,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -19,7 +21,7 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { useAppSelector } from "../store/root";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiLogoutCreate, useOrdersList } from "../../../api";
 import { authActions } from "../store/auth";
 import { cartActions } from "../store/cart";
@@ -62,28 +64,39 @@ export default function AppNavBar() {
     setMobileOpen(!mobileOpen);
   };
 
+  const goToHomePage = () => {
+    navigate("/");
+    window.scrollTo(0, 0);
+  };
+
   const goToLoginPage = () => {
     navigate("/login");
+    window.scrollTo(0, 0);
   };
 
   const goToMenuPage = () => {
     navigate("/menu");
+    window.scrollTo(0, 0);
   };
 
   const goToCartPage = () => {
     navigate("/cart");
+    window.scrollTo(0, 0);
   };
 
   const goToOrderHistoryPage = () => {
     navigate("/orderHistory");
+    window.scrollTo(0, 0);
   };
 
   const goToPendingOrderPage = () => {
     navigate("/pendingOrders");
+    window.scrollTo(0, 0);
   };
 
   const goToSalesDataPage = () => {
     navigate("/salesData");
+    window.scrollTo(0, 0);
   };
 
   const logout = () => {
@@ -130,7 +143,7 @@ export default function AppNavBar() {
                 <MenuIcon />
               </IconButton>
             )}
-            <Link to="/" style={logoLinkStyle}>
+            <Button style={logoLinkStyle} onClick={goToHomePage}>
               <Typography
                 variant="h6"
                 noWrap
@@ -139,50 +152,68 @@ export default function AppNavBar() {
               >
                 Home Flavors
               </Typography>
-            </Link>
+            </Button>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {isLoggedIn && isOwner && (
               <>
                 <InheritButton onClick={goToMenuPage}>
-                  <MenuBookIcon />
+                  <Tooltip title="Menu">
+                    <MenuBookIcon />
+                  </Tooltip>
                 </InheritButton>
                 <InheritButton onClick={goToPendingOrderPage}>
-                  <Badge badgeContent={notificationCount} color="primary">
-                    <NotificationsIcon />
-                  </Badge>
+                  <Tooltip title="Notifications">
+                    <Badge badgeContent={notificationCount} color="primary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </Tooltip>
                 </InheritButton>
                 <InheritButton onClick={goToSalesDataPage}>
-                  <LeaderboardIcon />
+                  <Tooltip title="Report">
+                    <LeaderboardIcon />
+                  </Tooltip>
                 </InheritButton>
                 <InheritButton onClick={logout}>
-                  <LogoutIcon />
+                  <Tooltip title="Log out">
+                    <LogoutIcon />
+                  </Tooltip>
                 </InheritButton>
               </>
             )}
             {isLoggedIn && !isOwner && (
               <>
                 <InheritButton onClick={goToMenuPage}>
-                  <MenuBookIcon />
+                  <Tooltip title="Menu">
+                    <MenuBookIcon />
+                  </Tooltip>
                 </InheritButton>
                 <InheritButton onClick={goToCartPage}>
-                  <animated.div style={cartAnimation}>
-                    <Badge badgeContent={totalQuantity} color="primary">
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </animated.div>
+                  <Tooltip title="Shopping cart">
+                    <animated.div style={cartAnimation}>
+                      <Badge badgeContent={totalQuantity} color="primary">
+                        <ShoppingCartIcon />
+                      </Badge>
+                    </animated.div>
+                  </Tooltip>
                 </InheritButton>
                 <InheritButton onClick={goToOrderHistoryPage}>
-                  <HistoryIcon />
+                  <Tooltip title="Order history">
+                    <HistoryIcon />
+                  </Tooltip>
                 </InheritButton>
                 <InheritButton onClick={logout}>
-                  <LogoutIcon />
+                  <Tooltip title="Log out">
+                    <LogoutIcon />
+                  </Tooltip>
                 </InheritButton>
               </>
             )}
             {!isLoggedIn && (
               <InheritButton onClick={goToLoginPage}>
-                <LoginIcon />
+                <Tooltip title="Log in">
+                  <LoginIcon />
+                </Tooltip>
               </InheritButton>
             )}
           </Box>

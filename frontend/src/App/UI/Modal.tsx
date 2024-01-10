@@ -1,4 +1,10 @@
-import { Box, Button, Modal as MuiModal, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Modal as MuiModal,
+  Typography,
+} from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { useTheme, useMediaQuery } from "@mui/material";
@@ -34,11 +40,11 @@ const largeScreenStyle = { ...shareStyle, ...largeScreenWidth };
 export default function Modal(props: {
   open: boolean;
   handleConfirm?: () => void;
-  handleClose: () => void;
+  handleClose?: () => void;
   message: string;
   confirmText?: string;
   cancelText?: string;
-  icon: "success" | "alert" | "none";
+  icon: "success" | "alert" | "loading" | "none";
   subtext?: string;
   subtextButtonText?: string;
   subtextAction?: () => void;
@@ -62,6 +68,8 @@ export default function Modal(props: {
         {props.icon === "alert" && (
           <WarningAmberIcon sx={{ fontSize: 80, color: "orange", p: 1 }} />
         )}
+
+        {props.icon === "loading" && <CircularProgress sx={{ m: 3 }} />}
         <Typography
           id="modal-modal-title"
           variant={isSmallScreen ? "subtitle1" : "h6"}

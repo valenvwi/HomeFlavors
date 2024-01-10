@@ -60,6 +60,7 @@ export default function Signup() {
       dispatch(authActions.setNewUser(true));
       dispatch(authActions.setUsername(data.username));
       navigate("/menu");
+      window.scrollTo(0, 0);
     } catch (error) {
       console.log(error);
       throw error;
@@ -67,7 +68,7 @@ export default function Signup() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ flexGrow: 1 }}>
       <Box sx={outerBoxStyle}>
         <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 

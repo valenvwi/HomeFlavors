@@ -61,6 +61,7 @@ export default function Login() {
       dispatch(authActions.setJustLoggedIn(true));
       dispatch(authActions.setUsername(data.username));
       navigate("/menu");
+      window.scrollTo(0, 0);
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 401) {
         setInvalidCredentials(true);
@@ -71,7 +72,7 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ flexGrow: 1 }}>
       <Box sx={outerBoxStyle}>
         <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 

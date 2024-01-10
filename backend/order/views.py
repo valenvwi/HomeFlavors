@@ -126,22 +126,21 @@ class SalesDataView(APIView):
 
             # Sales by item in the period
             menu_items_totals = OrderItem.objects.filter(
-                order__pick_up_date__range=(start_date, end_date),
-                order__is_accepted=True,
-                order__is_cancelled=False
-            ).values(
-                'menu_item__id',  # Include the menuItem id
-                'menu_item__image',  # Include the menuItem image
-                'menu_item__name'
-            ).annotate(
-                total_quantity=Sum('quantity'),
-                total_revenue=ExpressionWrapper(
-                    F('quantity') * F('menu_item__price'),
-                    output_field=DecimalField(max_digits=10, decimal_places=2)
-                )
-            )
+            order__pick_up_date__range=(start_date, end_date),
+            order__is_accepted=True,
+            order__is_cancelled=False
+        ).values(
+            'menu_item__id', 'menu_item__image', 'menu_item__name'
+        ).annotate(
+            total_quantity=Sum('quantity'),
+            total_revenue=Sum(ExpressionWrapper(
+                F('quantity') * F('menu_item__price'),
+                output_field=DecimalField(max_digits=10, decimal_places=2)
+            ))
+        ).order_by('menu_item__id')  # Ensuring consistent ordering for debugging
 
             menu_items_summary = []
+
             for item_total in menu_items_totals:
                 menu_items_summary.append({
                     'id': item_total['menu_item__id'],

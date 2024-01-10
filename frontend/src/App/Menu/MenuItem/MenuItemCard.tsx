@@ -20,7 +20,6 @@ import {
 } from "../../../components";
 import { mdImgStyle } from "../../../components/imgStyle";
 import { useSpring, animated } from "@react-spring/web";
-import { useState } from "react";
 
 export default function MenuItemCard(props: {
   menuItem: MenuItemType;
@@ -36,7 +35,6 @@ export default function MenuItemCard(props: {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isHovered, setIsHovered] = useState(false);
 
   const onAddToCart = () => {
     dispatch(cartActions.addToCart(props.menuItem));
@@ -69,6 +67,7 @@ export default function MenuItemCard(props: {
       : "translate3d(0,0%,0)",
     config: { duration: 100 },
   });
+
   return (
     <animated.div style={enterAnimation}>
       <OrangePaper
@@ -147,7 +146,7 @@ export default function MenuItemCard(props: {
             alt="Sold Out"
             width="80"
             height="80"
-            style={{ margin: "auto"}}
+            style={{ margin: "auto" }}
           />
         )}
       </OrangePaper>

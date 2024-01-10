@@ -36,7 +36,7 @@ const pasta = {
 const creamStew = {
   name: "Japanese Cream Stew",
   description:
-    "A A rich and creamy stew with king mushrooms, carrots, broccoli, and zucchini",
+    "A rich and creamy stew with king mushrooms, carrots, broccoli, and zucchini",
   price: 19.5,
   image: creamStewImg,
   isVeg: false,
@@ -55,12 +55,13 @@ const review1 = {
   rating: 5,
   reviewer: "A new married wife",
 };
+
 const review2 = {
-  title: "Powerful food",
+  title: "Exquisite Flavors",
   description:
-    "This is my favorite place before killing the moster! I always feel powerful after eating here.",
+    "As a picker eater I haven't found any food here I can complain about.",
   rating: 5,
-  reviewer: "One punch man",
+  reviewer: "Picky Princess",
 };
 
 const review3 = {
@@ -72,11 +73,11 @@ const review3 = {
 };
 
 const review4 = {
-  title: "Exquisite Flavors",
+  title: "Powerful food",
   description:
-    "As a picker eater I haven't found any food here I can complain about.",
+    "This is my favorite place before killing the moster! I always feel powerful after eating here.",
   rating: 5,
-  reviewer: "Picky Princess",
+  reviewer: "One punch man",
 };
 
 export const reviews = [review1, review2, review3, review4];

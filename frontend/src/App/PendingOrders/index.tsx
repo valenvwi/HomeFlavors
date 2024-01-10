@@ -10,6 +10,7 @@ import RightOrderDetailCard from "./RightOrderDetailCard";
 const containerStyle = {
   pt: 5,
   display: "flex",
+  flexGrow: 1,
 };
 
 const outerBoxStyle = {
@@ -17,7 +18,6 @@ const outerBoxStyle = {
   flexDirection: "column",
   mt: 5,
   flexGrow: 1,
-  minHeight: "90vh",
 };
 
 const innerBoxStyle = {

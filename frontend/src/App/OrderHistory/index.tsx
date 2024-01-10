@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { ordersPartialUpdate, useOrdersList } from "../../../api";
 import OrderHistoryCard from "./OrderHistoryCard";
 import { modalActions } from "../store/modal";
@@ -16,9 +16,16 @@ import {
 const containerStyle = {
   mt: 5,
   py: 5,
-  minHeight: "90vh",
   display: "flex",
   flexDirection: "column",
+  flexGrow: 1,
+};
+
+const emptyCartBoxStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 export default function OrderHistory() {
@@ -104,19 +111,25 @@ export default function OrderHistory() {
         handleClose={handleClose}
         icon="alert"
       />
-      {orders?.length === 0 && (
-        <CenterFlexBox
+      {(orders?.length === 0 ||
+        (orders?.length !== 0 &&
+          acceptedOrders?.length === 0 &&
+          pendingOrders?.length === 0)) && (
+        <Container
           sx={{
+            display: "flex",
             flexDirection: "column",
-            flexGrow: "1",
+            justifyContent: "center",
+            flexGrow: 1,
+            alignItems: "center",
           }}
         >
           <img src={noOrder} alt="Sold Out" width="250" />
           <BoldTypography variant="h5">No orders yet</BoldTypography>
-          <ContainedButton sx={{ my: 3 }} onClick={goToMenuPage}>
+          <ContainedButton sx={{ mt: 3, mb: 2 }} onClick={goToMenuPage}>
             Shop now
           </ContainedButton>
-        </CenterFlexBox>
+        </Container>
       )}
 
       {pendingOrders !== undefined && pendingOrders?.length > 0 && (

@@ -18,6 +18,7 @@ import {
   StandardTextField,
   ContainedButton,
 } from "../../components";
+import Modal from "../UI/Modal";
 
 type OrderInputs = {
   name: string;
@@ -65,6 +66,7 @@ export default function CheckoutForm() {
   const maxDate = dayjs().add(30, "day");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const isCheckingout = useAppSelector((state) => state.modal.isCheckingout);
 
   const { data: usersResponse } = useUsersRetrieve(currentUserId || 0);
   const user = usersResponse?.data;
@@ -73,10 +75,12 @@ export default function CheckoutForm() {
 
   const goToOrderHistory = () => {
     navigate("/orderHistory");
+    window.scrollTo(0, 0);
   };
 
   const backToShoppingCart = () => {
     navigate("/cart");
+    window.scrollTo(0, 0);
   };
 
   const isTimeValid = (time: dayjs.Dayjs) => {
@@ -88,6 +92,8 @@ export default function CheckoutForm() {
   };
 
   const onSubmit: SubmitHandler<OrderInputs> = async (data) => {
+    dispatch(modalActions.setIsCheckingout(true));
+
     const orderData = {
       kitchen: "1",
       totalPrice: totalPrice.toString(),
@@ -105,6 +111,7 @@ export default function CheckoutForm() {
       createOrderItems(response.data.id);
     } catch (error) {
       console.log(error);
+      dispatch(modalActions.setIsCheckingout(false));
     }
   };
 
@@ -122,8 +129,10 @@ export default function CheckoutForm() {
       dispatch(cartActions.resetCart());
       dispatch(modalActions.setIsCheckedout(true));
       goToOrderHistory();
+      dispatch(modalActions.setIsCheckingout(false));
     } catch (error) {
       console.error("Error creating order items", error);
+      dispatch(modalActions.setIsCheckingout(false));
     }
   };
 
@@ -137,6 +146,14 @@ export default function CheckoutForm() {
         mt: { xs: 1, md: 5 },
       }}
     >
+      {isCheckingout && (
+        <Modal
+          open={isCheckingout}
+          message="Placing the order now..."
+          icon="loading"
+        />
+      )}
+
       <BoldTypography variant="h5" sx={{ m: 2 }}>
         Order information
       </BoldTypography>

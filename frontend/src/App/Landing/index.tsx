@@ -69,6 +69,7 @@ export default function Landing() {
         </Grid>
       </Box>
 
+      <br />
       <Divider />
 
       <Box sx={{ my: 5 }}>
@@ -78,6 +79,7 @@ export default function Landing() {
         <OurValue />
       </Box>
 
+      <br />
       <Divider />
 
       <Box sx={{ py: 2 }}>

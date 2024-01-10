@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert, AlertTitle, Container } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/root";
 import KitchenInfo from "./KitchenInfo";
 import MenuItem from "./MenuItem";
@@ -44,8 +44,10 @@ export default function Menu() {
           You have successfully signed up!
         </Alert>
       )}
-      <KitchenInfo />
-      <MenuItem />
+      <Container sx={{ flexGrow: 1, p: 0 }}>
+        <KitchenInfo />
+        <MenuItem />
+      </Container>
     </>
   );
 }

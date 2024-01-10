@@ -29,10 +29,12 @@ const containerStyle = {
   py: 5,
   display: "flex",
   flexDirection: "column",
-  minHeight: "98vh",
+  flexGrow: 1,
 };
 
 const containerWithEmptyCartStyle = {
+  mt: 5,
+  pt: 5,
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -67,10 +69,12 @@ export default function Cart() {
 
   const goToMenuPage = () => {
     navigate("/menu");
+    window.scrollTo(0, 0);
   };
 
   const goToCheckoutPage = () => {
     navigate("/checkout");
+    window.scrollTo(0, 0);
   };
 
   return cartItems.length > 0 ? (
@@ -125,7 +129,7 @@ export default function Cart() {
       <Box sx={emptyCartBoxStyle}>
         <img src={emptyCart} alt="empty shopping cart" width="250" />
         <BoldTypography variant="h5">Your cart is empty</BoldTypography>
-        <ContainedButton sx={{ my: 3 }} onClick={goToMenuPage}>
+        <ContainedButton sx={{ mt: 3, mb: 2 }} onClick={goToMenuPage}>
           Shop now
         </ContainedButton>
       </Box>

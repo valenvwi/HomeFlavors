@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
 import { useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
@@ -9,14 +9,19 @@ import gold from "../../assets/medals/gold.png";
 import silver from "../../assets/medals/silver.png";
 import bronze from "../../assets/medals/bronze.png";
 import noSalesDataPic from "../../assets/no_sales_data.png";
-import { BoldTypography, SpaceBetweenFlexBox } from "../../components";
+import {
+  BoldTypography,
+  CenterFlexBox,
+  SpaceBetweenFlexBox,
+} from "../../components";
 
 const flexColumnGrowStyle = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center",
   flexGrow: 1,
+  mt: 4,
+  py: 5,
 };
 
 const TitleTypography = (
@@ -51,7 +56,7 @@ export default function SalesData() {
     setEndDate(endDate);
   };
 
-  if (!salesDataResponse) {
+  if (salesByItem != undefined && salesByItem.length === 0) {
     return (
       <Container sx={flexColumnGrowStyle} maxWidth="xl">
         <SpaceBetweenFlexBox
@@ -66,12 +71,12 @@ export default function SalesData() {
           <SalesDateSelect onSetDate={onSetDate} />
         </SpaceBetweenFlexBox>
 
-        <Box sx={flexColumnGrowStyle}>
+        <CenterFlexBox sx={flexColumnGrowStyle}>
           <img src={noSalesDataPic} alt="No sales data" width="250" />
           <BoldTypography variant="h5">
             No sales data available yet
           </BoldTypography>
-        </Box>
+        </CenterFlexBox>
       </Container>
     );
   }
@@ -126,7 +131,7 @@ export default function SalesData() {
 
       <TitleTypography>Top 3 Sales</TitleTypography>
 
-      {salesByItem && (
+      {salesByItem != undefined && salesByItem.length > 0 && (
         <Grid container sx={{ my: 3 }}>
           <TopSalesCard
             name={salesByItem[0].name}

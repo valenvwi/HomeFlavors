@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import {
   BoldTypography,
   ContainedButton,
@@ -123,14 +123,14 @@ export default function BannerSection(props: Props) {
             >
               <BoldTypography
                 variant={isMediumScreen ? "h5" : "h3"}
-                sx={{ my: 3 }}
+                sx={{ pb: 10 }}
               >
                 {props.kitchen?.name}
               </BoldTypography>
               <GreyTypography variant={isMediumScreen ? "body1" : "h5"}>
                 {props.kitchen?.description}
               </GreyTypography>
-              <ContainedButton onClick={goToMenuPage} sx={{ my: 5 }}>
+              <ContainedButton onClick={goToMenuPage} sx={{ my: 3 }}>
                 Check out our menu
               </ContainedButton>
             </Box>
@@ -141,8 +141,8 @@ export default function BannerSection(props: Props) {
               src={spicySoup}
               alt="landing"
               style={{
-                width: isMediumScreen ? "200px" : "300px",
-                height: isMediumScreen ? "200px" : "300px",
+                width: isMediumScreen ? "200px" : "260px",
+                height: isMediumScreen ? "200px" : "260px",
                 borderRadius: "50%",
                 objectFit: "cover",
                 marginRight: "20px",

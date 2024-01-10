@@ -55,7 +55,7 @@ export default function SalesItemTable(props: { sales: Props }) {
           {props.sales.map((row) => (
             <StyledTableRow
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              key={row.id}
+              key={`item`+ row.id}
             >
               <TableCell
                 component="th"
