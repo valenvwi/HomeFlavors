@@ -24,11 +24,7 @@ export default function Footer() {
               About Us
             </Typography>
             <Typography variant="body2" color="white">
-              This website is created by Wai Ian Vong on Jan 2024.
-            </Typography>
-            <Typography variant="body2" color="white">
-              Check out the GitHub repository for this project{" "}
-              <Link to="https://github.com/valenvwi/HomeFlavors">here.</Link>
+              Disclaimer: This website is created for demo purpose only
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -43,16 +39,6 @@ export default function Footer() {
             </Typography>
           </Grid>
         </Grid>
-        <Box mt={3}>
-          <Typography variant="body2" color="white" align="center">
-            {"Copyright © "}
-            <Link color="inherit" to="https://your-website.com/">
-              Home Flavors
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-          </Typography>
-        </Box>
       </Container>
     </Box>
   );

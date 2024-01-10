@@ -7,11 +7,17 @@ import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { isAxiosError } from "axios";
 import flyingPan from "../assets/frying-pan.png";
-import { BoldTypography, ContainedButton, GreyTypography } from "../components";
+import {
+  BoldTypography,
+  ContainedButton,
+  GreyTypography,
+  OrangePaper,
+  SpaceAroundFlexBox,
+} from "../components";
 import { authLogoStyle } from "../components/imgStyle";
 
 const outerBoxStyle = {
-  marginTop: "130px",
+  marginTop: "120px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -47,13 +53,34 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<LoginInputs>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [invalidCredentials, setInvalidCredentials] = useState<boolean>(false);
 
+  const [defaultUsername, setDefaultUsername] = useState<string>("");
+  const [defaultPassword, setDefaultPassword] = useState<string>("");
+
+  const handleGuestLogin = () => {
+    setDefaultUsername("demouser");
+    setDefaultPassword("asdasd");
+    setValue("username", "demouser");
+    setValue("password", "asdasd");
+  };
+
+  const handleOwnerLogin = () => {
+    setDefaultUsername("demoowner");
+    setDefaultPassword("dsadsa");
+    setValue("username", "demoowner");
+    setValue("password", "dsadsa");
+  };
+
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     try {
+      console.log("data", data);
+      console.log("e.target.value", defaultUsername);
+
       const response = await apiTokenCreate(data);
       dispatch(authActions.setIsLoggedIn(true));
       dispatch(authActions.setCurrentUserId(response.data.userId));
@@ -82,6 +109,25 @@ export default function Login() {
         <GreyTypography variant="body2" sx={{ textAlign: "center" }}>
           We are happy to see you again!
         </GreyTypography>
+        <OrangePaper sx={{ my: 3, display: "flex", flexDirection: "column" }}>
+          <BoldTypography variant="subtitle2" sx={{ textAlign: "center" }}>
+            Select a demo account to log in
+          </BoldTypography>
+          <SpaceAroundFlexBox>
+            <ContainedButton
+              sx={{ my: 1, fontSize: "12px" }}
+              onClick={handleGuestLogin}
+            >
+              Guest
+            </ContainedButton>
+            <ContainedButton
+              sx={{ fontSize: "12px" }}
+              onClick={handleOwnerLogin}
+            >
+              Owner
+            </ContainedButton>
+          </SpaceAroundFlexBox>
+        </OrangePaper>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -93,6 +139,8 @@ export default function Login() {
             id="username"
             label="Username"
             autoComplete="username"
+            value={defaultUsername}
+            onChange={(e) => setDefaultUsername(e.target.value)}
             autoFocus
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
@@ -103,6 +151,8 @@ export default function Login() {
             label="Password"
             type="password"
             autoComplete="current-password"
+            value={defaultPassword}
+            onChange={(e) => setDefaultPassword(e.target.value)}
             error={!!errors.password}
             helperText={errors.password && errors.password.message}
           />
