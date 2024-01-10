@@ -54,6 +54,7 @@ export default function Landing() {
     <Container sx={{ mt: 5 }}>
       {kitchen && <BannerSection kitchen={kitchen} />}
 
+      <br />
       <Divider />
 
       <Box sx={{ my: 5 }}>

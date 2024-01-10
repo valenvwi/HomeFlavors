@@ -10,7 +10,6 @@ type Props = {
   };
 };
 export default function ReviewCard(props: Props) {
-  
   return (
     <OrangePaper
       sx={{

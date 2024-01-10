@@ -11,6 +11,13 @@ const smImgStyle = {
   flexShrink: 0,
 } as const;
 
+const outerBoxStyle = {
+  display: "flex",
+  alignItems: "center",
+  my: 1,
+  px: 1,
+} as const;
+
 type Props = {
   menuItem: {
     name: string;
@@ -26,14 +33,7 @@ export default function FeatureMenuItem(props: Props) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <OrangePaper
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        my: 1,
-        px: 1,
-      }}
-    >
+    <OrangePaper sx={outerBoxStyle}>
       <img
         src={props.menuItem.image}
         alt={props.menuItem.name}
