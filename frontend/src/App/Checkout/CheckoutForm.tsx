@@ -124,7 +124,6 @@ export default function CheckoutForm() {
           order: orderId,
         };
         await orderItemsCreate(orderItemData);
-        console.log("Order item created", orderItemData);
       }
       dispatch(cartActions.resetCart());
       dispatch(modalActions.setIsCheckedout(true));

@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import ErrorIcon from "@mui/icons-material/Error";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { ContainedButton } from "../../components";
 
@@ -44,7 +45,7 @@ export default function Modal(props: {
   message: string;
   confirmText?: string;
   cancelText?: string;
-  icon: "success" | "alert" | "loading" | "none";
+  icon: "success" | "alert" | "loading" | "fail" | "none";
   subtext?: string;
   subtextButtonText?: string;
   subtextAction?: () => void;
@@ -67,6 +68,9 @@ export default function Modal(props: {
         )}
         {props.icon === "alert" && (
           <WarningAmberIcon sx={{ fontSize: 80, color: "orange", p: 1 }} />
+        )}
+        {props.icon === "fail" && (
+          <ErrorIcon sx={{ fontSize: 80, color: "red", p: 1 }} />
         )}
 
         {props.icon === "loading" && <CircularProgress sx={{ m: 3 }} />}

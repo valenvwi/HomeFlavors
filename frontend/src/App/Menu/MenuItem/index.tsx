@@ -37,6 +37,7 @@ export default function MenuItem() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessDeleteModal, setShowSuccessDeleteModal] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
+  const [showFailDeleteModal, setShowFailDeleteModal] = useState(false);
   const isCreatedMenuItem = useAppSelector(
     (state) => state.modal.isCreatedMenuItem
   );
@@ -84,16 +85,22 @@ export default function MenuItem() {
   };
 
   const deleteMenuItem = async (id: number) => {
-    await menuItemsDestroy(id);
-    setShowDeleteModal(false);
-    setShowSuccessDeleteModal(true);
-    setMenuItemId(0);
-    refetchMenuItems();
+    try {
+      await menuItemsDestroy(id);
+      setShowDeleteModal(false);
+      setShowSuccessDeleteModal(true);
+      setMenuItemId(0);
+      refetchMenuItems();
+    } catch (error) {
+      setShowFailDeleteModal(true);
+      return;
+    }
   };
 
   const closeDialog = () => {
     setShowDeleteModal(false);
     setShowSuccessDeleteModal(false);
+    setShowFailDeleteModal(false);
     dispatch(modalActions.setIsCreatedMenuItem(false));
     dispatch(modalActions.setIsEditedMenuItem(false));
   };
@@ -119,6 +126,16 @@ export default function MenuItem() {
           cancelText="Close"
           handleClose={closeDialog}
           icon="success"
+        />
+      )}
+
+      {showFailDeleteModal && (
+        <Modal
+          open={showFailDeleteModal}
+          message="You are not allowed to delete my items!"
+          cancelText="Close"
+          handleClose={closeDialog}
+          icon="fail"
         />
       )}
 

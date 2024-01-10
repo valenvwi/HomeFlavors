@@ -20,7 +20,6 @@ export default function EditContent(props: Props) {
   };
 
   const onSubmit: SubmitHandler<KitchenType> = async (data) => {
-    console.log(data);
     const response = await kitchensPartialUpdate(1, data);
     if (!response) {
       console.log("error");

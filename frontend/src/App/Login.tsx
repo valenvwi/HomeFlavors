@@ -59,28 +59,18 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const [invalidCredentials, setInvalidCredentials] = useState<boolean>(false);
 
-  const [defaultUsername, setDefaultUsername] = useState<string>("");
-  const [defaultPassword, setDefaultPassword] = useState<string>("");
-
   const handleGuestLogin = () => {
-    setDefaultUsername("demouser");
-    setDefaultPassword("asdasd");
     setValue("username", "demouser");
     setValue("password", "asdasd");
   };
 
   const handleOwnerLogin = () => {
-    setDefaultUsername("demoowner");
-    setDefaultPassword("dsadsa");
     setValue("username", "demoowner");
     setValue("password", "dsadsa");
   };
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     try {
-      console.log("data", data);
-      console.log("e.target.value", defaultUsername);
-
       const response = await apiTokenCreate(data);
       dispatch(authActions.setIsLoggedIn(true));
       dispatch(authActions.setCurrentUserId(response.data.userId));
@@ -139,8 +129,7 @@ export default function Login() {
             id="username"
             label="Username"
             autoComplete="username"
-            value={defaultUsername}
-            onChange={(e) => setDefaultUsername(e.target.value)}
+            InputLabelProps={{ shrink: true }}
             autoFocus
             error={!!errors.username}
             helperText={errors.username && errors.username.message}
@@ -151,8 +140,7 @@ export default function Login() {
             label="Password"
             type="password"
             autoComplete="current-password"
-            value={defaultPassword}
-            onChange={(e) => setDefaultPassword(e.target.value)}
+            InputLabelProps={{ shrink: true }}
             error={!!errors.password}
             helperText={errors.password && errors.password.message}
           />

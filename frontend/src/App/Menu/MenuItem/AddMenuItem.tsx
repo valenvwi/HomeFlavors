@@ -66,7 +66,6 @@ export default function AddMenuItem(props: {
   };
 
   const onSubmit: SubmitHandler<MenuItemType> = async (data) => {
-    console.log("submitting...");
     const formData = new FormData();
     if (!selectedImage) {
       setShowImageError(true);
