@@ -1,4 +1,10 @@
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { ordersPartialUpdate, useOrdersList } from "../../../api/index";
 import { useState } from "react";
 import { OrderType } from "../types/order";
@@ -53,6 +59,9 @@ export default function PendingOrders() {
   const upcomingOrders = upcomingOrdersResponse?.data;
 
   const [order, setOrder] = useState<OrderType | null>(null);
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [showOrderList, setShowOrderList] = useState<boolean>(true);
 
   const acceptOrder = async (orderId: number) => {
     await ordersPartialUpdate(orderId, {
@@ -76,46 +85,69 @@ export default function PendingOrders() {
   return (
     <>
       <Container sx={containerStyle}>
-        {pendingOrders && upcomingOrders && (
-          <LeftOrderList
-            pendingOrders={pendingOrders}
-            upcomingOrders={upcomingOrders}
-            onSetOrder={setOrder}
-          />
-        )}
-        <Box sx={outerBoxStyle}>
-          {order != null ? (
+        {isMediumScreen ? (
+          showOrderList ? (
+            pendingOrders &&
+            upcomingOrders && (
+              <LeftOrderList
+                pendingOrders={pendingOrders}
+                upcomingOrders={upcomingOrders}
+                onSetOrder={setOrder}
+                onSetShowOrderList={setShowOrderList}
+              />
+            )
+          ) : (
             <RightOrderDetailCard
               order={order}
               acceptOrder={acceptOrder}
               cancelOrder={cancelOrder}
+              onSetShowOrderList={setShowOrderList}
             />
-          ) : (
-            <Box sx={innerBoxStyle}>
-              {pendingOrders?.length === 0 ? (
-                <>
-                  <img src={noOrder} alt="Sold Out" width="250" />
-                  <Typography variant="h5" sx={fontTitleStyle}>
-                    You have no pending orders
-                  </Typography>
-                  <Typography variant="subtitle1" sx={fontContentStyle}>
-                    Check out the upcoming orders
-                  </Typography>
-                </>
+          )
+        ) : (
+          <>
+            pendingOrders && upcomingOrders && (
+            <LeftOrderList
+              pendingOrders={pendingOrders}
+              upcomingOrders={upcomingOrders}
+              onSetOrder={setOrder}
+            />
+            )
+            <Box sx={outerBoxStyle}>
+              {order != null ? (
+                <RightOrderDetailCard
+                  order={order}
+                  acceptOrder={acceptOrder}
+                  cancelOrder={cancelOrder}
+                />
               ) : (
-                <>
-                  <img src={selectImg} alt="Sold Out" width="250" />
-                  <Typography variant="h5" sx={fontTitleStyle}>
-                    You have <b>{pendingOrders?.length}</b> pending orders
-                  </Typography>
-                  <Typography variant="subtitle1" sx={fontContentStyle}>
-                    Click on an order to view details
-                  </Typography>
-                </>
+                <Box sx={innerBoxStyle}>
+                  {pendingOrders?.length === 0 ? (
+                    <>
+                      <img src={noOrder} alt="Sold Out" width="250" />
+                      <Typography variant="h5" sx={fontTitleStyle}>
+                        You have no pending orders
+                      </Typography>
+                      <Typography variant="subtitle1" sx={fontContentStyle}>
+                        Check out the upcoming orders
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <img src={selectImg} alt="Sold Out" width="250" />
+                      <Typography variant="h5" sx={fontTitleStyle}>
+                        You have <b>{pendingOrders?.length}</b> pending orders
+                      </Typography>
+                      <Typography variant="subtitle1" sx={fontContentStyle}>
+                        Click on an order to view details
+                      </Typography>
+                    </>
+                  )}
+                </Box>
               )}
             </Box>
-          )}
-        </Box>
+          </>
+        )}
       </Container>
     </>
   );

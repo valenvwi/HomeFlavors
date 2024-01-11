@@ -6,19 +6,14 @@ import {
   ToggleButtonGroup,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { OrderType } from "../types/order";
 import { useMemo, useState } from "react";
 import LeftOrderCard from "./LeftOrderCard";
 import dayjs from "dayjs";
 import Divider from "@mui/material/Divider";
-
-const drawerStyler = {
-  width: "30%",
-  flexShrink: 0,
-  zIndex: 0,
-  [`& .MuiDrawer-paper`]: { width: "30%", boxSizing: "border-box" },
-};
 
 const boxStyle = {
   overflow: "auto",
@@ -43,14 +38,35 @@ const dateStyle = {
   py: 2,
 };
 
+const mediumScreenConfig = {
+  drawerStyle: {
+    width: "100%",
+    zIndex: 3,
+    [`& .MuiDrawer-paper`]: { width: "100%", boxSizing: "border-box" },
+  },
+};
+
+const bigScreenConfig = {
+  drawerStyle: {
+    width: "30%",
+    flexShrink: 0,
+    zIndex: 0,
+    [`& .MuiDrawer-paper`]: { width: "30%", boxSizing: "border-box" },
+  },
+};
+
 type Props = {
   pendingOrders: OrderType[];
   upcomingOrders: OrderType[];
   onSetOrder: (orderId: number) => void;
+  onSetShowOrderList: (showOrderList: boolean) => void;
 };
 
 export default function LeftOrderList(props: Props) {
   const [alignment, setAlignment] = useState("pending");
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const style = isMediumScreen ? mediumScreenConfig : bigScreenConfig;
 
   const orders =
     alignment === "pending" ? props.pendingOrders : props.upcomingOrders;
@@ -81,10 +97,11 @@ export default function LeftOrderList(props: Props) {
 
   const changeOrder = (order: OrderType) => {
     props.onSetOrder(order);
+    props.onSetShowOrderList(false);
   };
 
   return (
-    <Drawer variant="permanent" sx={drawerStyler}>
+    <Drawer variant="permanent" sx={style.drawerStyle}>
       <Toolbar />
       <ToggleButtonGroup
         color="primary"

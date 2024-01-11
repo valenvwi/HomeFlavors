@@ -1,5 +1,4 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useKitchensRetrieve } from "../../../api";
 
 export default function Footer() {
@@ -14,7 +13,7 @@ export default function Footer() {
         py: 3,
         borderTop: "1px solid",
         borderColor: "divider",
-        zIndex: 6,
+        zIndex: 2,
       }}
     >
       <Container maxWidth="lg">

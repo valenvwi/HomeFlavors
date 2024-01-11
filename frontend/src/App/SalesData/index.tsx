@@ -91,7 +91,7 @@ export default function SalesData() {
   }
 
   return (
-    <Container sx={{ mt: 4, py: 5 }} maxWidth="xl">
+    <Container sx={{ mt: 4, py: 5, flexGrow: 1 }} maxWidth="xl">
       <SpaceBetweenFlexBox
         sx={{
           mt: isSmallScreen ? 1 : 2,

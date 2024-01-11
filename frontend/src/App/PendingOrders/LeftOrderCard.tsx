@@ -1,9 +1,4 @@
-import {
-  Box,
-  ListItem,
-  ListItemButton,
-  Paper,
-} from "@mui/material";
+import { Box, ListItem, ListItemButton, Paper } from "@mui/material";
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BoldTypography, GreyTypography } from "../../components";
