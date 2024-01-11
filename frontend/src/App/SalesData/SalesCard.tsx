@@ -7,6 +7,7 @@ const cardStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  width: "90%",
   pt: 2,
   m: 2,
   borderRadius: "15px",

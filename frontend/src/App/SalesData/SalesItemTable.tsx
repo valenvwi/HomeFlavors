@@ -6,20 +6,34 @@ import {
   TableHead,
   TableRow,
   styled,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 
 const cardStyle = {
   borderRadius: "15px",
 };
 
-const tableCellTitleStyle = {
-  fontSize: "16px",
-  fontWeight: 700,
-  color: "white",
+const smallScreenConfig = {
+  tableCellTitleStyle: {
+    fontSize: "14px",
+    fontWeight: 700,
+    color: "white",
+  },
+  tableCellContentStyle: {
+    fontSize: "12px",
+  },
 };
 
-const tableCellContentStyle = {
-  fontSize: "14px",
+const bigScreenConfig = {
+  tableCellTitleStyle: {
+    fontSize: "16px",
+    fontWeight: 700,
+    color: "white",
+  },
+  tableCellContentStyle: {
+    fontSize: "14px",
+  },
 };
 
 const StyledTableRow = styled(TableRow)(() => ({
@@ -37,17 +51,22 @@ type Props = {
 }[];
 
 export default function SalesItemTable(props: { sales: Props }) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const style = isSmallScreen ? smallScreenConfig : bigScreenConfig;
+
   return (
     <TableContainer style={cardStyle} sx={{ my: 4 }}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead sx={{ backgroundColor: "#EA5C2B" }}>
           <TableRow>
-            <TableCell style={tableCellTitleStyle}>Menu Item</TableCell>
-            <TableCell style={tableCellTitleStyle} align="right">
+            <TableCell style={style.tableCellTitleStyle}>Menu Item</TableCell>
+            <TableCell style={style.tableCellTitleStyle} align="right">
               Item sold
             </TableCell>
-            <TableCell style={tableCellTitleStyle} align="right">
-              Item Revenue (CHF)
+            <TableCell style={style.tableCellTitleStyle} align="right">
+              Revenue (CHF)
             </TableCell>
           </TableRow>
         </TableHead>
@@ -55,19 +74,19 @@ export default function SalesItemTable(props: { sales: Props }) {
           {props.sales.map((row) => (
             <StyledTableRow
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              key={`item`+ row.id}
+              key={`item` + row.id}
             >
               <TableCell
                 component="th"
                 scope="row"
-                style={tableCellContentStyle}
+                style={style.tableCellContentStyle}
               >
                 {row.name}
               </TableCell>
-              <TableCell align="right" style={tableCellContentStyle}>
+              <TableCell align="right" style={style.tableCellContentStyle}>
                 {row.quantity}
               </TableCell>
-              <TableCell align="right" style={tableCellContentStyle}>
+              <TableCell align="right" style={style.tableCellContentStyle}>
                 {parseFloat(row.revenue).toFixed(2)}
               </TableCell>
             </StyledTableRow>

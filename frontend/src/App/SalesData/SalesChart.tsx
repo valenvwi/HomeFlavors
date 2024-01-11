@@ -36,7 +36,7 @@ export default function SalesChart(props: {
           data: data,
         },
       ]}
-      width={250}
+      width={220}
       height={200}
       sx={{
         "& .MuiLineElement-root": {

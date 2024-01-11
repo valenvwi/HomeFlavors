@@ -1,4 +1,10 @@
-import { Container, Grid, Typography } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Typography,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import SalesItemTable from "./SalesItemTable";
 import { useSalesDataList } from "../../../api";
 import SalesCard from "./SalesCard";
@@ -34,6 +40,9 @@ export default function SalesData() {
 
   const [startDate, setStartDate] = useState(todayString);
   const [endDate, setEndDate] = useState(todayString);
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Below lines are for testing purposes
   // const tomorrow= new Date(today.setDate(today.getDate() + 1))
@@ -85,17 +94,19 @@ export default function SalesData() {
     <Container sx={{ mt: 4, py: 5 }} maxWidth="xl">
       <SpaceBetweenFlexBox
         sx={{
-          mt: 2,
+          mt: isSmallScreen ? 1 : 2,
         }}
       >
-        <TitleTypography>Overview</TitleTypography>
-        <BoldTypography variant="h5">
+        {!isSmallScreen && <TitleTypography>Overview</TitleTypography>}
+        <BoldTypography variant={isSmallScreen ? "subtitle1" : "h5"}>
           {startDate === endDate ? startDate : startDate + " - " + endDate}
         </BoldTypography>
         <SalesDateSelect onSetDate={onSetDate} />
       </SpaceBetweenFlexBox>
 
-      <Grid container sx={{ my: 3 }}>
+      {isSmallScreen && <TitleTypography>Overview</TitleTypography>}
+
+      <Grid container sx={{ my: 3, justifyContent: "center" }}>
         {salesByHour && (
           <>
             <SalesCard
@@ -139,18 +150,22 @@ export default function SalesData() {
             quantity={salesByItem[0].quantity}
             medal={gold}
           />
-          <TopSalesCard
-            name={salesByItem[1].name}
-            image={salesByItem[1].image}
-            quantity={salesByItem[1].quantity}
-            medal={silver}
-          />
-          <TopSalesCard
-            name={salesByItem[2].name}
-            image={salesByItem[2].image}
-            quantity={salesByItem[2].quantity}
-            medal={bronze}
-          />
+          {salesByItem.length > 1 && (
+            <TopSalesCard
+              name={salesByItem[1].name}
+              image={salesByItem[1].image}
+              quantity={salesByItem[1].quantity}
+              medal={silver}
+            />
+          )}
+          {salesByItem.length > 2 && (
+            <TopSalesCard
+              name={salesByItem[2].name}
+              image={salesByItem[2].image}
+              quantity={salesByItem[2].quantity}
+              medal={bronze}
+            />
+          )}
         </Grid>
       )}
 
