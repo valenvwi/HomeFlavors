@@ -1,6 +1,5 @@
 import { Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
-import { SyntheticEvent } from "react";
 import { categories, labels } from "../../../Utils/constants";
 
 export default function Tabbar(props: {
@@ -8,7 +7,7 @@ export default function Tabbar(props: {
 }) {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
+  const handleChange = (newValue: number) => {
     setValue(newValue);
   };
 
@@ -19,7 +18,7 @@ export default function Tabbar(props: {
     <Tabs
       value={value}
       orientation={isSmallScreen ? "horizontal" : "vertical"}
-      onChange={handleChange}
+      onChange={() => handleChange(value)}
       aria-label="scrollable tabs"
       sx={{ margin: "0 auto" }}
     >

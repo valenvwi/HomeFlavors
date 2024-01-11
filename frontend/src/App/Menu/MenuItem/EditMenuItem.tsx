@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { menuItemsPartialUpdate, useMenuItemsList } from "../../../../api";
+import { MenuItem as ApiMenuItem, menuItemsPartialUpdate, useMenuItemsList } from "../../../../api";
 import { useRef, useState } from "react";
 import { BASEURL } from "../../../config";
 import { labels, categories } from "../../Utils/constants";
@@ -26,7 +26,7 @@ import {
 import { lgImgStyle } from "../../../components/imgStyle";
 
 export default function EditMenuItem(props: {
-  menuItem: MenuItemType;
+  menuItem: MenuItemType | null;
   onCancelEdit: () => void;
   category: string;
 }) {
@@ -76,12 +76,15 @@ export default function EditMenuItem(props: {
 
     Object.entries(data).forEach(([key, value]) => {
       if (key !== "image") {
-        formData.append(key, value);
+        formData.append(key, String(value));
       }
     });
 
     try {
-      await menuItemsPartialUpdate(props.menuItem.id, formData);
+      if (!props.menuItem) {
+        return;
+      }
+      await menuItemsPartialUpdate(props.menuItem.id, Object.fromEntries(formData) as unknown as ApiMenuItem);
       refetch();
       props.onCancelEdit();
       window.scrollTo(0, 0);
@@ -90,6 +93,10 @@ export default function EditMenuItem(props: {
       console.error("Error:", error);
     }
   };
+
+  if (!props.menuItem) {
+    return null;
+  }
 
   return (
     <Container component="main" maxWidth="xs">

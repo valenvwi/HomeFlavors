@@ -95,11 +95,11 @@ export default function CheckoutForm() {
     dispatch(modalActions.setIsCheckingout(true));
 
     const orderData = {
-      kitchen: "1",
+      kitchen: 1,
       totalPrice: totalPrice.toString(),
       totalQuantity: cartItems
         .map((cartItem: CartItemType) => cartItem.quantity)
-        .reduce((a, b) => a + b, 0),
+        .reduce((a:number, b:number) => a + b, 0),
       name: data.name,
       contactNumber: data.contactNumber,
       pickUpDate: data.pickUpDateTime.format("YYYY-MM-DD"),

@@ -9,7 +9,6 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import soldOut from "../../../assets/sold-out.png";
 import { useAppDispatch, useAppSelector } from "../../store/root";
 import { cartActions } from "../../store/cart";
-import { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Modal from "../../UI/Modal";
 import { useNavigate } from "react-router-dom";

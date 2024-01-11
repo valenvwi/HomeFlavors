@@ -10,4 +10,8 @@ COPY . .
 
 RUN npm run generate
 
-CMD [ "npm", "run", "build" ]
+RUN npm run build
+
+CMD [ "npm", "run", "serve" ]
+
+# CMD [ "npm", "run", "serve-secure" ]

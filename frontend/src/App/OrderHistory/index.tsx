@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { ordersPartialUpdate, useOrdersList } from "../../../api";
 import OrderHistoryCard from "./OrderHistoryCard";
 import { modalActions } from "../store/modal";
@@ -9,7 +9,6 @@ import Modal from "../UI/Modal";
 import { useState } from "react";
 import {
   BoldTypography,
-  CenterFlexBox,
   ContainedButton,
 } from "../../components";
 
@@ -19,13 +18,6 @@ const containerStyle = {
   display: "flex",
   flexDirection: "column",
   flexGrow: 1,
-};
-
-const emptyCartBoxStyle = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
 };
 
 export default function OrderHistory() {

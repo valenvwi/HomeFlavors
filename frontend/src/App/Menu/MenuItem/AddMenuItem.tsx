@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { MenuItemType } from "../../types/menuItem";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { menuItemsCreate, useMenuItemsList } from "../../../../api";
+import { MenuItem as ApiMenuItem, menuItemsCreate, useMenuItemsList } from "../../../../api";
 import { useRef, useState } from "react";
 import { labels, categories } from "../../Utils/constants";
 import { useAppDispatch } from "../../store/root";
@@ -72,15 +72,19 @@ export default function AddMenuItem(props: {
       return;
     }
 
+    if (image === null) {
+      return;
+    }
+
     formData.append("image", image);
     formData.append("kitchen", "1");
     Object.entries(data).forEach(([key, value]) => {
       if (key !== "image") {
-        formData.append(key, value);
+        formData.append(key, String(value));
       }
     });
 
-    await menuItemsCreate(formData);
+    await menuItemsCreate(Object.fromEntries(formData) as unknown as ApiMenuItem);
     refetch();
     props.ontoggleAddMenuItem();
     window.scrollTo(0, 0);
@@ -189,7 +193,7 @@ export default function AddMenuItem(props: {
                   const trimmedValue = value.trim();
                   return (
                     (!isNaN(trimmedValue) && trimmedValue === value) ||
-                    "Price must be a number without leading or trailing whitespace"
+                    "Price must be a number without whitespace"
                   );
                 },
               },

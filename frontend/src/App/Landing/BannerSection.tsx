@@ -40,7 +40,6 @@ const gridStyle = {
 type Props = {
   kitchen: {
     name: string;
-    logo: string;
     description: string;
     address: string;
     openingHours: string;

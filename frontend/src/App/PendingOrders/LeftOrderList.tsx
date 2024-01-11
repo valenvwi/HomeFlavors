@@ -48,7 +48,6 @@ const mediumScreenConfig = {
 
 const bigScreenConfig = {
   drawerStyle: {
-    width: "30%",
     flexShrink: 0,
     zIndex: 0,
     [`& .MuiDrawer-paper`]: { width: "30%", boxSizing: "border-box" },
