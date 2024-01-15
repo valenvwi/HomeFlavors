@@ -119,6 +119,7 @@ export default function PendingOrders() {
                   order={order}
                   acceptOrder={acceptOrder}
                   cancelOrder={cancelOrder}
+                  onSetShowOrderList={setShowOrderList}
                 />
               ) : (
                 <Box sx={innerBoxStyle}>

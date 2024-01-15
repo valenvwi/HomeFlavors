@@ -16,14 +16,35 @@ const SmTypography = ({
   sx,
   ...rest
 }: ComponentPropsWithoutRef<typeof Typography>) => (
-  <Typography variant="subtitle2" sx={{ mx: 1, my: 2, ...sx }} {...rest} />
+  <Typography
+    variant="subtitle2"
+    sx={{ mx: 1, my: 2, color: "#EA5C2B", ...sx }}
+    {...rest}
+  />
 );
 
-const MdTypography = ({
+const MdTitle = ({
   sx,
   ...rest
 }: ComponentPropsWithoutRef<typeof Typography>) => (
-  <Typography variant="subtitle1" sx={{ m: 3, ...sx }} {...rest} />
+  <Typography
+    variant="subtitle1"
+    sx={{
+      color: "#EA5C2B",
+      mx: 3,
+      mt: 3,
+      fontFamily: "Rowdies",
+      ...sx,
+    }}
+    {...rest}
+  />
+);
+
+const MdContent = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Typography>) => (
+  <Typography variant="subtitle1" sx={{ mx: 3, mb: 3, ...sx }} {...rest} />
 );
 
 export default function OurValue() {
@@ -43,7 +64,7 @@ export default function OurValue() {
         }}
       >
         <SmTypography>
-          <b>Freshness First</b>
+          <b>Freshness First123</b>
           <br />
           At Amy's Kitchen, we prioritize the use of fresh, high-quality
           ingredients to ensure every dish is as nutritious as it is flavorful.
@@ -78,25 +99,23 @@ export default function OurValue() {
         }}
       />
       <Box sx={{ mx: 2 }}>
-        <MdTypography>
-          <b>Freshness First</b>
-          <br />
+        <MdTitle>Freshness First </MdTitle>
+        <MdContent>
           At Amy's Kitchen, we prioritize the use of fresh, high-quality
           ingredients to ensure every dish is as nutritious as it is flavorful.
-        </MdTypography>
-        <MdTypography>
-          <b>Homemade Tradition</b>
-          <br />
+        </MdContent>
+        <MdTitle>Homemade Tradition </MdTitle>
+        <MdContent>
           We're dedicated to bringing the warmth and comfort of homemade cooking
           to your table, perfect for family gatherings or special occasions.
-        </MdTypography>
-        <MdTypography>
-          <b>Culinary Diversity</b>
-          <br />
+        </MdContent>
+
+        <MdTitle>Culinary Diversity </MdTitle>
+        <MdContent>
           Our diverse menu reflects a blend of traditional recipes and
           innovative culinary techniques, offering something unique for every
           palate.
-        </MdTypography>
+        </MdContent>
       </Box>
     </SpaceAroundFlexBox>
   );

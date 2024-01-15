@@ -84,7 +84,7 @@ export default function BannerSection(props: Props) {
           >
             <BoldTypography
               variant={isMediumScreen ? "h5" : "h3"}
-              sx={{ my: 3 }}
+              sx={{ my: 3, fontFamily: "Rowdies" }}
             >
               {props.kitchen?.name}
             </BoldTypography>
@@ -138,7 +138,10 @@ export default function BannerSection(props: Props) {
                 alignItems: "flex-start",
               }}
             >
-              <BoldTypography variant={style.fontTitleVariant} sx={{ pb: 10 }}>
+              <BoldTypography
+                variant={style.fontTitleVariant}
+                sx={{ pb: 10, fontFamily: "Rowdies" }}
+              >
                 {props.kitchen?.name}
               </BoldTypography>
               <GreyTypography variant={style.fontSubtitleVariant}>
