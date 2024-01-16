@@ -14,7 +14,7 @@ import ReviewCard from "./ReviewCard";
 import { reviews } from "../Utils/constants";
 import Carousel from "react-material-ui-carousel";
 import { CenterFlexBox } from "../../components";
-import BannerSection2 from "./BannerSection2";
+import BannerSection from "./BannerSection";
 import AboutUs from "./AboutUs";
 import OurValue from "./OurValue";
 
@@ -53,9 +53,9 @@ export default function Landing() {
 
   return (
     <>
-      <BannerSection2 kitchen={kitchen} />
+      <BannerSection kitchen={kitchen} />
       <Container sx={{ mt: 5 }}>
-        {/* {kitchen && <BannerSection kitchen={kitchen} />} */}
+
 
         <br />
         <Box sx={{ my: 5 }}>
