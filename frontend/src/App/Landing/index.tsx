@@ -14,9 +14,9 @@ import ReviewCard from "./ReviewCard";
 import { reviews } from "../Utils/constants";
 import Carousel from "react-material-ui-carousel";
 import { CenterFlexBox } from "../../components";
-import OurValue from "./OurValue";
 import BannerSection2 from "./BannerSection2";
-
+import AboutUs from "./AboutUs";
+import OurValue from "./OurValue";
 
 const fontTitle = {
   fontStyle: "normal",
@@ -51,7 +51,6 @@ export default function Landing() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-
   return (
     <>
       <BannerSection2 kitchen={kitchen} />
@@ -59,6 +58,15 @@ export default function Landing() {
         {/* {kitchen && <BannerSection kitchen={kitchen} />} */}
 
         <br />
+        <Box sx={{ my: 5 }}>
+          <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
+            Our Values
+          </Typography>
+          <OurValue />
+        </Box>
+
+        <br />
+        <Divider />
 
         <Box sx={{ my: 5 }}>
           <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
@@ -78,9 +86,9 @@ export default function Landing() {
 
         <Box sx={{ my: 5 }}>
           <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
-            Our Values
+            About us
           </Typography>
-          <OurValue />
+          <AboutUs kitchen={kitchen} />
         </Box>
 
         <br />

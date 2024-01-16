@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        backgroundColor: "primary.main",
+        backgroundColor: "white",
         mt: 5,
         py: 3,
         borderTop: "1px solid",
@@ -18,25 +18,25 @@ export default function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={5}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="white" gutterBottom>
+          <Grid item xs={12} sm={12} sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+            <Typography variant="h6" color="primary.main" gutterBottom>
               About Us
             </Typography>
-            <Typography variant="body2" color="white">
+            <Typography variant="body2">
               Disclaimer: This website is created for demo purpose only
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="white" gutterBottom>
+          {/* <Grid item xs={12} sm={6} sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+            <Typography variant="h6" color="primary.main" gutterBottom>
               Contact Us
             </Typography>
-            <Typography variant="body2" color="white">
+            <Typography variant="body2" >
               Email: homeFlavor@abc.com
             </Typography>
-            <Typography variant="body2" color="white">
+            <Typography variant="body2" >
               Phone: {kitchen?.contactNumber}
             </Typography>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Box>

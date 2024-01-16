@@ -42,7 +42,7 @@ export default function FeatureMenuItem(props: Props) {
       <Box sx={{ flexGrow: 1, ml: 2, my: 1 }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <BoldTypography
-            variant={isSmallScreen ? "subtitle2" : "body1"}
+            variant={isSmallScreen ? "subtitle2" : "subtitle1"}
             sx={{ pr: 1 }}
           >
             {props.menuItem.name}
