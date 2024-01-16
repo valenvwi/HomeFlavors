@@ -1,15 +1,11 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   BoldTypography,
-  CenterFlexBox,
   ContainedButton,
-  GreyTypography,
-  SpaceAroundFlexBox,
 } from "../../components";
-import spicySoup from "../../assets/Korean spicy tofu soup.jpg";
 import { useNavigate } from "react-router-dom";
 import { useTheme, useMediaQuery } from "@mui/material";
-import bannerImg from "../../assets/banner1.png";
+import bannerImg from "../../assets/banner1.jpg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const mediumScreenConfig = {

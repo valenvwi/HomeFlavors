@@ -3,6 +3,7 @@ import {
   Badge,
   Box,
   Button,
+  Container,
   CssBaseline,
   Drawer,
   IconButton,
@@ -31,7 +32,7 @@ import { InheritButton } from "../../components";
 
 const logoLinkStyle = {
   textDecoration: "none",
-  color: "white",
+  color: "#EA5C2B",
   marginLeft: "5px",
 };
 
@@ -130,118 +131,131 @@ export default function AppNavBar() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar
+        position="fixed"
+        id="appBar"
+        sx={{
+          backgroundColor: "white",
+          color: "#EA5C2B",
+        }}
+      >
         <Toolbar>
-          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-            {isLoggedIn && (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: "none" } }}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-            <Button style={logoLinkStyle} onClick={goToHomePage}>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                fontFamily="Lobster"
-              >
-                Home Flavors
-              </Typography>
-            </Button>
-          </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {isLoggedIn && isOwner && (
-              <>
-                <InheritButton onClick={goToMenuPage}>
-                  <Tooltip title="Menu">
-                    <MenuBookIcon />
-                  </Tooltip>
-                </InheritButton>
-                <InheritButton onClick={goToPendingOrderPage}>
-                  <Tooltip title="Notifications">
-                    <Badge badgeContent={notificationCount} color="primary">
-                      <NotificationsIcon />
-                    </Badge>
-                  </Tooltip>
-                </InheritButton>
-                <InheritButton onClick={goToSalesDataPage}>
-                  <Tooltip title="Report">
-                    <LeaderboardIcon />
-                  </Tooltip>
-                </InheritButton>
-                <InheritButton onClick={logout}>
-                  <Tooltip title="Log out">
-                    <LogoutIcon />
-                  </Tooltip>
-                </InheritButton>
-              </>
-            )}
-            {isLoggedIn && !isOwner && (
-              <>
-                <InheritButton onClick={goToMenuPage}>
-                  <Tooltip title="Menu">
-                    <MenuBookIcon />
-                  </Tooltip>
-                </InheritButton>
-                <InheritButton onClick={goToCartPage}>
-                  <Tooltip title="Shopping cart">
-                    <animated.div style={cartAnimation}>
-                      <Badge badgeContent={totalQuantity} color="primary">
-                        <ShoppingCartIcon />
+          <Container
+            maxWidth="lg"
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+              {isLoggedIn && (
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="start"
+                  onClick={handleDrawerToggle}
+                  sx={{ display: { sm: "none" } }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              )}
+              <Button style={logoLinkStyle} onClick={goToHomePage}>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  fontFamily="Rowdies"
+                  sx={{ mx: 2 }}
+                >
+                  Home Flavors
+                </Typography>
+              </Button>
+            </Box>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {isLoggedIn && isOwner && (
+                <>
+                  <InheritButton onClick={goToMenuPage}>
+                    <Tooltip title="Menu">
+                      <MenuBookIcon />
+                    </Tooltip>
+                  </InheritButton>
+                  <InheritButton onClick={goToPendingOrderPage}>
+                    <Tooltip title="Notifications">
+                      <Badge badgeContent={notificationCount} color="primary">
+                        <NotificationsIcon />
                       </Badge>
-                    </animated.div>
+                    </Tooltip>
+                  </InheritButton>
+                  <InheritButton onClick={goToSalesDataPage}>
+                    <Tooltip title="Report">
+                      <LeaderboardIcon />
+                    </Tooltip>
+                  </InheritButton>
+                  <InheritButton onClick={logout}>
+                    <Tooltip title="Log out">
+                      <LogoutIcon />
+                    </Tooltip>
+                  </InheritButton>
+                </>
+              )}
+              {isLoggedIn && !isOwner && (
+                <>
+                  <InheritButton onClick={goToMenuPage}>
+                    <Tooltip title="Menu">
+                      <MenuBookIcon />
+                    </Tooltip>
+                  </InheritButton>
+                  <InheritButton onClick={goToCartPage}>
+                    <Tooltip title="Shopping cart">
+                      <animated.div style={cartAnimation}>
+                        <Badge badgeContent={totalQuantity} color="primary">
+                          <ShoppingCartIcon />
+                        </Badge>
+                      </animated.div>
+                    </Tooltip>
+                  </InheritButton>
+                  <InheritButton onClick={goToOrderHistoryPage}>
+                    <Tooltip title="Order history">
+                      <HistoryIcon />
+                    </Tooltip>
+                  </InheritButton>
+                  <InheritButton onClick={logout}>
+                    <Tooltip title="Log out">
+                      <LogoutIcon />
+                    </Tooltip>
+                  </InheritButton>
+                </>
+              )}
+              {!isLoggedIn && (
+                <InheritButton onClick={goToLoginPage}>
+                  <Tooltip title="Log in">
+                    <LoginIcon />
                   </Tooltip>
                 </InheritButton>
-                <InheritButton onClick={goToOrderHistoryPage}>
-                  <Tooltip title="Order history">
-                    <HistoryIcon />
-                  </Tooltip>
-                </InheritButton>
-                <InheritButton onClick={logout}>
-                  <Tooltip title="Log out">
-                    <LogoutIcon />
-                  </Tooltip>
-                </InheritButton>
-              </>
-            )}
-            {!isLoggedIn && (
-              <InheritButton onClick={goToLoginPage}>
-                <Tooltip title="Log in">
-                  <LoginIcon />
-                </Tooltip>
-              </InheritButton>
-            )}
-          </Box>
+              )}
+            </Box>
 
-          <Box sx={{ display: { xs: "block", sm: "none" } }}>
-            {isLoggedIn && !isOwner && (
-              <InheritButton onClick={goToCartPage}>
-                <animated.div style={cartAnimation}>
-                  <Badge badgeContent={totalQuantity}>
-                    <ShoppingCartIcon />
+            <Box sx={{ display: { xs: "block", sm: "none" } }}>
+              {isLoggedIn && !isOwner && (
+                <InheritButton onClick={goToCartPage}>
+                  <animated.div style={cartAnimation}>
+                    <Badge badgeContent={totalQuantity}>
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </animated.div>
+                </InheritButton>
+              )}
+              {isLoggedIn && isOwner && (
+                <InheritButton onClick={goToPendingOrderPage}>
+                  <Badge badgeContent={notificationCount}>
+                    <NotificationsIcon />
                   </Badge>
-                </animated.div>
-              </InheritButton>
-            )}
-            {isLoggedIn && isOwner && (
-              <InheritButton onClick={goToPendingOrderPage}>
-                <Badge badgeContent={notificationCount}>
-                  <NotificationsIcon />
-                </Badge>
-              </InheritButton>
-            )}
-            {!isLoggedIn && (
-              <InheritButton onClick={goToLoginPage}>
-                <LoginIcon />
-              </InheritButton>
-            )}
-          </Box>
+                </InheritButton>
+              )}
+              {!isLoggedIn && (
+                <InheritButton onClick={goToLoginPage}>
+                  <LoginIcon />
+                </InheritButton>
+              )}
+            </Box>
+          </Container>
         </Toolbar>
       </AppBar>
       <Box
