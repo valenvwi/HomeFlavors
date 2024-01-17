@@ -29,6 +29,11 @@ const fontTitle = {
   mb: 5,
 };
 
+const whiteFontTitle = {
+  ...fontTitle,
+  color: "white",
+};
+
 const fontSmallTitle = {
   fontStyle: "normal",
   fontWeight: "bold",
@@ -36,6 +41,11 @@ const fontSmallTitle = {
   textAlign: "center",
   lineHeight: "36px",
   my: 2,
+};
+
+const whiteFontSmallTitle = {
+  ...fontSmallTitle,
+  color: "white",
 };
 
 const splitArrayTwoByTwo = <T,>(array: T[]) => {
@@ -52,6 +62,7 @@ export default function Landing() {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
 
@@ -107,45 +118,60 @@ export default function Landing() {
 
         <br />
         <Divider />
+      </Container>
 
-        <Box sx={{ py: 2 }}>
-          <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
+      <Box sx={{ py: 2, backgroundColor: "#402D28", width: "100vw" }}>
+        <Container
+          sx={{
+            mt: 5,
+            mb: 3,
+          }}
+        >
+          <Typography sx={isSmallScreen ? whiteFontSmallTitle : whiteFontTitle}>
             Customer Reviews
           </Typography>
           <Grid container spacing={1}>
             {isSmallScreen ? (
-              <Carousel sx={{ margin: "20px auto", width: "100%" }}>
+              <Carousel sx={{ margin: "10px auto", width: "90%" }}>
                 {reviews.map((review) => (
                   <Grid item xs={12} key={review.reviewer}>
                     <ReviewCard review={review} />
                   </Grid>
                 ))}
               </Carousel>
-            ) : (
-              <Carousel swipe sx={{ margin: "20px auto", width: "100%" }}>
+            ) : isMediumScreen ? (
+              <Carousel swipe sx={{ margin: "20px auto", width: "90%" }}>
                 {splitArrayTwoByTwo(reviews).map(([review1, review2]) => (
                   <CenterFlexBox key={review1.reviewer}>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={6}>
                       <ReviewCard review={review1} />
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={6}>
                       <ReviewCard review={review2} />
                     </Grid>
                   </CenterFlexBox>
                 ))}
               </Carousel>
+            ) : (
+              reviews.map((review) => (
+                <Grid item md={3} key={review.reviewer}>
+                  <ReviewCard review={review} />
+                </Grid>
+              ))
             )}
           </Grid>
-        </Box>
+        </Container>
+      </Box>
 
-        <br />
-        <Divider />
+      <br />
+      <Divider />
 
+      <Container sx={{ mt: 5 }}>
         <Box sx={{ my: 5 }}>
           <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
             About us
           </Typography>
-          <AboutUs kitchen={kitchen} />
+          {/* <AboutUs kitchen={kitchen} /> */}
         </Box>
       </Container>
     </>

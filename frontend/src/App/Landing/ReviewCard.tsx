@@ -1,5 +1,5 @@
-import { Rating, Typography } from "@mui/material";
-import { BoldTypography, GreyTypography, OrangePaper } from "../../components";
+import { Box, Rating, Typography } from "@mui/material";
+import { BoldTypography } from "../../components";
 
 type Props = {
   review: {
@@ -11,23 +11,31 @@ type Props = {
 };
 export default function ReviewCard(props: Props) {
   return (
-    <OrangePaper
+    <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         m: 2,
       }}
     >
-      <BoldTypography variant="subtitle1" sx={{ mb: 2 }}>
+      <Rating
+        name="disabled"
+        value={props.review.rating}
+        disabled
+        sx={{ "&.Mui-disabled": { opacity: "1" } }}
+      />
+      <BoldTypography variant="subtitle1" sx={{ my: 2, color: "white" }}>
         {props.review.title}
       </BoldTypography>
-      <GreyTypography variant="body2" sx={{ mb: 2 }}>
+      <Typography
+        variant="body2"
+        sx={{ mb: 2, color: "white", opacity: "0.80" }}
+      >
         {props.review.description}
-      </GreyTypography>
-      <Typography variant="body2" sx={{ mb: 2 }}>
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 2, color: "white" }}>
         -- {props.review.reviewer}
       </Typography>
-      <Rating name="disabled" value={props.review.rating} disabled />
-    </OrangePaper>
+    </Box>
   );
 }
