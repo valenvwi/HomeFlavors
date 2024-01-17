@@ -168,10 +168,7 @@ export default function Landing() {
 
       <Container sx={{ mt: 5 }}>
         <Box sx={{ my: 5 }}>
-          <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
-            About us
-          </Typography>
-          {/* <AboutUs kitchen={kitchen} /> */}
+          <AboutUs kitchen={kitchen} />
         </Box>
       </Container>
     </>

@@ -1,7 +1,12 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import kitchenImg from "../../assets/kitchen.jpg";
 import { CenterFlexBox, SpaceAroundFlexBox } from "../../components";
 import { ComponentPropsWithoutRef } from "react";
+import aboutUsImg from "../../assets/aboutUsLocation.jpg";
+import contactIcon from "../../assets/aboutUsIcons/contact.png";
+import locationIcon from "../../assets/aboutUsIcons/location.png";
+import openingHoursIcon from "../../assets/aboutUsIcons/openingHours.png";
+import emailIcon from "../../assets/aboutUsIcons/email.png";
 
 const smallScreenImgStyle = {
   width: "300px",
@@ -32,7 +37,6 @@ const MdTitle = ({
     sx={{
       color: "#EA5C2B",
       mx: 3,
-      mt: 3,
       fontFamily: "Rowdies",
       ...sx,
     }}
@@ -40,11 +44,29 @@ const MdTitle = ({
   />
 );
 
+const fontTitle = {
+  fontStyle: "normal",
+  fontWeight: "bold",
+  fontSize: "36px",
+  textAlign: "center",
+  lineHeight: "54px",
+  my: 1,
+};
+
+const fontSmallTitle = {
+  fontStyle: "normal",
+  fontWeight: "bold",
+  fontSize: "20px",
+  textAlign: "center",
+  lineHeight: "36px",
+  my: 2,
+};
+
 const MdContent = ({
   sx,
   ...rest
 }: ComponentPropsWithoutRef<typeof Typography>) => (
-  <Typography variant="subtitle1" sx={{ mx: 3, mb: 3, ...sx }} {...rest} />
+  <Typography variant="subtitle1" sx={{ mx: 3, ...sx }} {...rest} />
 );
 
 type Props = {
@@ -54,77 +76,56 @@ type Props = {
     openingHours: string;
   };
 };
+
 export default function AboutUs(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  return isSmallScreen ? (
-    <Box sx={{ p: 2 }}>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <img src={kitchenImg} alt="landing" style={smallScreenImgStyle} />
-      </Box>
-      <Box
+  const icons = [openingHoursIcon, locationIcon, contactIcon, emailIcon];
+  const contents = [
+    props.kitchen.openingHours,
+    props.kitchen.address,
+    props.kitchen.contactNumber,
+    "homeFlavors@abc.com",
+  ];
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={7}>
+        <Box
+          component="img"
+          src={aboutUsImg}
+          sx={{ width: "100%", borderRadius: "20px" }}
+        />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        md={4}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: isMediumScreen ? "center" : "flex-start",
+          ml: isMediumScreen ? 0 : 6,
         }}
       >
-        <Typography variant="subtitle2" sx={{ py: 1 }}>
-          <b>Address:</b>
-          <br />
-          {props.kitchen.address}
+        <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
+          Find us
         </Typography>
-        <Typography variant="subtitle2" sx={{ py: 1 }}>
-          <b>Contact:</b>
-          <br />
-          {props.kitchen.contactNumber}
-        </Typography>
-        <Typography variant="subtitle2" sx={{ py: 1 }}>
-          <b>Opening hours:</b>
-          <br />
-          {props.kitchen.openingHours}
-        </Typography>
-      </Box>
-    </Box>
-  ) : (
-    <SpaceAroundFlexBox sx={{ p: 2 }}>
-      <img
-        src={kitchenImg}
-        alt="landing"
-        style={{
-          width: isMediumScreen ? "200px" : "300px",
-          height: isMediumScreen ? "200px" : "300px",
-          borderRadius: "15px",
-          objectFit: "cover",
-          margin: "0 50px",
-          boxShadow: "0px 0px 100px 0px rgba(235, 134, 75, 0.5)",
-        }}
-      />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Typography variant="subtitle1" sx={{ py: 1 }}>
-          <b>Address:</b>
-          <br />
-          {props.kitchen.address}
-        </Typography>
-        <Typography variant="subtitle1" sx={{ py: 1 }}>
-          <b>Contact:</b>
-          <br />
-          {props.kitchen.contactNumber}
-        </Typography>
-        <Typography variant="subtitle1" sx={{ py: 1 }}>
-          <b>Opening hours:</b>
-          <br />
-          {props.kitchen.openingHours}
-        </Typography>
-      </Box>
-    </SpaceAroundFlexBox>
+        {icons.map((icon, index) => (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              py: isMediumScreen ? 1 : 2,
+            }}
+          >
+            <img src={icon} alt="fresh" style={{ width: "40px" }} />
+            <MdContent>{contents[index]}</MdContent>
+          </Box>
+        ))}
+      </Grid>
+    </Grid>
   );
 }
