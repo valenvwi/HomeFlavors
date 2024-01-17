@@ -7,6 +7,7 @@ import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { isAxiosError } from "axios";
 import flyingPan from "../assets/frying-pan.png";
+import bannerImg from "../assets/banner1.jpg";
 import {
   BoldTypography,
   ContainedButton,
@@ -17,10 +18,11 @@ import {
 import { authLogoStyle } from "../components/imgStyle";
 
 const outerBoxStyle = {
-  marginTop: "120px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  m: 3,
+  py: 4,
 };
 
 const formBoxStyle = {
@@ -89,77 +91,93 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ flexGrow: 1 }}>
-      <Box sx={outerBoxStyle}>
-        <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
+    <Box
+      sx={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bannerImg})`,
+        backgroundSize: "cover",
+        flexGrow: 1,
+      }}
+    >
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          background: "white",
+          borderRadius: "20px",
+          marginTop: "100px",
+        }}
+      >
+        <Box sx={outerBoxStyle}>
+          <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 
-        <BoldTypography variant="h5" sx={{ py: 2 }}>
-          Welcome back
-        </BoldTypography>
-        <GreyTypography variant="body2" sx={{ textAlign: "center" }}>
-          We are happy to see you again!
-        </GreyTypography>
-        <OrangePaper sx={{ my: 3, display: "flex", flexDirection: "column" }}>
-          <BoldTypography variant="subtitle2" sx={{ textAlign: "center" }}>
-            Select a demo account to log in
+          <BoldTypography variant="h5" sx={{ py: 2 }}>
+            Welcome back
           </BoldTypography>
-          <SpaceAroundFlexBox>
-            <ContainedButton
-              sx={{ my: 1, fontSize: "12px" }}
-              onClick={handleGuestLogin}
-            >
-              Guest
-            </ContainedButton>
-            <ContainedButton
-              sx={{ fontSize: "12px" }}
-              onClick={handleOwnerLogin}
-            >
-              Owner
-            </ContainedButton>
-          </SpaceAroundFlexBox>
-        </OrangePaper>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate
-          sx={formBoxStyle}
-        >
-          <TextField
-            {...register("username", { required: "Username is required" })}
-            id="username"
-            label="Username"
-            autoComplete="username"
-            InputLabelProps={{ shrink: true }}
-            autoFocus
-            error={!!errors.username}
-            helperText={errors.username && errors.username.message}
-          />
-          <TextField
-            {...register("password", { required: "Password is required" })}
-            name="password"
-            label="Password"
-            type="password"
-            autoComplete="current-password"
-            InputLabelProps={{ shrink: true }}
-            error={!!errors.password}
-            helperText={errors.password && errors.password.message}
-          />
+          <GreyTypography variant="body2" sx={{ textAlign: "center" }}>
+            We are happy to see you again!
+          </GreyTypography>
+          <OrangePaper sx={{ my: 3, display: "flex", flexDirection: "column" }}>
+            <BoldTypography variant="subtitle2" sx={{ textAlign: "center" }}>
+              Select a demo account to log in
+            </BoldTypography>
+            <SpaceAroundFlexBox>
+              <ContainedButton
+                sx={{ my: 1, fontSize: "12px" }}
+                onClick={handleGuestLogin}
+              >
+                Guest
+              </ContainedButton>
+              <ContainedButton
+                sx={{ fontSize: "12px" }}
+                onClick={handleOwnerLogin}
+              >
+                Owner
+              </ContainedButton>
+            </SpaceAroundFlexBox>
+          </OrangePaper>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            sx={formBoxStyle}
+          >
+            <TextField
+              {...register("username", { required: "Username is required" })}
+              id="username"
+              label="Username"
+              autoComplete="username"
+              InputLabelProps={{ shrink: true }}
+              autoFocus
+              error={!!errors.username}
+              helperText={errors.username && errors.username.message}
+            />
+            <TextField
+              {...register("password", { required: "Password is required" })}
+              name="password"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              InputLabelProps={{ shrink: true }}
+              error={!!errors.password}
+              helperText={errors.password && errors.password.message}
+            />
 
-          {invalidCredentials && (
-            <Typography variant="subtitle2" sx={errorMsgStyle}>
-              Incorrect username/ password
-            </Typography>
-          )}
-          <ContainedButton type="submit" sx={buttonStyle}>
-            Log In
-          </ContainedButton>
-          <Grid container>
-            <Grid item sx={{ fontSize: "12px" }}>
-              <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
+            {invalidCredentials && (
+              <Typography variant="subtitle2" sx={errorMsgStyle}>
+                Incorrect username/ password
+              </Typography>
+            )}
+            <ContainedButton type="submit" sx={buttonStyle}>
+              Log In
+            </ContainedButton>
+            <Grid container>
+              <Grid item sx={{ fontSize: "12px" }}>
+                <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 }

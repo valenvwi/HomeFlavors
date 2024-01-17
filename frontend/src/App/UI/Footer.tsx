@@ -34,7 +34,6 @@ const FontContent = ({
 
 const boxStyle = {
   backgroundColor: "#402D28",
-  mt: 5,
   py: 3,
   borderTop: "1px solid",
   borderColor: "divider",

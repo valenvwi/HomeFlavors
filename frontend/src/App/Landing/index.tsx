@@ -163,11 +163,8 @@ export default function Landing() {
         </Container>
       </Box>
 
-      <br />
-      <Divider />
-
       <Container sx={{ mt: 5 }}>
-        <Box sx={{ my: 5 }}>
+        <Box sx={{ my: 5, pb: 4 }}>
           <FindUs kitchen={kitchen} />
         </Box>
       </Container>
