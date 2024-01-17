@@ -7,8 +7,8 @@ import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { isAxiosError } from "axios";
 import flyingPan from "../assets/frying-pan.png";
-import bannerImg from "../assets/banner1.jpg";
 import {
+  BackgroundContainer,
   BoldTypography,
   ContainedButton,
   GreyTypography,
@@ -91,12 +91,7 @@ export default function Login() {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bannerImg})`,
-        backgroundSize: "cover",
-        flexGrow: 1,
-      }}
+    <BackgroundContainer
     >
       <Container
         component="main"
@@ -178,6 +173,6 @@ export default function Login() {
           </Box>
         </Box>
       </Container>
-    </Box>
+    </BackgroundContainer>
   );
 }

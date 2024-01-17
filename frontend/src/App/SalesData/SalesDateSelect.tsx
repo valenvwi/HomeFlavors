@@ -43,15 +43,17 @@ export default function SalesDateSelect(props: {
   };
 
   return (
-    <FormControl sx={{ py: 2 }}>
-      <InputLabel id="demo-simple-select-label">Select Date</InputLabel>
+    <FormControl sx={{ py: 2, borderColor: "white", color: "white" }}>
+      <InputLabel id="demo-simple-select-label" sx={{ color: "white" }}>
+        Select Date
+      </InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={selectedDate}
         label="Date"
         onChange={handleChange}
-        sx={{ fontSize: "14px" }}
+        sx={{ fontSize: "14px", color: "white", borderColor: "white" }}
       >
         <MenuItem value={0}>Today</MenuItem>
         <MenuItem value={1}>Yesterday</MenuItem>

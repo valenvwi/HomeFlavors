@@ -11,7 +11,6 @@ const cardStyle = {
   pt: 2,
   m: 2,
   borderRadius: "15px",
-  backgroundColor: "#fff6f2",
 };
 
 const fontTitleStyle = {

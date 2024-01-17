@@ -37,11 +37,15 @@ const bigScreenConfig = {
 };
 
 const StyledTableRow = styled(TableRow)(() => ({
-  "&:nth-of-type(even)": {
-    backgroundColor: "#fff6f2",
+  "&.MuiTableRow-root": {
+    "&:nth-of-type(even)": {
+      backgroundColor: "#fff6f2",
+    },
+    "&:nth-of-type(odd)": {
+      backgroundColor: "#fff",
+    },
   },
 }));
-
 type Props = {
   id: number;
   image: string;

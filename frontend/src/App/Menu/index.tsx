@@ -44,10 +44,10 @@ export default function Menu() {
           You have successfully signed up!
         </Alert>
       )}
-      <Container sx={{ flexGrow: 1, p: 0 }}>
+      <>
         <KitchenInfo />
         <MenuItem />
-      </Container>
+      </>
     </>
   );
 }

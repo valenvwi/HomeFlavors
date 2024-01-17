@@ -54,6 +54,16 @@ export default function MenuItem() {
     );
   const menuItems = menuItemsResponse?.data;
 
+  const soupItems = menuItems?.filter((item) => item.category === "soup");
+  const meatItems = menuItems?.filter((item) => item.category === "meat");
+  const seafoodItems = menuItems?.filter((item) => item.category === "seafood");
+  const vegetableItems = menuItems?.filter(
+    (item) => item.category === "vegetable"
+  );
+  const pastaItems = menuItems?.filter((item) => item.category === "pasta");
+
+  const categoryTitle = [ "Soup", "Meat", "Seafood", "Vegetable", "Pasta"];
+
   const toggleAddMenuItem = () => {
     setShowAddMenuItem(!showAddMenuItem);
   };
@@ -180,6 +190,7 @@ export default function MenuItem() {
           category={category}
         />
       )}
+
       {!showAddMenuItem && !showEditMenuItem && (
         <>
           {isSmallScreen ? (
@@ -187,8 +198,11 @@ export default function MenuItem() {
           ) : (
             <Tabbar handleCategoryChange={handleCategoryChange} />
           )}
+
+          
+          <Typography>Soup</Typography>
           <Grid container>
-            {menuItems?.map((item) =>
+            {soupItems?.map((item) =>
               isSmallScreen ? (
                 <MenuItemCardMobile
                   menuItem={item}
@@ -203,7 +217,8 @@ export default function MenuItem() {
                   isEntering={isEntering}
                 />
               ) : (
-                <Grid item sm={12} md={6}>
+                <>
+                <Grid item sm={12} md={3}>
                   <MenuItemCard
                     menuItem={item}
                     key={item.id}
@@ -217,6 +232,7 @@ export default function MenuItem() {
                     isEntering={isEntering}
                   />
                 </Grid>
+                </>
               )
             )}
           </Grid>

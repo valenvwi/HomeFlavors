@@ -16,6 +16,7 @@ import silver from "../../assets/medals/silver.png";
 import bronze from "../../assets/medals/bronze.png";
 import noSalesDataPic from "../../assets/no_sales_data.png";
 import {
+  BackgroundContainer,
   BoldTypography,
   CenterFlexBox,
   SpaceBetweenFlexBox,
@@ -32,7 +33,7 @@ const flexColumnGrowStyle = {
 
 const TitleTypography = (
   props: ComponentPropsWithoutRef<typeof Typography>
-) => <Typography fontWeight={700} variant="h6" {...props} />;
+) => <Typography fontWeight={700} variant="h6" color="white" {...props} />;
 
 export default function SalesData() {
   const today = new Date();
@@ -73,8 +74,10 @@ export default function SalesData() {
             mt: 2,
           }}
         >
-          <BoldTypography variant="h6">Overview</BoldTypography>
-          <BoldTypography variant="h5">
+          <BoldTypography variant="h6" sx={{ color: "white" }}>
+            Overview
+          </BoldTypography>
+          <BoldTypography variant="h5" sx={{ color: "white" }}>
             {startDate === endDate ? startDate : startDate + " - " + endDate}
           </BoldTypography>
           <SalesDateSelect onSetDate={onSetDate} />
@@ -91,87 +94,92 @@ export default function SalesData() {
   }
 
   return (
-    <Container sx={{ mt: 4, py: 5, flexGrow: 1 }} maxWidth="xl">
-      <SpaceBetweenFlexBox
-        sx={{
-          mt: isSmallScreen ? 1 : 2,
-        }}
-      >
-        {!isSmallScreen && <TitleTypography>Overview</TitleTypography>}
-        <BoldTypography variant={isSmallScreen ? "subtitle1" : "h5"}>
-          {startDate === endDate ? startDate : startDate + " - " + endDate}
-        </BoldTypography>
-        <SalesDateSelect onSetDate={onSetDate} />
-      </SpaceBetweenFlexBox>
+    <BackgroundContainer>
+      <Container sx={{ mt: 4, py: 5, flexGrow: 1 }} maxWidth="xl">
+        <SpaceBetweenFlexBox
+          sx={{
+            mt: isSmallScreen ? 1 : 2,
+          }}
+        >
+          {!isSmallScreen && <TitleTypography>Overview</TitleTypography>}
+          <BoldTypography
+            variant={isSmallScreen ? "subtitle1" : "h5"}
+            sx={{ color: "white" }}
+          >
+            {startDate === endDate ? startDate : startDate + " - " + endDate}
+          </BoldTypography>
+          <SalesDateSelect onSetDate={onSetDate} />
+        </SpaceBetweenFlexBox>
 
-      {isSmallScreen && <TitleTypography>Overview</TitleTypography>}
+        {isSmallScreen && <TitleTypography>Overview</TitleTypography>}
 
-      <Grid container sx={{ my: 3, justifyContent: "center" }}>
-        {salesByHour && (
-          <>
-            <SalesCard
-              title="Total Sales"
-              subtitle={"CHF " + (salesByPeriod?.revenue ?? "0.00")}
-              sales={salesByHour}
-              data="revenue"
-            />
-            <SalesCard
-              title="Total Orders"
-              subtitle={salesByPeriod.orders}
-              sales={salesByHour}
-              data="ordersCount"
-            />
-            <SalesCard
-              title="Total Items Sold"
-              subtitle={salesByPeriod.quantity}
-              sales={salesByHour}
-              data="quantity"
-            />
-            <SalesCard
-              title="Cancellation Rate"
-              subtitle={
-                orderStatus.cancelledOrders
-                  ? orderStatus?.cancelPercentage + "%"
-                  : "0"
-              }
-              orderStatus={orderStatus}
-            />
-          </>
-        )}
-      </Grid>
-
-      <TitleTypography>Top 3 Sales</TitleTypography>
-
-      {salesByItem != undefined && salesByItem.length > 0 && (
-        <Grid container sx={{ my: 3 }}>
-          <TopSalesCard
-            name={salesByItem[0].name}
-            image={salesByItem[0].image}
-            quantity={salesByItem[0].quantity}
-            medal={gold}
-          />
-          {salesByItem.length > 1 && (
-            <TopSalesCard
-              name={salesByItem[1].name}
-              image={salesByItem[1].image}
-              quantity={salesByItem[1].quantity}
-              medal={silver}
-            />
-          )}
-          {salesByItem.length > 2 && (
-            <TopSalesCard
-              name={salesByItem[2].name}
-              image={salesByItem[2].image}
-              quantity={salesByItem[2].quantity}
-              medal={bronze}
-            />
+        <Grid container sx={{ my: 3, justifyContent: "center" }}>
+          {salesByHour && (
+            <>
+              <SalesCard
+                title="Total Sales"
+                subtitle={"CHF " + (salesByPeriod?.revenue ?? "0.00")}
+                sales={salesByHour}
+                data="revenue"
+              />
+              <SalesCard
+                title="Total Orders"
+                subtitle={salesByPeriod.orders}
+                sales={salesByHour}
+                data="ordersCount"
+              />
+              <SalesCard
+                title="Total Items Sold"
+                subtitle={salesByPeriod.quantity}
+                sales={salesByHour}
+                data="quantity"
+              />
+              <SalesCard
+                title="Cancellation Rate"
+                subtitle={
+                  orderStatus.cancelledOrders
+                    ? orderStatus?.cancelPercentage + "%"
+                    : "0"
+                }
+                orderStatus={orderStatus}
+              />
+            </>
           )}
         </Grid>
-      )}
 
-      <TitleTypography>Sales by Item</TitleTypography>
+        <TitleTypography>Top 3 Sales</TitleTypography>
 
-      {salesByItem && <SalesItemTable sales={salesByItem} />}
-    </Container>
+        {salesByItem != undefined && salesByItem.length > 0 && (
+          <Grid container sx={{ my: 3 }}>
+            <TopSalesCard
+              name={salesByItem[0].name}
+              image={salesByItem[0].image}
+              quantity={salesByItem[0].quantity}
+              medal={gold}
+            />
+            {salesByItem.length > 1 && (
+              <TopSalesCard
+                name={salesByItem[1].name}
+                image={salesByItem[1].image}
+                quantity={salesByItem[1].quantity}
+                medal={silver}
+              />
+            )}
+            {salesByItem.length > 2 && (
+              <TopSalesCard
+                name={salesByItem[2].name}
+                image={salesByItem[2].image}
+                quantity={salesByItem[2].quantity}
+                medal={bronze}
+              />
+            )}
+          </Grid>
+        )}
+
+        <TitleTypography>Sales by Item</TitleTypography>
+
+        {salesByItem && <SalesItemTable sales={salesByItem} />}
+      </Container>
+    </BackgroundContainer>
   );
 }

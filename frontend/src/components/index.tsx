@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { ComponentPropsWithRef } from "@react-spring/web";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import bannerImg from "../assets/banner1.jpg";
 
 export const BoldTypography = (
   props: ComponentPropsWithoutRef<typeof Typography>
@@ -91,6 +92,21 @@ export const SpaceAroundFlexBox = ({
       display: "flex",
       justifyContent: "space-around",
       alignItems: "center",
+      ...sx,
+    }}
+    {...rest}
+  />
+);
+
+export const BackgroundContainer = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Box>) => (
+  <Box
+    sx={{
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bannerImg})`,
+        backgroundSize: "cover",
+        flexGrow: 1,
       ...sx,
     }}
     {...rest}
