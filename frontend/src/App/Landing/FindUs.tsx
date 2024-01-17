@@ -77,7 +77,7 @@ type Props = {
   };
 };
 
-export default function AboutUs(props: Props) {
+export default function FindUs(props: Props) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));

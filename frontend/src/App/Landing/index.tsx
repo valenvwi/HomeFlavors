@@ -15,7 +15,7 @@ import { reviews } from "../Utils/constants";
 import Carousel from "react-material-ui-carousel";
 import { CenterFlexBox, ContainedButton } from "../../components";
 import BannerSection from "./BannerSection";
-import AboutUs from "./AboutUs";
+import FindUs from "./FindUs";
 import OurValue from "./OurValue";
 import { useNavigate } from "react-router-dom";
 
@@ -168,7 +168,7 @@ export default function Landing() {
 
       <Container sx={{ mt: 5 }}>
         <Box sx={{ my: 5 }}>
-          <AboutUs kitchen={kitchen} />
+          <FindUs kitchen={kitchen} />
         </Box>
       </Container>
     </>
