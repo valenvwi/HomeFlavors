@@ -13,10 +13,11 @@ import { useKitchensRetrieve } from "../../../api";
 import ReviewCard from "./ReviewCard";
 import { reviews } from "../Utils/constants";
 import Carousel from "react-material-ui-carousel";
-import { CenterFlexBox } from "../../components";
+import { CenterFlexBox, ContainedButton } from "../../components";
 import BannerSection from "./BannerSection";
 import AboutUs from "./AboutUs";
 import OurValue from "./OurValue";
+import { useNavigate } from "react-router-dom";
 
 const fontTitle = {
   fontStyle: "normal",
@@ -24,7 +25,8 @@ const fontTitle = {
   fontSize: "36px",
   textAlign: "center",
   lineHeight: "54px",
-  my: 2,
+  mt: 2,
+  mb: 5,
 };
 
 const fontSmallTitle = {
@@ -51,44 +53,56 @@ export default function Landing() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const navigate = useNavigate();
+
+  const goToMenuPage = () => {
+    navigate("/menu");
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <BannerSection kitchen={kitchen} />
       <Container sx={{ mt: 5 }}>
-
-
-        <br />
         <Box sx={{ my: 5 }}>
-          <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
-            Our Values
-          </Typography>
           <OurValue />
         </Box>
 
         <br />
         <Divider />
 
-        <Box sx={{ my: 5 }}>
+        <Box
+          sx={{
+            my: 5,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "cewnter",
+          }}
+        >
           <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
             Our Speciality
           </Typography>
           <Grid container spacing={2}>
             {featureMenuItems.map((menuItem) => (
-              <Grid item xs={12} sm={6} key={menuItem.name}>
+              <Grid item xs={12} sm={6} md={3} key={menuItem.name}>
                 <FeatureMenuItem menuItem={menuItem} />
               </Grid>
             ))}
           </Grid>
-        </Box>
-
-        <br />
-        <Divider />
-
-        <Box sx={{ my: 5 }}>
-          <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
-            About us
-          </Typography>
-          <AboutUs kitchen={kitchen} />
+          <Box sx={{ margin: "0 auto" }}>
+            <ContainedButton
+              onClick={goToMenuPage}
+              sx={{ mt: 1, px: 3, py: 1 }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "18px",
+                }}
+              >
+                View All
+              </Typography>
+            </ContainedButton>
+          </Box>
         </Box>
 
         <br />
@@ -122,6 +136,16 @@ export default function Landing() {
               </Carousel>
             )}
           </Grid>
+        </Box>
+
+        <br />
+        <Divider />
+
+        <Box sx={{ my: 5 }}>
+          <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
+            About us
+          </Typography>
+          <AboutUs kitchen={kitchen} />
         </Box>
       </Container>
     </>

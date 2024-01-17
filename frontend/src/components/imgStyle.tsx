@@ -17,10 +17,10 @@ export const mdImgStyle = {
 } as const;
 
 export const lgImgStyle = {
-  width: "150px",
-  height: "150px",
+  width: "210px",
+  height: "210px",
   objectFit: "cover",
-  borderRadius: "10px",
+  borderRadius: "20px",
   aspectRatio: "1",
   margin: "0 auto",
 } as const;

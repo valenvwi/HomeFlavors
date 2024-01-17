@@ -77,7 +77,7 @@ export default function BannerSection(props: Props) {
         >
           {props.kitchen?.description}
         </Typography>
-        <ContainedButton onClick={goToMenuPage} sx={{ my: 5, p: 2 }}>
+        <ContainedButton onClick={goToMenuPage} sx={{ my: 5, px: 3, py: 1 }}>
           <Typography sx={style.buttonText}>
             Menu
             <ArrowForwardIcon sx={{ ml: 1 }} />

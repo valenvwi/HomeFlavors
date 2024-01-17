@@ -65,28 +65,28 @@ export default function AboutUs(props: Props) {
         <img src={kitchenImg} alt="landing" style={smallScreenImgStyle} />
       </Box>
       <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Typography variant="subtitle2" sx={{ py: 1 }}>
-                <b>Address:</b>
-                <br />
-                {props.kitchen.address}
-              </Typography>
-              <Typography variant="subtitle2" sx={{ py: 1 }}>
-                <b>Contact:</b>
-                <br />
-                {props.kitchen.contactNumber}
-              </Typography>
-              <Typography variant="subtitle2" sx={{ py: 1 }}>
-                <b>Opening hours:</b>
-                <br />
-                {props.kitchen.openingHours}
-              </Typography>
-            </Box>
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="subtitle2" sx={{ py: 1 }}>
+          <b>Address:</b>
+          <br />
+          {props.kitchen.address}
+        </Typography>
+        <Typography variant="subtitle2" sx={{ py: 1 }}>
+          <b>Contact:</b>
+          <br />
+          {props.kitchen.contactNumber}
+        </Typography>
+        <Typography variant="subtitle2" sx={{ py: 1 }}>
+          <b>Opening hours:</b>
+          <br />
+          {props.kitchen.openingHours}
+        </Typography>
+      </Box>
     </Box>
   ) : (
     <SpaceAroundFlexBox sx={{ p: 2 }}>
@@ -103,29 +103,28 @@ export default function AboutUs(props: Props) {
         }}
       />
       <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Typography variant="subtitle2" sx={{ py: 1 }}>
-                <b>Address:</b>
-                <br />
-                {props.kitchen.address}
-              </Typography>
-              <Typography variant="subtitle2" sx={{ py: 1 }}>
-                <b>Contact:</b>
-                <br />
-                {props.kitchen.contactNumber}
-              </Typography>
-              <Typography variant="subtitle2" sx={{ py: 1 }}>
-                <b>Opening hours:</b>
-                <br />
-                {props.kitchen.openingHours}
-              </Typography>
-            </Box>
-
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="subtitle1" sx={{ py: 1 }}>
+          <b>Address:</b>
+          <br />
+          {props.kitchen.address}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ py: 1 }}>
+          <b>Contact:</b>
+          <br />
+          {props.kitchen.contactNumber}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ py: 1 }}>
+          <b>Opening hours:</b>
+          <br />
+          {props.kitchen.openingHours}
+        </Typography>
+      </Box>
     </SpaceAroundFlexBox>
   );
 }

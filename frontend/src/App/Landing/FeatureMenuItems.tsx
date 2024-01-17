@@ -1,22 +1,6 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import { BoldTypography, GreyTypography, OrangePaper } from "../../components";
-import { mdImgStyle } from "../../components/imgStyle";
-
-const smImgStyle = {
-  width: "80px",
-  height: "80px",
-  borderRadius: "10px",
-  margin: "10px 0px",
-  objectFit: "cover",
-  flexShrink: 0,
-} as const;
-
-const outerBoxStyle = {
-  display: "flex",
-  alignItems: "center",
-  my: 1,
-  px: 1,
-} as const;
+import { BoldTypography, GreyTypography } from "../../components";
+import { lgImgStyle } from "../../components/imgStyle";
 
 type Props = {
   menuItem: {
@@ -30,31 +14,37 @@ type Props = {
 };
 export default function FeatureMenuItem(props: Props) {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <OrangePaper sx={outerBoxStyle}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+      }}
+    >
       <img
         src={props.menuItem.image}
         alt={props.menuItem.name}
-        style={isSmallScreen ? smImgStyle : mdImgStyle}
+        style={lgImgStyle}
       />
-      <Box sx={{ flexGrow: 1, ml: 2, my: 1 }}>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <BoldTypography
-            variant={isSmallScreen ? "subtitle2" : "subtitle1"}
-            sx={{ pr: 1 }}
-          >
-            {props.menuItem.name}
-          </BoldTypography>
-        </Box>
+      <Box sx={{ mx: isMediumScreen ? 2 : 0 }}>
+        <BoldTypography variant="subtitle1" sx={{ mt: 2, pb: 1 }}>
+          {" "}
+          {props.menuItem.name}
+        </BoldTypography>
         <GreyTypography variant="body2">
+          {" "}
           {props.menuItem.description}
         </GreyTypography>
-        <BoldTypography variant="subtitle2">
+        <BoldTypography variant="subtitle1" sx={{ mt: 1, mb: 2 }}>
+          {" "}
           CHF {props.menuItem.price}
         </BoldTypography>
       </Box>
-    </OrangePaper>
+    </Box>
   );
 }
