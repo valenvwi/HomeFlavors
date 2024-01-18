@@ -14,10 +14,7 @@ import { smImgStyle, mdImgStyle } from "../../components/imgStyle";
 
 const smallScreenConfig = {
   cardStyle: {
-    my: 2,
-    p: 2,
-    backgroundColor: "#fff6f2",
-    borderRadius: "15px",
+    py: 3,
   },
   innerFirstBoxStyle: {
     display: "flex",
@@ -37,11 +34,8 @@ const smallScreenConfig = {
 const largeScreenConfig = {
   cardStyle: {
     display: "flex",
-    m: 2,
+    m: 1,
     px: 3,
-    py: 2,
-    backgroundColor: "#fff6f2",
-    borderRadius: "15px",
     alignItems: "center",
   },
   innerFirstBoxStyle: { flexGrow: 1, my: 2, mx: 4 },
@@ -57,11 +51,6 @@ const largeScreenConfig = {
 const outerBoxStyle = {
   display: "flex",
   alignItems: "center",
-};
-
-const buttonStyle = {
-  backgroundColor: "#fff6f2",
-  color: "primary",
 };
 
 const GreyTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
@@ -107,7 +96,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
   return isSmallScreen ? (
     <>
       <animated.div style={fadeOutAnimation}>
-        <Card elevation={6} sx={style.cardStyle}>
+        <Box sx={style.cardStyle}>
           <Box sx={outerBoxStyle}>
             <img
               src={`${BASEURL}/${props.cartItem.image}`}
@@ -140,17 +129,17 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               </IconButton>
             </CenterFlexBox>
 
-            <Button style={buttonStyle} onClick={onDeleteCartItem}>
+            <IconButton color="primary" onClick={onDeleteCartItem}>
               <DeleteOutlineIcon sx={{ fontSize: "28px", ml: 1 }} />
-            </Button>
+            </IconButton>
           </Box>
-        </Card>
+        </Box>
       </animated.div>
     </>
   ) : (
     <>
       <animated.div style={fadeOutAnimation}>
-        <Card elevation={6} sx={style.cardStyle}>
+        <Box sx={style.cardStyle}>
           <img
             src={`${BASEURL}/${props.cartItem.image}`}
             alt={props.cartItem.name}
@@ -158,7 +147,9 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
           />
 
           <Box sx={style.innerFirstBoxStyle}>
-            <BoldTypography variant="h6">{props.cartItem.name}</BoldTypography>
+            <BoldTypography variant="subtitle1">
+              {props.cartItem.name}
+            </BoldTypography>
             <GreyTypography variant="body2">
               {props.cartItem.description}
             </GreyTypography>
@@ -174,13 +165,13 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               <AddCircleOutlineIcon sx={style.iconStyle} />
             </IconButton>
           </CenterFlexBox>
-          <BoldTypography variant="subtitle1">
+          <BoldTypography variant="subtitle1" sx={{ mr: 2 }}>
             CHF {(props.cartItem.price * props.cartItem.quantity).toFixed(2)}
           </BoldTypography>
-          <Button style={buttonStyle} onClick={onDeleteCartItem}>
-            <DeleteOutlineIcon sx={{ fontSize: "32px", ml: 1 }} />
-          </Button>
-        </Card>
+          <IconButton color="primary" onClick={onDeleteCartItem}>
+            <DeleteOutlineIcon sx={{ fontSize: "36px" }} />
+          </IconButton>
+        </Box>
       </animated.div>
     </>
   );

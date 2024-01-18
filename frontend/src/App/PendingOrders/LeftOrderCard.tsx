@@ -1,10 +1,15 @@
-import { Box, Divider, ListItem, ListItemButton, Paper } from "@mui/material";
+import {
+  Box,
+  Divider,
+  ListItemButton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BoldTypography, GreyTypography } from "../../components";
 
 const paperStyle = {
-  px: 3,
   display: "flex",
   alignItems: "top",
   justifyContent: "space-between",
@@ -20,14 +25,17 @@ export default function LeftOrderCard(props: Props) {
     props.changeOrder(order);
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
-      <Box key={props.order.id} sx={{ mx: 0 }}>
+      <Box key={props.order.id}>
         <ListItemButton
           onClick={() => changeOrder(props.order)}
           sx={{ justifyContent: "center" }}
         >
-          <Box sx={paperStyle}>
+          <Box sx={{ ...paperStyle, px: !isSmallScreen && 1 }}>
             <Box>
               <BoldTypography variant="subtitle2">
                 Order #{props.order.id}

@@ -26,13 +26,14 @@ const imgStyle = {
 export default function CartItem() {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector((state) => state.cart.totalPrice);
-  
+
   return (
-    <Paper
-      elevation={0}
+    <Box
       sx={{
-        mt: { md: 3 },
-        px: 1,
+        backgroundColor: "white",
+        borderRadius: "30px",
+        margin: "90px auto 0 auto",
+        p: 2,
       }}
     >
       <BoldTypography variant="h5" sx={{ py: 1 }}>
@@ -55,7 +56,7 @@ export default function CartItem() {
               </Typography>
             </Box>
           </Box>
-          <Typography variant="body2">{cartItem.price} </Typography>
+          <BoldTypography variant="body2">CHF {cartItem.price} </BoldTypography>
         </SpaceBetweenFlexBox>
       ))}
       <Divider sx={{ mt: 3 }} />
@@ -70,6 +71,6 @@ export default function CartItem() {
           CHF {totalPrice.toFixed(2)}
         </BoldTypography>
       </SpaceBetweenFlexBox>
-    </Paper>
+    </Box>
   );
 }

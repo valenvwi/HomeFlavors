@@ -67,7 +67,7 @@ const bigScreenConfig = {
     pt: 2,
     m: 2,
     borderRadius: "15px",
-    backgroundColor: "#fff6f2",
+    backgroundColor: "white",
     position: "relative",
     overflow: "visible",
   },

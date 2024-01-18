@@ -99,7 +99,7 @@ export default function CheckoutForm() {
       totalPrice: totalPrice.toString(),
       totalQuantity: cartItems
         .map((cartItem: CartItemType) => cartItem.quantity)
-        .reduce((a:number, b:number) => a + b, 0),
+        .reduce((a: number, b: number) => a + b, 0),
       name: data.name,
       contactNumber: data.contactNumber,
       pickUpDate: data.pickUpDateTime.format("YYYY-MM-DD"),
@@ -140,9 +140,12 @@ export default function CheckoutForm() {
   }
 
   return (
-    <OrangePaper
+    <Box
       sx={{
-        mt: { xs: 1, md: 5 },
+        backgroundColor: "white",
+        borderRadius: "30px",
+        my: 5,
+        p: 2,
       }}
     >
       {isCheckingout && (
@@ -232,6 +235,6 @@ export default function CheckoutForm() {
           </ContainedButton>
         </Box>
       </Grid>
-    </OrangePaper>
+    </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   BoldTypography,
@@ -21,11 +21,16 @@ export default function PaymentForm() {
     console.log(data.nameOnCard, "You don't really need to submit");
   };
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <OrangePaper
+<Box
       sx={{
-        mt: { md: 5 },
-        mb: 4,
+        backgroundColor: "white",
+        borderRadius: "30px",
+        margin: isSmallScreen ? "0 ": "90px auto 0 auto",
+        p: 2,
       }}
     >
       <BoldTypography variant="h5" sx={{ m: 2 }}>
@@ -71,6 +76,6 @@ export default function PaymentForm() {
           ></StandardTextField>
         </ResponsiveGrid>
       </Grid>
-    </OrangePaper>
+    </Box>
   );
 }

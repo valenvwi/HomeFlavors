@@ -3,13 +3,14 @@ import { OrderType } from "../types/order";
 import dayjs from "dayjs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { useState } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 import { BASEURL } from "../../config";
 import { useTheme, useMediaQuery } from "@mui/material";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import {
   BoldTypography,
   ContainedButton,
+  GreyBoldTypography,
   GreyTypography,
   SpaceBetweenFlexBox,
 } from "../../components";
@@ -20,7 +21,6 @@ const smallScreenConfig = {
     my: 2,
     p: 1,
     borderRadius: "15px",
-    backgroundColor: "#fff6f2",
   },
   fontTitleVariant: "subtitle1",
   fontContentVariant: "body2",
@@ -33,7 +33,6 @@ const largeScreenConfig = {
     py: 4,
     px: 5,
     borderRadius: "15px",
-    backgroundColor: "#fff6f2",
   },
   fontTitleVariant: "h6",
   fontContentVariant: "subtitle1",
@@ -73,6 +72,21 @@ const flexendStyle = {
   my: 1,
 };
 
+const GreyContent = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Typography>) => (
+  <Typography
+    fontWeight={700}
+    variant="body1"
+    sx={{
+      color: "#8b8989",
+      mr: 1,
+      ...sx,
+    }}
+    {...rest}
+  />
+);
 type Props = {
   order: OrderType;
   openCancelOrderDialog: (orderId: number) => void;
@@ -121,15 +135,24 @@ export default function OrderHistoryCard(props: Props) {
               style={style.imageStyle}
             />
             <Box sx={flexBoxColumnStyle}>
-              <Typography variant={style.fontContentVariant}>
-                Pick up time: {formattedPickUpDateTime}
-              </Typography>
-              <Typography variant={style.fontContentVariant}>
-                Total Quantity: {props.order.totalQuantity}
-              </Typography>
-              <Typography variant={style.fontContentVariant}>
-                Price: CHF {props.order.totalPrice}
-              </Typography>
+              <Box sx={{ display: "flex" }}>
+                <GreyContent>Pick up time:</GreyContent>
+                <BoldTypography variant={style.fontContentVariant}>
+                  {formattedPickUpDateTime}
+                </BoldTypography>
+              </Box>
+              <Box sx={{ display: "flex" }}>
+                <GreyContent>Total Quantity:</GreyContent>
+                <BoldTypography variant={style.fontContentVariant}>
+                  {props.order.totalQuantity}
+                </BoldTypography>
+              </Box>
+              <Box sx={{ display: "flex" }}>
+                <GreyContent>Price:</GreyContent>
+                <BoldTypography variant={style.fontContentVariant}>
+                  CHF {props.order.totalPrice}
+                </BoldTypography>
+              </Box>
             </Box>
           </Box>
           {!props.order.isAccepted && !isSmallScreen && (

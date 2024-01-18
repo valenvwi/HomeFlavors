@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import { useState } from "react";
 import {
+  BackgroundContainer,
   BoldTypography,
   ContainedButton,
 } from "../../components";
@@ -78,81 +79,83 @@ export default function OrderHistory() {
     refetchAcceptedOrder();
   };
   return (
-    <Container sx={containerStyle}>
-      <Modal
-        open={isCheckedout}
-        handleClose={handleClose}
-        message="Your order has been placed successfully!"
-        cancelText="Close"
-        icon="success"
-      />
+    <BackgroundContainer>
+      <Container sx={containerStyle}>
+        <Modal
+          open={isCheckedout}
+          handleClose={handleClose}
+          message="Your order has been placed successfully!"
+          cancelText="Close"
+          icon="success"
+        />
 
-      <Modal
-        open={isCancelled}
-        handleClose={handleClose}
-        message="Your order has been cancelled successfully!"
-        cancelText="Close"
-        icon="success"
-      />
-      <Modal
-        open={openCancelledDialog}
-        message="Are you sure you want to cancel this order?"
-        confirmText="Yes"
-        cancelText="No"
-        handleConfirm={() => cancelOrder(orderId)}
-        handleClose={handleClose}
-        icon="alert"
-      />
-      {(orders?.length === 0 ||
-        (orders?.length !== 0 &&
-          acceptedOrders?.length === 0 &&
-          pendingOrders?.length === 0)) && (
-        <Container
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            flexGrow: 1,
-            alignItems: "center",
-          }}
-        >
-          <img src={noOrder} alt="Sold Out" width="250" />
-          <BoldTypography variant="h5">No orders yet</BoldTypography>
-          <ContainedButton sx={{ mt: 3, mb: 2 }} onClick={goToMenuPage}>
-            Shop now
-          </ContainedButton>
-        </Container>
-      )}
+        <Modal
+          open={isCancelled}
+          handleClose={handleClose}
+          message="Your order has been cancelled successfully!"
+          cancelText="Close"
+          icon="success"
+        />
+        <Modal
+          open={openCancelledDialog}
+          message="Are you sure you want to cancel this order?"
+          confirmText="Yes"
+          cancelText="No"
+          handleConfirm={() => cancelOrder(orderId)}
+          handleClose={handleClose}
+          icon="alert"
+        />
+        {(orders?.length === 0 ||
+          (orders?.length !== 0 &&
+            acceptedOrders?.length === 0 &&
+            pendingOrders?.length === 0)) && (
+          <Container
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              flexGrow: 1,
+              alignItems: "center",
+            }}
+          >
+            <img src={noOrder} alt="Sold Out" width="250" />
+            <BoldTypography variant="h5">No orders yet</BoldTypography>
+            <ContainedButton sx={{ mt: 3, mb: 2 }} onClick={goToMenuPage}>
+              Shop now
+            </ContainedButton>
+          </Container>
+        )}
 
-      {pendingOrders !== undefined && pendingOrders?.length > 0 && (
-        <>
-          <BoldTypography variant="h6" sx={{ my: 1 }}>
-            {" "}
-            Pending {pluralize(pendingOrders?.length || 0, "Order")} (
-            {pendingOrders?.length})
-          </BoldTypography>
-          {pendingOrders?.map((order) => (
-            <OrderHistoryCard
-              order={order}
-              key={order.id}
-              openCancelOrderDialog={openCancelOrderDialog}
-            />
-          ))}
-        </>
-      )}
+        {pendingOrders !== undefined && pendingOrders?.length > 0 && (
+          <>
+            <BoldTypography variant="h6" sx={{ my: 1, color: "white" }}>
+              {" "}
+              Pending {pluralize(pendingOrders?.length || 0, "Order")} (
+              {pendingOrders?.length})
+            </BoldTypography>
+            {pendingOrders?.map((order) => (
+              <OrderHistoryCard
+                order={order}
+                key={order.id}
+                openCancelOrderDialog={openCancelOrderDialog}
+              />
+            ))}
+          </>
+        )}
 
-      {acceptedOrders !== undefined && acceptedOrders?.length > 0 && (
-        <>
-          <BoldTypography variant="h6" sx={{ my: 1 }}>
-            {" "}
-            All {pluralize(acceptedOrders?.length || 0, "Order")} (
-            {acceptedOrders?.length})
-          </BoldTypography>
-          {acceptedOrders?.map((order) => (
-            <OrderHistoryCard order={order} key={order.id} />
-          ))}
-        </>
-      )}
-    </Container>
+        {acceptedOrders !== undefined && acceptedOrders?.length > 0 && (
+          <>
+            <BoldTypography variant="h6" sx={{ my: 1, color: "white" }}>
+              {" "}
+              All {pluralize(acceptedOrders?.length || 0, "Order")} (
+              {acceptedOrders?.length})
+            </BoldTypography>
+            {acceptedOrders?.map((order) => (
+              <OrderHistoryCard order={order} key={order.id} />
+            ))}
+          </>
+        )}
+      </Container>
+    </BackgroundContainer>
   );
 }
