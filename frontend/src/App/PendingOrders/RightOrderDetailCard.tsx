@@ -9,7 +9,12 @@ import {
 import dayjs from "dayjs";
 import { OrderType } from "../types/order";
 import { BASEURL } from "../../config";
-import { BoldTypography, ContainedButton } from "../../components";
+import {
+  BoldTypography,
+  ContainedButton,
+  GreyBoldTypography,
+  GreyTypography,
+} from "../../components";
 import { smImgStyle } from "../../components/imgStyle";
 
 const orderDetailSmallBox = {
@@ -19,9 +24,8 @@ const orderDetailSmallBox = {
 
 const orderItemBox = {
   display: "flex",
-  justifyContent: "space-between",
   alignItems: "center",
-  my: 2,
+  m: 2,
 };
 
 const mediumScreenConfig = {
@@ -33,9 +37,7 @@ const mediumScreenConfig = {
 
   orderDetailBox: {
     p: 1,
-    mb: 4,
-    borderRadius: "15px",
-    backgroundColor: "#fff6f2",
+    mb: 2,
   },
   smallPaperStyle: {
     p: 1,
@@ -47,14 +49,13 @@ const mediumScreenConfig = {
 const bigScreenConfig = {
   containerStyle: {
     m: 2,
-    p: 4,
+    px: 5,
+    py: 2,
     width: "100%",
   },
   orderDetailBox: {
-    p: 3,
+    px: 2,
     mb: 4,
-    borderRadius: "15px",
-    backgroundColor: "#fff6f2",
   },
   smallPaperStyle: {
     px: 3,
@@ -64,8 +65,9 @@ const bigScreenConfig = {
   imgStyle: {
     objectFit: "cover",
     borderRadius: "10px",
-    width: "80px",
-    height: "80px",
+    width: "60px",
+    height: "60px",
+    mr: 2,
   },
 };
 type Props = {
@@ -92,33 +94,30 @@ export default function RightOrderDetailCard(props: Props) {
 
   return (
     <Container sx={style.containerStyle}>
-      <Paper elevation={6} sx={style.orderDetailBox}>
-        <BoldTypography variant="h6">Order details</BoldTypography>
+      <Box sx={style.orderDetailBox}>
+        <BoldTypography variant="h5">Order details</BoldTypography>
         <Typography variant="subtitle2" sx={{ pt: 1 }}>
           Order for <b>{props.order.name}</b> created at{" "}
           {dayjs(props.order.createdAt).format("YYYY-MM-DD HH:mm")}
         </Typography>
-        <br />
-        <Box sx={orderDetailSmallBox}>
-          <Paper sx={style.smallPaperStyle}>
-            <Typography variant="subtitle2">
-              Pick up Date & Time
-              <br />
-              <b>
-                {props.order.pickUpDate}{" "}
-                {dayjs(props.order.pickUpTime, "HH:mm:ss").format("HH:mm")}
-              </b>
-            </Typography>
-          </Paper>
-          <Paper sx={style.smallPaperStyle}>
-            <Typography variant="subtitle2">
-              Contact number
-              <br />
-              <b>{props.order.contactNumber}</b>
-            </Typography>
-          </Paper>
+        <Box sx={{ display: "flex", mt: 1 }}>
+          <GreyBoldTypography variant="subtitle2" sx={{ mr: 1 }}>
+            Pick up time:{" "}
+          </GreyBoldTypography>
+          <BoldTypography variant="subtitle2">
+            {props.order.pickUpDate}{" "}
+            {dayjs(props.order.pickUpTime, "HH:mm:ss").format("HH:mm")}
+          </BoldTypography>
         </Box>
-      </Paper>
+        <Box sx={{ display: "flex" }}>
+          <GreyBoldTypography variant="subtitle2" sx={{ mr: 1 }}>
+            Contact number:
+          </GreyBoldTypography>
+          <BoldTypography variant="subtitle2">
+            {props.order.contactNumber}
+          </BoldTypography>
+        </Box>
+      </Box>
 
       {props.order.orderItems?.map((orderItem) => (
         <Box sx={orderItemBox} key={orderItem.id}>
@@ -129,12 +128,23 @@ export default function RightOrderDetailCard(props: Props) {
             sx={style.imgStyle}
           />
 
-          <Typography key={orderItem.id} variant="subtitle2">
-            {orderItem.menuItem.name} x {orderItem.quantity}
-          </Typography>
-          <Typography variant="subtitle2">
-            {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexGrow: "1",
+              flexDirection: "column",
+            }}
+          >
+            <BoldTypography key={orderItem.id} variant="subtitle2">
+              {orderItem.menuItem.name}
+            </BoldTypography>
+            <GreyBoldTypography variant="subtitle2">
+              Qty: {orderItem.quantity}
+            </GreyBoldTypography>
+          </Box>
+          <BoldTypography variant="subtitle2">
+            CHF {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
+          </BoldTypography>
         </Box>
       ))}
       {props.order.remark && (
@@ -143,22 +153,26 @@ export default function RightOrderDetailCard(props: Props) {
         </Typography>
       )}
       <br />
-      <BoldTypography sx={{ textAlign: "right" }}>
-        Total quantity: {props.order.totalQuantity}
-      </BoldTypography>
-      <BoldTypography sx={{ textAlign: "right" }}>
-        Total price: CHF {parseFloat(props.order.totalPrice).toFixed(2)}
-      </BoldTypography>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <GreyBoldTypography sx={{ mr: 1 }}>Total quantity:</GreyBoldTypography>
+        <BoldTypography>{props.order.totalQuantity}</BoldTypography>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+        <GreyBoldTypography sx={{ mr: 1 }}>Total price:</GreyBoldTypography>
+        <BoldTypography sx={{ textAlign: "right" }}>
+          CHF {parseFloat(props.order.totalPrice).toFixed(2)}
+        </BoldTypography>
+      </Box>
       {!props.order.isAccepted && (
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <ContainedButton
             color="success"
-            sx={{ m: 2 }}
+            sx={{ mb: 3, mx: 2 }}
             onClick={onAcceptOrder}
           >
             Accept
           </ContainedButton>
-          <ContainedButton color="error" sx={{ my: 2 }} onClick={onCancelOrder}>
+          <ContainedButton color="error" sx={{ mb: 3 }} onClick={onCancelOrder}>
             Cancel
           </ContainedButton>
         </Box>
@@ -167,7 +181,7 @@ export default function RightOrderDetailCard(props: Props) {
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <ContainedButton
             onClick={() => props.onSetShowOrderList(true)}
-            sx={{ my: 2 }}
+            sx={{ mb: 3 }}
           >
             Back
           </ContainedButton>

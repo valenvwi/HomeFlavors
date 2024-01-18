@@ -1,4 +1,4 @@
-import { Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { categories, labels } from "../../../Utils/constants";
 
@@ -11,14 +11,11 @@ export default function Tabbar(props: {
     setValue(newValue);
   };
 
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
-
   return (
     <Tabs
       value={value}
-      orientation={isSmallScreen ? "horizontal" : "vertical"}
-      onChange={() => handleChange(value)}
+      orientation="horizontal"
+      onChange={(event, newValue) => handleChange(newValue)}
       aria-label="scrollable tabs"
       sx={{ margin: "0 auto" }}
     >

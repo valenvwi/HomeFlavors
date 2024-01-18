@@ -54,16 +54,6 @@ export default function MenuItem() {
     );
   const menuItems = menuItemsResponse?.data;
 
-  const soupItems = menuItems?.filter((item) => item.category === "soup");
-  const meatItems = menuItems?.filter((item) => item.category === "meat");
-  const seafoodItems = menuItems?.filter((item) => item.category === "seafood");
-  const vegetableItems = menuItems?.filter(
-    (item) => item.category === "vegetable"
-  );
-  const pastaItems = menuItems?.filter((item) => item.category === "pasta");
-
-  const categoryTitle = [ "Soup", "Meat", "Seafood", "Vegetable", "Pasta"];
-
   const toggleAddMenuItem = () => {
     setShowAddMenuItem(!showAddMenuItem);
   };
@@ -116,7 +106,8 @@ export default function MenuItem() {
   };
 
   return (
-    <Container sx={{ display: "flex", flexDirection: "column", mt: 4 }}>
+    <Container sx={{ display: "flex", flexDirection: "column", mt: 3, mb: 5 }}>
+      {/* All Modals */}
       {showDeleteModal && (
         <Modal
           open={showDeleteModal}
@@ -179,10 +170,13 @@ export default function MenuItem() {
           </Button>
         </Box>
       )}
+
+      {/* Add menu item section for owner */}
       {showAddMenuItem && (
         <AddMenuItem ontoggleAddMenuItem={toggleAddMenuItem} />
       )}
 
+      {/* Edit menu item section for owner */}
       {showEditMenuItem && (
         <EditMenuItem
           menuItem={menuItem}
@@ -191,6 +185,9 @@ export default function MenuItem() {
         />
       )}
 
+      {/* Menu item section for all*/}
+
+      {/* Navigation bar to select category */}
       {!showAddMenuItem && !showEditMenuItem && (
         <>
           {isSmallScreen ? (
@@ -199,26 +196,10 @@ export default function MenuItem() {
             <Tabbar handleCategoryChange={handleCategoryChange} />
           )}
 
-          
-          <Typography>Soup</Typography>
           <Grid container>
-            {soupItems?.map((item) =>
-              isSmallScreen ? (
-                <MenuItemCardMobile
-                  menuItem={item}
-                  key={item.id}
-                  isOwner={isOwner}
-                  onSetMenuItem={onSetMenuItem}
-                  open={open}
-                  handleOpen={handleOpen}
-                  handleClose={handleClose}
-                  onSetMenuItemId={onSetMenuItemId}
-                  openDeleteDialog={openDeleteDialog}
-                  isEntering={isEntering}
-                />
-              ) : (
-                <>
-                <Grid item sm={12} md={3}>
+            {menuItems &&
+              menuItems.map((item) => (
+                <Grid item xs={12} sm={6} md={3}>
                   <MenuItemCard
                     menuItem={item}
                     key={item.id}
@@ -232,9 +213,7 @@ export default function MenuItem() {
                     isEntering={isEntering}
                   />
                 </Grid>
-                </>
-              )
-            )}
+              ))}
           </Grid>
         </>
       )}

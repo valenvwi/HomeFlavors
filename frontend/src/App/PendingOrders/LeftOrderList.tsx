@@ -19,11 +19,15 @@ const boxStyle = {
   overflow: "auto",
   px: 1,
   my: 1,
+  flexGrow: 1,
+  height: "100%",
 };
 
 const toggleButtonStyle = {
-  m: "0 auto",
   pt: 4,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const fontStyle = {
@@ -35,7 +39,7 @@ const fontStyle = {
 const dateStyle = {
   textAlign: "center",
   fontWeight: 700,
-  py: 2,
+  py: 1,
 };
 
 const mediumScreenConfig = {
@@ -100,8 +104,15 @@ export default function LeftOrderList(props: Props) {
   };
 
   return (
-    <Drawer variant="permanent" sx={style.drawerStyle}>
-      <Toolbar />
+    <Box
+      sx={{
+        backgroundColor: "white",
+        borderRadius: "30px",
+        margin: "90px auto 0 auto",
+        width: "70%",
+        height: "70vh",
+      }}
+    >
       <ToggleButtonGroup
         color="primary"
         value={alignment}
@@ -134,9 +145,9 @@ export default function LeftOrderList(props: Props) {
                       changeOrder={changeOrder}
                     />
                   ))}
-                  {(tomorrowOrders.length > 0 || upcomingOrders.length > 0) && (
+                  {/* {(tomorrowOrders.length > 0 || upcomingOrders.length > 0) && (
                     <Divider sx={{ mt: 3 }} />
-                  )}
+                  )} */}
                 </>
               )}
               {tomorrowOrders.length > 0 && (
@@ -151,7 +162,7 @@ export default function LeftOrderList(props: Props) {
                       changeOrder={changeOrder}
                     />
                   ))}
-                  {upcomingOrders.length > 0 && <Divider sx={{ mt: 3 }} />}
+                  {/* {upcomingOrders.length > 0 && <Divider sx={{ mt: 3 }} />} */}
                 </>
               )}
               {upcomingOrders.length > 0 && (
@@ -172,6 +183,6 @@ export default function LeftOrderList(props: Props) {
           )}
         </List>
       </Box>
-    </Drawer>
+    </Box>
   );
 }

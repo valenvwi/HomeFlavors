@@ -19,6 +19,9 @@ export const GreyTypography = (
   props: ComponentPropsWithoutRef<typeof Typography>
 ) => <Typography color="#8b8989" {...props} />;
 
+export const GreyBoldTypography = (
+  props: ComponentPropsWithoutRef<typeof Typography>
+) => <Typography color="#8b8989" fontWeight={700} {...props} />;
 export const ContainedButton = ({
   sx,
   ...rest
@@ -105,8 +108,8 @@ export const BackgroundContainer = ({
   <Box
     sx={{
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bannerImg})`,
-        backgroundSize: "cover",
-        flexGrow: 1,
+      backgroundSize: "cover",
+      flexGrow: 1,
       ...sx,
     }}
     {...rest}
@@ -143,7 +146,14 @@ export const PrimaryIconButton = ({
 }: ComponentPropsWithRef<typeof IconButton>) => (
   <IconButton
     color="primary"
-    sx={{ height: " 60px", width: "60px", ...sx }}
+    sx={{
+      height: " 60px",
+      width: "60px",
+      position: "absolute",
+      right: 0,
+      bottom: 5,
+      ...sx,
+    }}
     {...rest}
   />
 );

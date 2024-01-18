@@ -13,12 +13,10 @@ import Modal from "../../UI/Modal";
 import { useNavigate } from "react-router-dom";
 import {
   BoldTypography,
-  CenterFlexBox,
   GreyTypography,
-  OrangePaper,
   PrimaryIconButton,
 } from "../../../components";
-import { lgImgStyle, mdImgStyle } from "../../../components/imgStyle";
+import { lgImgStyle } from "../../../components/imgStyle";
 import { useSpring, animated } from "@react-spring/web";
 
 export default function MenuItemCard(props: {
@@ -72,113 +70,81 @@ export default function MenuItemCard(props: {
 
   return (
     <animated.div style={enterAnimation}>
-      {/* <OrangePaper
-        sx={{
-          display: "flex",
-          m: 2,
-        }}
-      >
-        <img
-          src={`${BASEURL}/${props.menuItem.image}`}
-          alt={props.menuItem.name}
-          style={mdImgStyle}
-        />
-        <Box sx={{ flexGrow: 1, ml: 2, my: 2 }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <BoldTypography variant="body1" sx={{ pr: 1 }}>
-              {props.menuItem.name}
-            </BoldTypography>
-            {props.menuItem.isVeg && (
-              <img src={vegIcon} alt="Vegetarian icon" width="20" height="20" />
-            )}
-            {props.menuItem.isSpicy && (
-              <img src={spicyIcon} alt="Spicy icon" width="25" height="25" />
-            )}
-          </Box>
-          <GreyTypography variant="body2">
-            {props.menuItem.description}
-          </GreyTypography>
-          <BoldTypography variant="subtitle2">
-            CHF {props.menuItem.price}
-          </BoldTypography>
-        </Box>
-        {props.isOwner ? (
-          <>
-            <Button
-              style={{ backgroundColor: "#fff6f2" }}
-              onClick={setMenuItem}
-            >
-              <ModeEditIcon sx={{ fontSize: "36px" }} />
-            </Button>
-            <Button
-              style={{ backgroundColor: "#fff6f2", color: "primary" }}
-              onClick={onDeleteMenuItem}
-            >
-              <DeleteIcon sx={{ fontSize: "36px", color: "primary" }} />
-            </Button>
-          </>
-        ) : props.menuItem.isAvailable ? (
-          !isLoggedIn ? (
-            <CenterFlexBox>
-              <PrimaryIconButton onClick={props.handleOpen}>
-                <AddCircleOutlineIcon sx={{ fontSize: "40px" }} />
-              </PrimaryIconButton>
-              <Modal
-                open={props.open}
-                handleClose={props.handleClose}
-                icon="none"
-                message="Log in to add to cart"
-                confirmText="Log in"
-                handleConfirm={goToLogin}
-                subtext="Don't have an account?"
-                subtextButtonText="Sign up"
-                subtextAction={goToSignup}
-              />
-            </CenterFlexBox>
-          ) : (
-            <CenterFlexBox>
-              <PrimaryIconButton onClick={onAddToCart}>
-                <AddCircleOutlineIcon sx={{ fontSize: "36px" }} />
-              </PrimaryIconButton>
-            </CenterFlexBox>
-          )
-        ) : (
-          <img
-            src={soldOut}
-            alt="Sold Out"
-            width="80"
-            height="80"
-            style={{ margin: "auto" }}
-          />
-        )}
-      </OrangePaper> */}
       <Box
         sx={{
+          position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          mt: 3,
+          my: 3,
           mx: 3,
         }}
       >
-        <PrimaryIconButton onClick={props.handleOpen}>
-          <AddCircleOutlineIcon
-            sx={{ fontSize: "40px", position: "fixed", right: 20, bottom: 10 }}
-          />
-        </PrimaryIconButton>
-        <Modal
-          open={props.open}
-          handleClose={props.handleClose}
-          icon="none"
-          message="Log in to add to cart"
-          confirmText="Log in"
-          handleConfirm={goToLogin}
-          subtext="Don't have an account?"
-          subtextButtonText="Sign up"
-          subtextAction={goToSignup}
-        />
+        {isLoggedIn ? (
+          props.isOwner ? (
+            <>
+              <Button
+                onClick={setMenuItem}
+                sx={{ position: "absolute", right: 30, bottom: 12 }}
+              >
+                <ModeEditIcon
+                  sx={{
+                    fontSize: "28px",
+                  }}
+                />
+              </Button>
+              <Button
+                onClick={onDeleteMenuItem}
+                sx={{ position: "absolute", right: 0, bottom: 12 }}
+              >
+                <DeleteIcon
+                  sx={{
+                    fontSize: "28px",
+                  }}
+                />
+              </Button>
+            </>
+          ) : props.menuItem.isAvailable ? (
+            <PrimaryIconButton onClick={onAddToCart}>
+              <AddCircleOutlineIcon
+                sx={{
+                  fontSize: "40px",
+                }}
+              />
+            </PrimaryIconButton>
+          ) : (
+            <img
+              src={soldOut}
+              alt="Sold out"
+              width="60"
+              height="60"
+              style={{ position: "absolute", right: 0, bottom: 5 }}
+            />
+          )
+        ) : (
+          <>
+            <PrimaryIconButton onClick={props.handleOpen}>
+              <AddCircleOutlineIcon
+                sx={{
+                  fontSize: "40px",
+                }}
+              />
+            </PrimaryIconButton>
+            <Modal
+              open={props.open}
+              handleClose={props.handleClose}
+              icon="none"
+              message="Log in to add to cart"
+              confirmText="Log in"
+              handleConfirm={goToLogin}
+              subtext="Don't have an account?"
+              subtextButtonText="Sign up"
+              subtextAction={goToSignup}
+            />
+          </>
+        )}
         <img
           src={`${BASEURL}/${props.menuItem.image}`}
           alt={props.menuItem.name}
@@ -218,56 +184,6 @@ export default function MenuItemCard(props: {
         <BoldTypography variant="subtitle1" sx={{ mt: 1, mb: 2 }}>
           CHF {props.menuItem.price}
         </BoldTypography>
-
-        {/* {props.isOwner ? (
-          <>
-            <Button
-              style={{ backgroundColor: "#fff6f2" }}
-              onClick={setMenuItem}
-            >
-              <ModeEditIcon sx={{ fontSize: "36px" }} />
-            </Button>
-            <Button
-              style={{ backgroundColor: "#fff6f2", color: "primary" }}
-              onClick={onDeleteMenuItem}
-            >
-              <DeleteIcon sx={{ fontSize: "36px", color: "primary" }} />
-            </Button>
-          </>
-        ) : props.menuItem.isAvailable ? (
-          !isLoggedIn ? (
-            <CenterFlexBox>
-              <PrimaryIconButton onClick={props.handleOpen}>
-                <AddCircleOutlineIcon sx={{ fontSize: "40px", position:"fixed", right:0, bottom:0 }} />
-              </PrimaryIconButton>
-              <Modal
-                open={props.open}
-                handleClose={props.handleClose}
-                icon="none"
-                message="Log in to add to cart"
-                confirmText="Log in"
-                handleConfirm={goToLogin}
-                subtext="Don't have an account?"
-                subtextButtonText="Sign up"
-                subtextAction={goToSignup}
-              />
-            </CenterFlexBox>
-          ) : (
-            <CenterFlexBox>
-              <PrimaryIconButton onClick={onAddToCart}>
-                <AddCircleOutlineIcon sx={{ fontSize: "36px" }} />
-              </PrimaryIconButton>
-            </CenterFlexBox>
-          )
-        ) : (
-          <img
-            src={soldOut}
-            alt="Sold Out"
-            width="80"
-            height="80"
-            style={{ margin: "auto" }}
-          />
-        )} */}
       </Box>
     </animated.div>
   );

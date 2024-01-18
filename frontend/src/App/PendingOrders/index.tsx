@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  Grid,
   Typography,
   useMediaQuery,
   useTheme,
@@ -12,18 +13,22 @@ import selectImg from "../../assets/select-img.png";
 import noOrder from "../../assets/no-pending-orders.png";
 import LeftOrderList from "./LeftOrderList";
 import RightOrderDetailCard from "./RightOrderDetailCard";
+import { BackgroundContainer } from "../../components";
 
 const containerStyle = {
   pt: 5,
   display: "flex",
-  flexGrow: 1,
 };
 
 const outerBoxStyle = {
+  backgroundColor: "white",
+  borderRadius: "30px",
+  margin: "90px auto 0 auto",
+  mx: 2,
+  width: "80%",
+  height: "70vh",
   display: "flex",
-  flexDirection: "column",
-  mt: 5,
-  flexGrow: 1,
+  overflow: "auto",
 };
 
 const innerBoxStyle = {
@@ -84,7 +89,8 @@ export default function PendingOrders() {
 
   return (
     <>
-      <Container sx={containerStyle}>
+      <BackgroundContainer sx={{ display: "flex" }}>
+        {/* <Container sx={containerStyle}> */}
         {isMediumScreen ? (
           showOrderList ? (
             pendingOrders &&
@@ -106,50 +112,58 @@ export default function PendingOrders() {
           )
         ) : (
           <>
-            pendingOrders && upcomingOrders && (
-            <LeftOrderList
-              pendingOrders={pendingOrders}
-              upcomingOrders={upcomingOrders}
-              onSetOrder={setOrder}
-            />
-            )
-            <Box sx={outerBoxStyle}>
-              {order != null ? (
-                <RightOrderDetailCard
-                  order={order}
-                  acceptOrder={acceptOrder}
-                  cancelOrder={cancelOrder}
-                  onSetShowOrderList={setShowOrderList}
-                />
-              ) : (
-                <Box sx={innerBoxStyle}>
-                  {pendingOrders?.length === 0 ? (
-                    <>
-                      <img src={noOrder} alt="Sold Out" width="250" />
-                      <Typography variant="h5" sx={fontTitleStyle}>
-                        You have no pending orders
-                      </Typography>
-                      <Typography variant="subtitle1" sx={fontContentStyle}>
-                        Check out the upcoming orders
-                      </Typography>
-                    </>
+            <Grid container spacing={2} sx={{ flexGrow: 1 }}>
+              <Grid item md={4}>
+                {pendingOrders && upcomingOrders && (
+                  <LeftOrderList
+                    pendingOrders={pendingOrders}
+                    upcomingOrders={upcomingOrders}
+                    onSetOrder={setOrder}
+                  />
+                )}
+              </Grid>
+              <Grid item md={8}>
+                <Box sx={outerBoxStyle}>
+                  {order != null ? (
+                    <RightOrderDetailCard
+                      order={order}
+                      acceptOrder={acceptOrder}
+                      cancelOrder={cancelOrder}
+                      onSetShowOrderList={setShowOrderList}
+                    />
                   ) : (
-                    <>
-                      <img src={selectImg} alt="Sold Out" width="250" />
-                      <Typography variant="h5" sx={fontTitleStyle}>
-                        You have <b>{pendingOrders?.length}</b> pending orders
-                      </Typography>
-                      <Typography variant="subtitle1" sx={fontContentStyle}>
-                        Click on an order to view details
-                      </Typography>
-                    </>
+                    <Box sx={innerBoxStyle}>
+                      {pendingOrders?.length === 0 ? (
+                        <>
+                          <img src={noOrder} alt="Sold Out" width="250" />
+                          <Typography variant="h5" sx={fontTitleStyle}>
+                            You have no pending orders
+                          </Typography>
+                          <Typography variant="subtitle1" sx={fontContentStyle}>
+                            Check out the upcoming orders
+                          </Typography>
+                        </>
+                      ) : (
+                        <>
+                          <img src={selectImg} alt="Sold Out" width="250" />
+                          <Typography variant="h5" sx={fontTitleStyle}>
+                            You have <b>{pendingOrders?.length}</b> pending
+                            orders
+                          </Typography>
+                          <Typography variant="subtitle1" sx={fontContentStyle}>
+                            Click on an order to view details
+                          </Typography>
+                        </>
+                      )}
+                    </Box>
                   )}
                 </Box>
-              )}
-            </Box>
+              </Grid>
+            </Grid>
           </>
         )}
-      </Container>
+        {/* </Container> */}
+      </BackgroundContainer>
     </>
   );
 }
