@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, useMediaQuery, useTheme } from "@mui/material";
 import { ordersPartialUpdate, useOrdersList } from "../../../api";
 import OrderHistoryCard from "./OrderHistoryCard";
 import { modalActions } from "../store/modal";
@@ -11,6 +11,7 @@ import {
   BackgroundContainer,
   BoldTypography,
   ContainedButton,
+  EmptywithImageContainer,
 } from "../../components";
 
 const containerStyle = {
@@ -26,6 +27,9 @@ export default function OrderHistory() {
   const orders = orderResponse?.data;
   const navigate = useNavigate();
   const [orderId, setOrderId] = useState<number>(0);
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const { data: pendingOrdersResponse, refetch: refetchPendingOrder } =
     useOrdersList({
@@ -109,21 +113,17 @@ export default function OrderHistory() {
           (orders?.length !== 0 &&
             acceptedOrders?.length === 0 &&
             pendingOrders?.length === 0)) && (
-          <Container
+          <EmptywithImageContainer
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              flexGrow: 1,
-              alignItems: "center",
+              width: isSmallScreen ? "80%" : "40%",
             }}
           >
-            <img src={noOrder} alt="Sold Out" width="250" />
+            <img src={noOrder} alt="Sold Out" width="50%" />
             <BoldTypography variant="h5">No orders yet</BoldTypography>
-            <ContainedButton sx={{ mt: 3, mb: 2 }} onClick={goToMenuPage}>
+            <ContainedButton sx={{ mt: 2, mb: 1 }} onClick={goToMenuPage}>
               Shop now
             </ContainedButton>
-          </Container>
+          </EmptywithImageContainer>
         )}
 
         {pendingOrders !== undefined && pendingOrders?.length > 0 && (

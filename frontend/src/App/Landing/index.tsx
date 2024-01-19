@@ -120,7 +120,7 @@ export default function Landing() {
         <Divider />
       </Container>
 
-      <Box sx={{ py: 2, backgroundColor: "#402D28", width: "100vw" }}>
+      <Box sx={{ py: 2, backgroundColor: "#402D28", width: "100%" }}>
         <Container
           sx={{
             mt: 5,

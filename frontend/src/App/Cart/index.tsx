@@ -9,6 +9,7 @@ import {
   BackgroundContainer,
   BoldTypography,
   ContainedButton,
+  EmptywithImageContainer,
 } from "../../components";
 
 const smallScreenConfig = {
@@ -29,23 +30,13 @@ const largeScreenConfig = {
 } as const;
 
 const containerStyle = {
-  margin: "90px auto 30px auto",
+  marginTop: "90px",
+  marginBottom: "30px",
+  width: "90%",
   pt: 2,
   pb: 5,
   display: "flex",
   flexDirection: "column",
-  backgroundColor: "background.paper",
-  borderRadius: "30px",
-};
-
-const containerWithEmptyCartStyle = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  flexGrow: 1,
-  margin: "90px auto",
-  py: 5,
   backgroundColor: "background.paper",
   borderRadius: "30px",
 };
@@ -95,6 +86,7 @@ export default function Cart() {
         >
           Your cart ({totalQuantity})
         </BoldTypography>
+        {!isSmallScreen && <Divider sx={{ my: 2, mx: 4 }} />}
         <Box sx={{ flexGrow: isSmallScreen ? 1 : 0 }}>
           {cartItems.map((cartItem: CartItemType) => (
             <CartItemCard key={cartItem.id} cartItem={cartItem} />
@@ -121,36 +113,39 @@ export default function Cart() {
             </Box>
           </>
         ) : (
-          <Box sx={{ mx: 1, px: 3 }}>
-            <BoldTypography variant={style.fontVariant} sx={style.fontStyle}>
-              Total Price: CHF {totalPrice.toFixed(2)}
-            </BoldTypography>
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <ContainedButton onClick={goToMenuPage}>Back</ContainedButton>
-              <ContainedButton sx={{ mx: 1 }} onClick={goToCheckoutPage}>
-                Check out
-              </ContainedButton>
+          <>
+            <Divider sx={{ my: 2, mx: 4 }} />
+
+            <Box sx={{ mx: 1, px: 3 }}>
+              <BoldTypography variant={style.fontVariant} sx={style.fontStyle}>
+                Total Price: CHF {totalPrice.toFixed(2)}
+              </BoldTypography>
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <ContainedButton onClick={goToMenuPage}>Back</ContainedButton>
+                <ContainedButton sx={{ mx: 1 }} onClick={goToCheckoutPage}>
+                  Check out
+                </ContainedButton>
+              </Box>
             </Box>
-          </Box>
+          </>
         )}
       </Container>
     </BackgroundContainer>
   ) : (
     <BackgroundContainer>
-      <Container
+      <EmptywithImageContainer
         sx={{
-          ...containerWithEmptyCartStyle,
           width: isSmallScreen ? "80%" : "40%",
         }}
       >
         <Box sx={emptyCartBoxStyle}>
           <img src={emptyCart} alt="empty shopping cart" width="50%" />
           <BoldTypography variant="h5">Your cart is empty</BoldTypography>
-          <ContainedButton sx={{ mt: 1 }} onClick={goToMenuPage}>
+          <ContainedButton sx={{ mt: 2, mb: 1 }} onClick={goToMenuPage}>
             Shop now
           </ContainedButton>
         </Box>
-      </Container>
+      </EmptywithImageContainer>
     </BackgroundContainer>
   );
 }

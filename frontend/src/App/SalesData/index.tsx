@@ -18,7 +18,7 @@ import noSalesDataPic from "../../assets/no_sales_data.png";
 import {
   BackgroundContainer,
   BoldTypography,
-  CenterFlexBox,
+  EmptywithImageContainer,
   SpaceBetweenFlexBox,
 } from "../../components";
 
@@ -46,7 +46,7 @@ export default function SalesData() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Below lines are for testing purposes
-  // const tomorrow= new Date(today.setDate(today.getDate() + 1))
+  // const tomorrow = new Date(today.setDate(today.getDate() + 1));
   // const tomorrowString = tomorrow.toISOString().split("T")[0];
   // const [startDate, setStartDate] = useState(tomorrowString);
   // const [endDate, setEndDate] = useState(tomorrowString);
@@ -68,28 +68,34 @@ export default function SalesData() {
 
   if (salesByItem != undefined && salesByItem.length === 0) {
     return (
-      <Container sx={flexColumnGrowStyle} maxWidth="xl">
-        <SpaceBetweenFlexBox
-          sx={{
-            mt: 2,
-          }}
-        >
-          <BoldTypography variant="h6" sx={{ color: "white" }}>
-            Overview
-          </BoldTypography>
-          <BoldTypography variant="h5" sx={{ color: "white" }}>
-            {startDate === endDate ? startDate : startDate + " - " + endDate}
-          </BoldTypography>
-          <SalesDateSelect onSetDate={onSetDate} />
-        </SpaceBetweenFlexBox>
+      <BackgroundContainer>
+        <Container sx={flexColumnGrowStyle} maxWidth="xl">
+          <SpaceBetweenFlexBox
+            sx={{
+              mt: 2,
+            }}
+          >
+            <BoldTypography variant="h6" sx={{ color: "white" }}>
+              Overview
+            </BoldTypography>
+            <BoldTypography variant="h5" sx={{ color: "white" }}>
+              {startDate === endDate ? startDate : startDate + " - " + endDate}
+            </BoldTypography>
+            <SalesDateSelect onSetDate={onSetDate} />
+          </SpaceBetweenFlexBox>
 
-        <CenterFlexBox sx={flexColumnGrowStyle}>
-          <img src={noSalesDataPic} alt="No sales data" width="250" />
-          <BoldTypography variant="h5">
-            No sales data available yet
-          </BoldTypography>
-        </CenterFlexBox>
-      </Container>
+          <EmptywithImageContainer
+            sx={{
+              width: isSmallScreen ? "80%" : "40%",
+            }}
+          >
+            <img src={noSalesDataPic} alt="No sales data" width="250" />
+            <BoldTypography variant="h5">
+              No sales data available yet
+            </BoldTypography>
+          </EmptywithImageContainer>
+        </Container>
+      </BackgroundContainer>
     );
   }
 

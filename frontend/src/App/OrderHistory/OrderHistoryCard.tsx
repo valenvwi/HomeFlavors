@@ -10,11 +10,11 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import {
   BoldTypography,
   ContainedButton,
-  GreyBoldTypography,
   GreyTypography,
   SpaceBetweenFlexBox,
 } from "../../components";
 import { smImgStyle, mdImgStyle } from "../../components/imgStyle";
+import OrderCardMainContent from "./OrderCardMainContent";
 
 const smallScreenConfig = {
   cardStyle: {
@@ -78,7 +78,7 @@ const GreyContent = ({
 }: ComponentPropsWithoutRef<typeof Typography>) => (
   <Typography
     fontWeight={700}
-    variant="body1"
+    variant="subtitle1"
     sx={{
       color: "#8b8989",
       mr: 1,
@@ -96,9 +96,6 @@ export default function OrderHistoryCard(props: Props) {
   const formattedCreatedAtDate = dayjs(props.order.createdAt).format(
     "YYYY-MM-DD HH:mm"
   );
-  const formattedPickUpDateTime = dayjs(
-    props.order.pickUpDate + " " + props.order.pickUpTime
-  ).format("YYYY-MM-DD HH:mm");
 
   const [expanded, setExpanded] = useState(false);
 
@@ -135,24 +132,7 @@ export default function OrderHistoryCard(props: Props) {
               style={style.imageStyle}
             />
             <Box sx={flexBoxColumnStyle}>
-              <Box sx={{ display: "flex" }}>
-                <GreyContent>Pick up time:</GreyContent>
-                <BoldTypography variant={style.fontContentVariant}>
-                  {formattedPickUpDateTime}
-                </BoldTypography>
-              </Box>
-              <Box sx={{ display: "flex" }}>
-                <GreyContent>Total Quantity:</GreyContent>
-                <BoldTypography variant={style.fontContentVariant}>
-                  {props.order.totalQuantity}
-                </BoldTypography>
-              </Box>
-              <Box sx={{ display: "flex" }}>
-                <GreyContent>Price:</GreyContent>
-                <BoldTypography variant={style.fontContentVariant}>
-                  CHF {props.order.totalPrice}
-                </BoldTypography>
-              </Box>
+              <OrderCardMainContent order={props.order} />
             </Box>
           </Box>
           {!props.order.isAccepted && !isSmallScreen && (
@@ -168,6 +148,16 @@ export default function OrderHistoryCard(props: Props) {
       )}
       {expanded && (
         <Box>
+          {isSmallScreen ? (
+            <Box sx={{ ...flexBoxColumnStyle, mx: 0 }}>
+              <OrderCardMainContent order={props.order} />
+            </Box>
+          ) : (
+            <SpaceBetweenFlexBox sx={{ alignItems: "center" }}>
+              <OrderCardMainContent order={props.order} />
+            </SpaceBetweenFlexBox>
+          )}
+
           {props.order.orderItems?.map((orderItem) => (
             <SpaceBetweenFlexBox key={orderItem.id}>
               <img
@@ -178,25 +168,25 @@ export default function OrderHistoryCard(props: Props) {
               {isSmallScreen ? (
                 <>
                   <Box sx={flexGrowColumnStyle}>
-                    <Typography
+                    <BoldTypography
                       variant={style.fontContentVariant}
                       sx={smallScreenDescriptionStyle}
                     >
                       {orderItem.menuItem.name}
-                    </Typography>
+                    </BoldTypography>
                     <GreyTypography variant={style.fontContentVariant}>
                       x {orderItem.quantity}
                     </GreyTypography>
                   </Box>
                 </>
               ) : (
-                <Typography variant={style.fontContentVariant}>
+                <BoldTypography variant={style.fontContentVariant}>
                   {orderItem.menuItem.name} x {orderItem.quantity}
-                </Typography>
+                </BoldTypography>
               )}
-              <Typography variant={style.fontContentVariant}>
+              <BoldTypography variant={style.fontContentVariant}>
                 {(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}
-              </Typography>
+              </BoldTypography>
             </SpaceBetweenFlexBox>
           ))}
           {props.order.remark && (

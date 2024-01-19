@@ -13,6 +13,7 @@ import { ThemeProvider } from "@emotion/react";
 import { theme } from "./App/theme/theme.tsx";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { GlobalStyles } from "@mui/material";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +28,23 @@ const queryClient = new QueryClient({
   }),
 });
 
+const scrollbarStyles = {
+  "&::-webkit-scrollbar": {
+    width: "8px",
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "#f1f1f1",
+    borderRadius: "10px",
+    height: "80%",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#8b8989",
+    borderRadius: "10px",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    backgroundColor: "#EA5C2B",
+  },
+};
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -34,11 +52,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-        <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-        </BrowserRouter>
+          <BrowserRouter>
+            <ThemeProvider theme={theme}>
+              <GlobalStyles styles={scrollbarStyles} />
+              <App />
+            </ThemeProvider>
+          </BrowserRouter>
         </PersistGate>
       </Provider>
     </QueryClientProvider>

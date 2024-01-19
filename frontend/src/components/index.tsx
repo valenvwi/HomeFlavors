@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Container,
   Grid,
   IconButton,
   Paper,
@@ -110,6 +111,48 @@ export const BackgroundContainer = ({
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bannerImg})`,
       backgroundSize: "cover",
       flexGrow: 1,
+      ...sx,
+    }}
+    {...rest}
+  />
+);
+
+export const EmptywithImageContainer = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Container>) => (
+  <Container
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      flexGrow: 1,
+      margin: "90px auto",
+      py: 5,
+      backgroundColor: "background.paper",
+      borderRadius: "30px",
+      ...sx,
+    }}
+    {...rest}
+  />
+);
+
+export const WhiteContainer = ({
+  sx,
+  ...rest
+}: ComponentPropsWithoutRef<typeof Container>) => (
+  <Container
+    sx={{
+      marginTop: "90px",
+      marginBottom: "30px",
+      width: "90%",
+      pt: 2,
+      pb: 5,
+      display: "flex",
+      flexDirection: "column",
+      backgroundColor: "background.paper",
+      borderRadius: "30px",
       ...sx,
     }}
     {...rest}

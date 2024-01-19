@@ -3,7 +3,7 @@ import { apiTokenCreate } from "../../api/index";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "./store/root";
 import { authActions } from "./store/auth";
-import { Box, Container, Grid, TextField, Typography } from "@mui/material";
+import { Box, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { isAxiosError } from "axios";
 import flyingPan from "../assets/frying-pan.png";
@@ -14,6 +14,7 @@ import {
   GreyTypography,
   OrangePaper,
   SpaceAroundFlexBox,
+  WhiteContainer,
 } from "../components";
 import { authLogoStyle } from "../components/imgStyle";
 
@@ -91,17 +92,8 @@ export default function Login() {
   };
 
   return (
-    <BackgroundContainer
-    >
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-          background: "white",
-          borderRadius: "20px",
-          marginTop: "100px",
-        }}
-      >
+    <BackgroundContainer>
+      <WhiteContainer maxWidth="xs">
         <Box sx={outerBoxStyle}>
           <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 
@@ -172,7 +164,7 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
-      </Container>
+      </WhiteContainer>
     </BackgroundContainer>
   );
 }

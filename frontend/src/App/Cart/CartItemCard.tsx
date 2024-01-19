@@ -1,4 +1,4 @@
-import { Box, Button, Card, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { CartItemType } from "../types/cartItem";
 import { BASEURL } from "../../config";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -9,12 +9,16 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { ComponentPropsWithoutRef, useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import { BoldTypography, CenterFlexBox } from "../../components";
+import {
+  BoldTypography,
+  CenterFlexBox,
+  SpaceBetweenFlexBox,
+} from "../../components";
 import { smImgStyle, mdImgStyle } from "../../components/imgStyle";
 
 const smallScreenConfig = {
   cardStyle: {
-    py: 3,
+    py: 0,
   },
   innerFirstBoxStyle: {
     display: "flex",
@@ -27,7 +31,7 @@ const smallScreenConfig = {
   },
   imageStyle: smImgStyle,
   iconStyle: {
-    fontSize: "28px",
+    fontSize: "22px",
   },
 } as const;
 
@@ -44,7 +48,7 @@ const largeScreenConfig = {
   },
   imageStyle: mdImgStyle,
   iconStyle: {
-    fontSize: "36px",
+    fontSize: "28px",
   },
 } as const;
 
@@ -52,10 +56,6 @@ const outerBoxStyle = {
   display: "flex",
   alignItems: "center",
 };
-
-const GreyTypography = (props: ComponentPropsWithoutRef<typeof Typography>) => (
-  <Typography color="#8b8989" {...props} />
-);
 
 export default function CartItemCard(props: { cartItem: CartItemType }) {
   const theme = useTheme();
@@ -95,6 +95,7 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
 
   return isSmallScreen ? (
     <>
+      <Divider sx={{ my: 1 }} />
       <animated.div style={fadeOutAnimation}>
         <Box sx={style.cardStyle}>
           <Box sx={outerBoxStyle}>
@@ -103,75 +104,87 @@ export default function CartItemCard(props: { cartItem: CartItemType }) {
               alt={props.cartItem.name}
               style={style.imageStyle}
             />
-            <Box>
-              <BoldTypography variant="subtitle1" sx={{ px: 2 }}>
-                {props.cartItem.name}
-              </BoldTypography>
-              <GreyTypography variant="body2" sx={{ px: 2 }}>
-                {props.cartItem.description}
-              </GreyTypography>
+            <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+              <SpaceBetweenFlexBox>
+                <BoldTypography variant="body2" sx={{ px: 2 }}>
+                  {props.cartItem.name}
+                </BoldTypography>
+                <IconButton color="primary" onClick={onDeleteCartItem}>
+                  <DeleteOutlineIcon sx={{ fontSize: "22px" }} />
+                </IconButton>
+              </SpaceBetweenFlexBox>
+
+              <SpaceBetweenFlexBox sx={{ mx: 1 }}>
+                <CenterFlexBox>
+                  <IconButton color="primary" onClick={onDecreaseQuantity}>
+                    <RemoveCircleOutlineIcon sx={style.iconStyle} />
+                  </IconButton>
+                  <BoldTypography variant="body2">
+                    Qty: {props.cartItem.quantity}
+                  </BoldTypography>
+                  <IconButton color="primary" onClick={onIncreaseQuantity}>
+                    <AddCircleOutlineIcon sx={style.iconStyle} />
+                  </IconButton>
+                </CenterFlexBox>
+                <BoldTypography variant="subtitle2">
+                  CHF {props.cartItem.price.toFixed(2)}
+                </BoldTypography>
+              </SpaceBetweenFlexBox>
             </Box>
           </Box>
-          <Box sx={style.innerFirstBoxStyle}>
-            <BoldTypography variant="subtitle2">
-              CHF {props.cartItem.price.toFixed(2)}
-            </BoldTypography>
 
-            <CenterFlexBox sx={style.innerSecondBoxStyle}>
-              <IconButton color="primary" onClick={onDecreaseQuantity}>
-                <RemoveCircleOutlineIcon sx={style.iconStyle} />
-              </IconButton>
-              <BoldTypography variant="body2">
-                Qty: {props.cartItem.quantity}
-              </BoldTypography>
-              <IconButton color="primary" onClick={onIncreaseQuantity}>
-                <AddCircleOutlineIcon sx={style.iconStyle} />
-              </IconButton>
-            </CenterFlexBox>
-
-            <IconButton color="primary" onClick={onDeleteCartItem}>
-              <DeleteOutlineIcon sx={{ fontSize: "28px", ml: 1 }} />
-            </IconButton>
-          </Box>
+          <Box sx={style.innerFirstBoxStyle}></Box>
         </Box>
       </animated.div>
     </>
   ) : (
     <>
       <animated.div style={fadeOutAnimation}>
-        <Box sx={style.cardStyle}>
+        <SpaceBetweenFlexBox sx={{ mx: 3, my: 1 }}>
           <img
             src={`${BASEURL}/${props.cartItem.image}`}
             alt={props.cartItem.name}
             style={style.imageStyle}
           />
 
-          <Box sx={style.innerFirstBoxStyle}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <BoldTypography variant="subtitle1">
               {props.cartItem.name}
             </BoldTypography>
-            <GreyTypography variant="body2">
-              {props.cartItem.description}
-            </GreyTypography>
+            <CenterFlexBox sx={style.innerSecondBoxStyle}>
+              <IconButton color="primary" onClick={onDecreaseQuantity}>
+                <RemoveCircleOutlineIcon sx={style.iconStyle} />
+              </IconButton>
+              <BoldTypography variant="subtitle1">
+                Qty: {props.cartItem.quantity}
+              </BoldTypography>
+              <IconButton color="primary" onClick={onIncreaseQuantity}>
+                <AddCircleOutlineIcon sx={style.iconStyle} />
+              </IconButton>
+            </CenterFlexBox>
           </Box>
-          <CenterFlexBox sx={style.innerSecondBoxStyle}>
-            <IconButton color="primary" onClick={onDecreaseQuantity}>
-              <RemoveCircleOutlineIcon sx={style.iconStyle} />
-            </IconButton>
-            <BoldTypography variant="subtitle1">
-              Qty: {props.cartItem.quantity}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <BoldTypography variant="subtitle1" sx={{ mr: 2 }}>
+              CHF {(props.cartItem.price * props.cartItem.quantity).toFixed(2)}
             </BoldTypography>
-            <IconButton color="primary" onClick={onIncreaseQuantity}>
-              <AddCircleOutlineIcon sx={style.iconStyle} />
+            <IconButton color="primary" onClick={onDeleteCartItem}>
+              <DeleteOutlineIcon sx={{ fontSize: "28px" }} />
             </IconButton>
-          </CenterFlexBox>
-          <BoldTypography variant="subtitle1" sx={{ mr: 2 }}>
-            CHF {(props.cartItem.price * props.cartItem.quantity).toFixed(2)}
-          </BoldTypography>
-          <IconButton color="primary" onClick={onDeleteCartItem}>
-            <DeleteOutlineIcon sx={{ fontSize: "36px" }} />
-          </IconButton>
-        </Box>
+          </Box>
+        </SpaceBetweenFlexBox>
       </animated.div>
     </>
   );

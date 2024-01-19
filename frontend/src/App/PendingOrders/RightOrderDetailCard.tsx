@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  Paper,
   Typography,
   useMediaQuery,
   useTheme,
@@ -13,37 +12,29 @@ import {
   BoldTypography,
   ContainedButton,
   GreyBoldTypography,
-  GreyTypography,
 } from "../../components";
 import { smImgStyle } from "../../components/imgStyle";
 
-const orderDetailSmallBox = {
-  display: "flex",
-  justifyContent: "space-around",
-};
-
-const orderItemBox = {
-  display: "flex",
-  alignItems: "center",
-  m: 2,
-};
-
 const mediumScreenConfig = {
   containerStyle: {
-    mt: 5,
     pt: 2,
-    width: "100%",
+    backgroundColor: "white",
+    borderRadius: "30px",
+    marginTop: "90px",
+    width: "90%",
+    height: "70vh",
   },
 
   orderDetailBox: {
     p: 1,
     mb: 2,
   },
-  smallPaperStyle: {
-    p: 1,
-    borderRadius: "5px",
+  imgStyle: { ...smImgStyle, mr: 1 },
+  orderItemBox: {
+    display: "flex",
+    alignItems: "center",
+    my: 2,
   },
-  imgStyle: smImgStyle,
 };
 
 const bigScreenConfig = {
@@ -57,17 +48,17 @@ const bigScreenConfig = {
     px: 2,
     mb: 4,
   },
-  smallPaperStyle: {
-    px: 3,
-    py: 2,
-    borderRadius: "10px",
-  },
   imgStyle: {
     objectFit: "cover",
     borderRadius: "10px",
     width: "60px",
     height: "60px",
     mr: 2,
+  },
+  orderItemBox: {
+    display: "flex",
+    alignItems: "center",
+    m: 2,
   },
 };
 type Props = {
@@ -120,7 +111,7 @@ export default function RightOrderDetailCard(props: Props) {
       </Box>
 
       {props.order.orderItems?.map((orderItem) => (
-        <Box sx={orderItemBox} key={orderItem.id}>
+        <Box sx={style.orderItemBox} key={orderItem.id}>
           <Box
             component="img"
             src={`${BASEURL}/${orderItem.menuItem.image}`}

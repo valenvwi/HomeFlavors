@@ -1,6 +1,5 @@
 import {
   Box,
-  Container,
   Grid,
   Typography,
   useMediaQuery,
@@ -14,11 +13,6 @@ import noOrder from "../../assets/no-pending-orders.png";
 import LeftOrderList from "./LeftOrderList";
 import RightOrderDetailCard from "./RightOrderDetailCard";
 import { BackgroundContainer } from "../../components";
-
-const containerStyle = {
-  pt: 5,
-  display: "flex",
-};
 
 const outerBoxStyle = {
   backgroundColor: "white",
@@ -90,7 +84,6 @@ export default function PendingOrders() {
   return (
     <>
       <BackgroundContainer sx={{ display: "flex" }}>
-        {/* <Container sx={containerStyle}> */}
         {isMediumScreen ? (
           showOrderList ? (
             pendingOrders &&
@@ -162,7 +155,6 @@ export default function PendingOrders() {
             </Grid>
           </>
         )}
-        {/* </Container> */}
       </BackgroundContainer>
     </>
   );

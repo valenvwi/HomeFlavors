@@ -6,7 +6,13 @@ import flyingPan from "../assets/frying-pan.png";
 import { useAppDispatch } from "./store/root";
 import { authActions } from "./store/auth";
 import { authLogoStyle } from "../components/imgStyle";
-import { BackgroundContainer, BoldTypography, ContainedButton, GreyTypography } from "../components";
+import {
+  BackgroundContainer,
+  BoldTypography,
+  ContainedButton,
+  GreyTypography,
+  WhiteContainer,
+} from "../components";
 
 const outerBoxStyle = {
   display: "flex",
@@ -69,17 +75,8 @@ export default function Signup() {
   };
 
   return (
-    <BackgroundContainer
-    >
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-          background: "white",
-          borderRadius: "20px",
-          marginTop: "100px",
-        }}
-      >
+    <BackgroundContainer>
+      <WhiteContainer maxWidth="xs">
         <Box sx={outerBoxStyle}>
           <img src={flyingPan} alt="flying pan" style={authLogoStyle} />
 
@@ -216,7 +213,7 @@ export default function Signup() {
             </Grid>
           </Box>
         </Box>
-      </Container>
+      </WhiteContainer>
     </BackgroundContainer>
   );
 }

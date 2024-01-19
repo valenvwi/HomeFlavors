@@ -52,7 +52,7 @@ export default function BannerSection(props: Props) {
       sx={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${bannerImg})`,
         backgroundSize: "cover",
-        width: "100vw",
+        width: "100%",
         height: "95vh",
       }}
     >

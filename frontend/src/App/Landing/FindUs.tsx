@@ -45,6 +45,11 @@ export default function FindUs(props: Props) {
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const icons = [openingHoursIcon, locationIcon, contactIcon, emailIcon];
+
+  if (!props.kitchen) {
+    return null;
+  }
+
   const contents = [
     props.kitchen.openingHours,
     props.kitchen.address,
@@ -77,20 +82,19 @@ export default function FindUs(props: Props) {
         <Typography sx={isSmallScreen ? fontSmallTitle : fontTitle}>
           Find us
         </Typography>
-        {props.kitchen &&
-          icons.map((icon, index) => (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                py: isMediumScreen ? 1 : 2,
-              }}
-              key={`${icon}-${index}`}
-            >
-              <img src={icon} alt="fresh" style={{ width: "40px" }} />
-              <MdContent>{contents[index]}</MdContent>
-            </Box>
-          ))}
+        {icons.map((icon, index) => (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              py: isMediumScreen ? 1 : 2,
+            }}
+            key={`${icon}-${index}`}
+          >
+            <img src={icon} alt="fresh" style={{ width: "40px" }} />
+            <MdContent>{contents[index]}</MdContent>
+          </Box>
+        ))}
       </Grid>
     </Grid>
   );
