@@ -36,7 +36,8 @@ Docker, Vite
 
 <img src="https://github.com/valenvwi/HomeFlavors/assets/119674688/2bbf7dfb-f0e2-4f2b-9dba-b9be2c4738d9" height=450> 
 
-<img src="https://github.com/valenvwi/HomeFlavors/assets/119674688/e1c8b4d6-7840-4297-892e-95c834628dc4" height=450> 
+<img src="https://github.com/valenvwi/HomeFlavors/assets/119674688/2eb3ee58-b94a-4c45-b723-737745c502f9" height=450> 
+
 
 <img src="https://github.com/valenvwi/HomeFlavors/assets/119674688/799e8d8b-f000-4a9e-ad41-5ebbbc5db38d" height=450> 
 
@@ -50,11 +51,17 @@ Docker, Vite
 https://github.com/valenvwi/HomeFlavors/assets/119674688/10793fed-ec2b-4983-a14d-9c9452a29ec3
 
 
-## Demo viedo (As a guest)
+## Demo viedo (Desktop view as a guest)
 
 
 
 https://github.com/valenvwi/HomeFlavors/assets/119674688/db108eef-39e1-4939-9f60-22ef67a7f1e1
+
+## Demo viedo (Mobile view as a guest)
+
+
+https://github.com/valenvwi/HomeFlavors/assets/119674688/4a0adee2-b308-48bf-803e-880ec5533b0d
+
 
 
 
